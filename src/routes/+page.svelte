@@ -54,12 +54,11 @@
 
 	let generated: string = $state('');
 
-	$effect(() => {
+	$effect(async () => {
 		if (card.name) {
-			generated = generateCard(card);
+			generated = await generateCard(card);
 		}
 	});
-
 	function handleImageUpload(event: Event, setImage: (value: string | null) => void) {
 		const file = (event.target as HTMLInputElement).files?.[0];
 		if (file) {
@@ -73,6 +72,8 @@
 
 	function downloadHTML() {
 		const element = document.createElement('a');
+		console.log('element', element);
+
 		const file = new Blob([generated], { type: 'text/html' });
 		element.href = URL.createObjectURL(file);
 		element.download = 'business-card.html';
