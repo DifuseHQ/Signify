@@ -1,0 +1,15 @@
+{
+    "eslint.validate": ["svelte", "typescript"],
+    "editor.formatOnSave": true,
+    "[svelte]": {
+      "editor.defaultFormatter": "svelte.svelte-vscode"
+    },
+    "[typescript]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "svelte.plugin.typescript.diagnostics.enable": true,
+    "svelte.plugin.svelte.diagnostics.enable": true,
+    "typescript.tsserver.experimental.enableProjectDiagnostics": true,
+    "css.customData": [".vscode/tailwind.json"]
+  }
+  
