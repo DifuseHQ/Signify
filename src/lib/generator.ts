@@ -1,4 +1,4 @@
-import { generateSVG } from './icon';
+import { generateSVG, svgToPng } from './icon';
 
 export type Template =
 	| 'modern-stack'
@@ -29,53 +29,69 @@ export interface Card {
 	};
 }
 
-export function generateCard(card: Card): string {
+export async function generateCard(card: Card): Promise<string> {
 	let tailwindHTML = '';
+
+	const icons = {
+		mail: await svgToPng(generateSVG('lucide:mail', '16px', card.colours.primary)),
+		phone: await svgToPng(generateSVG('mdi:phone', '16px', card.colours.primary)),
+		web: await svgToPng(generateSVG('mdi:web', '16px', card.colours.primary)),
+		linkedin: await svgToPng(generateSVG('mdi:linkedin', '16px', card.colours.primary)),
+		twitter: await svgToPng(generateSVG('mdi:twitter', '16px', card.colours.primary))
+	};
 
 	if (card.template === 'modern-stack') {
 		tailwindHTML += `
-			<table id="email-signature" style="background-color: ${card.colours.background}; border-radius: 8px; box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); width: 100%; max-width: 530px; font-family: Arial, sans-serif; line-height: 1.5;">
+			<table id="email-signature" style="background-color: ${card.colours.background}; border-radius: 8px; box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); width: 100%; max-width: 530px; font-family: Arial, sans-serif; line-height: 1.5; margin: 0;">
 				<tr>
-					<td style="padding: 24px">
-						<table style="width: 100%; border-collapse: collapse">
+					<td style="padding: 16px;">
+						<table style="width: 100%; border-collapse: collapse;">
 							<tr>
-								<td style="padding-bottom: 16px; display: flex; align-items: center; gap: 16px;">
+								<td style="vertical-align: middle; padding: 0; width: 70px;">
 									${
 										card.photos.profile
-											? `<img src="${card.photos.profile}" alt="${card.name}" style="width: 82px;height: 82px;border-radius: 50%;object-fit: cover; " />`
+											? `<img src="${card.photos.profile}" alt="${card.name}" style="width: 70px; height: 70px; border-radius: 50%; object-fit: cover;" />`
 											: ''
 									}
-									<div>
-										<span
-											style="font-size: 1.25rem; font-weight: 700; color:${card.colours.primary};">${card.name}</span><br />
-										<span style="font-size: 0.875rem; color:${card.colours.text};">${card.title}</span><br />
-										<span style="font-size: 0.875rem; color:${card.colours.text};">${card.company}</span>
-									</div>
+								</td>
+								<td style="vertical-align: middle; padding: 0; padding-left: 8px;">
+									<span style="font-size: 1.25rem; font-weight: 700; color:${card.colours.primary};">${card.name}</span><br />
+									<span style="font-size: 0.875rem; color:${card.colours.text};">${card.title}</span><br />
+									<span style="font-size: 0.875rem; color:${card.colours.text};">${card.company}</span>
 								</td>
 							</tr>
-
+						</table>
+					</td>
+				</tr>
+				<tr>
+					<td style="border-top: 1px solid #e5e7eb; padding: 16px 16px 0;">
+						<table style="width: 100%; border-collapse: collapse;">
 							<tr>
-								<td style="border-top: 1px solid #e5e7eb; padding-top: 16px">
+								<td style="vertical-align: middle; width: 48px;">
+									${
+										card.photos.company
+											? `<img src="${card.photos.company}" alt="Company Logo" style="width: 48px; height: 48px; border-radius: 50%; object-fit: cover;" />`
+											: ''
+									}
+								</td>
+								<td style="padding-left: 12px; padding-bottom: 5px;">
 									<table style="width: 100%; font-size: 0.875rem; color:${card.colours.text};">
 										<tr>
-											<td style="padding: 4px 0;display: flex;align-items: center; gap: 8px; ">
-												${generateSVG('lucide:mail', '16px', card.colours.primary)}
-												<a href="mailto:${card.email}"
-													style="color: ${card.colours.text}; text-decoration: none;">${card.email}</a>
+											<td style="padding: 4px 0; display: flex; align-items: center;">
+												<img src="${icons.mail}" alt="Email" style="width: 16px; height: 16px; margin-right: 2px;" />
+												<a href="mailto:${card.email}" style="color: ${card.colours.text}; text-decoration: none; margin-left: 8px;">${card.email}</a>
 											</td>
 										</tr>
 										<tr>
-											<td style=" padding: 4px 0; display: flex; align-items: center; gap: 8px;">
-												${generateSVG('mdi:phone', '16px', card.colours.primary)}
-												<a href="tel:${card.phone}"
-													style="color: ${card.colours.text}; text-decoration: none;">${card.phone}</a>
+											<td style="padding: 4px 0; display: flex; align-items: center;">
+												<img src="${icons.phone}" alt="Email" style="width: 16px; height: 16px; margin-right: 2px;" />
+												<a href="tel:${card.phone}" style="color: ${card.colours.text}; text-decoration: none; margin-left: 8px;">${card.phone}</a>
 											</td>
 										</tr>
 										<tr>
-											<td style=" padding: 4px 0; display: flex; align-items: center; gap: 8px; ">
-												${generateSVG('mdi:phone', '16px', card.colours.primary)}
-												<a href="${card.website}"
-													style="color: ${card.colours.text}; text-decoration: none;">${card.website}</a>
+											<td style="padding: 4px 0; display: flex; align-items: center;">
+												<img src="${icons.web}" alt="Email" style="width: 16px; height: 16px; margin-right: 2px;" />
+												<a href="${card.website}" style="color: ${card.colours.text}; text-decoration: none; margin-left: 8px;">${card.website}</a>
 											</td>
 										</tr>
 									</table>
@@ -85,6 +101,66 @@ export function generateCard(card: Card): string {
 					</td>
 				</tr>
 			</table>
+		`;
+	} else if (card.template === 'corporate-clean') {
+		tailwindHTML += `
+		<table id="email-signature" style="background-color: ${card.colours.background}; width: 100%; max-width: 600px; font-family: Arial, sans-serif; line-height: 1.5; margin: 0 auto; border-collapse: collapse; padding: 10px;">
+  <tr>
+    <td style="vertical-align: middle; width: 60px; padding-right: 12px;">
+      ${
+				card.photos.company
+					? `<img src="${card.photos.company}" alt="Company Logo" style="width: 40px; height: 40px; object-fit: cover;" />`
+					: ''
+			}
+    </td>
+    
+    <td style="vertical-align: middle; width: 60px; padding-right: 12px;">
+      ${
+				card.photos.profile
+					? `<img src="${card.photos.profile}" alt="${card.name}" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;" />`
+					: ''
+			}
+    </td>
+    
+    <td style="vertical-align: middle;">
+      <div style="font-size: 16px; font-weight: bold; color: ${card.colours.primary}; margin-bottom: 2px;">${card.name}</div>
+      <div style="font-size: 14px; color: ${card.colours.text};">${card.title}</div>
+    </td>
+
+    <td style="vertical-align: middle; text-align: right;">
+      <div style="font-size: 14px; color: ${card.colours.text};">
+        <a href="mailto:${card.email}" style="color: ${card.colours.text}; text-decoration: none;">${card.email}</a>
+      </div>
+      <div style="font-size: 14px; color: ${card.colours.text};">
+        <a href="tel:${card.phone}" style="color: ${card.colours.text}; text-decoration: none;">${card.phone}</a>
+      </div>
+      <div style="font-size: 14px; color: ${card.colours.text};">
+        <a href="${card.website}" style="color: ${card.colours.text}; text-decoration: none;">${card.website}</a>
+      </div>
+    </td>
+  </tr>
+  
+  <tr>
+    <td colspan="4" style="border-top: 1px solid ${card.colours.text}; padding-top: 10px;"></td>
+  </tr>
+  
+  <tr>
+    <td colspan="3" style="font-size: 14px; color: ${card.colours.text}; vertical-align: middle;">${card.company}</td>
+    <td style="text-align: right; vertical-align: middle;">
+      ${
+				card.linkedIn
+					? `<a href="${card.linkedIn}" style="text-decoration: none; color: ${card.colours.primary}; font-size: 14px;">in</a>`
+					: ''
+			}
+      ${
+				card.twitter
+					? `<a href="${card.twitter}" style="text-decoration: none; color: ${card.colours.primary}; font-size: 14px; margin-left: 12px;">𝕏</a>`
+					: ''
+			}
+    </td>
+  </tr>
+</table>
+
 		`;
 	}
 

@@ -54,11 +54,24 @@
 
 	let generated: string = $state('');
 
-	$effect(async () => {
-		if (card.name) {
-			generated = await generateCard(card);
+	onMount(() => {
+		// photos local storage
+		const photos = localStorage.getItem('photos');
+		if (photos) {
+			card.photos = JSON.parse(photos);
+		} else {
+			localStorage.setItem('photos', JSON.stringify(card.photos));
 		}
 	});
+
+	$effect(() => {
+		const snapshot = $state.snapshot(card);
+		generateCard(snapshot).then((html) => {
+			generated = html;
+			localStorage.setItem('photos', JSON.stringify(card.photos));
+		});
+	});
+
 	function handleImageUpload(event: Event, setImage: (value: string | null) => void) {
 		const file = (event.target as HTMLInputElement).files?.[0];
 		if (file) {
