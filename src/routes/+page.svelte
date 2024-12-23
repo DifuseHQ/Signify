@@ -38,7 +38,7 @@
 	});
 
 	let card = $state<Card>({
-		template: 'corporate-clean',
+		template: 'modern-stack',
 		name: 'Hayzam Sherif',
 		title: 'Senior Developer',
 		company: 'Alchemilla Ventures Private Limited',

@@ -104,63 +104,72 @@ export async function generateCard(card: Card): Promise<string> {
 		`;
 	} else if (card.template === 'corporate-clean') {
 		tailwindHTML += `
-		<table id="email-signature" style="background-color: ${card.colours.background}; width: 100%; max-width: 600px; font-family: Arial, sans-serif; line-height: 1.5; margin: 0 auto; border-collapse: collapse; padding: 10px;">
-  <tr>
-    <td style="vertical-align: middle; width: 60px; padding-right: 12px;">
-      ${
-				card.photos.company
-					? `<img src="${card.photos.company}" alt="Company Logo" style="width: 40px; height: 40px; object-fit: cover;" />`
-					: ''
-			}
-    </td>
-    
-    <td style="vertical-align: middle; width: 60px; padding-right: 12px;">
-      ${
-				card.photos.profile
-					? `<img src="${card.photos.profile}" alt="${card.name}" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;" />`
-					: ''
-			}
-    </td>
-    
-    <td style="vertical-align: middle;">
-      <div style="font-size: 16px; font-weight: bold; color: ${card.colours.primary}; margin-bottom: 2px;">${card.name}</div>
-      <div style="font-size: 14px; color: ${card.colours.text};">${card.title}</div>
-    </td>
+			<table id="email-signature"
+			style="background-color: ${card.colours.background}; border-radius: 8px; box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); width: 100%; max-width: 530px; font-family: Arial, sans-serif; line-height: 1.5; margin: 0;">
+				<tr>
+					<td rowspan="3" style="vertical-align: middle; width: 96px;height:96px; padding-left: 20px;padding-top:20px">
+					${
+						card.photos.company
+							? `<img src="${card.photos.company}" alt="Company Logo" style="width: 96px; height: 96px; object-fit: cover" />`
+							: ''
+					}
+					</td>
 
-    <td style="vertical-align: middle; text-align: right;">
-      <div style="font-size: 14px; color: ${card.colours.text};">
-        <a href="mailto:${card.email}" style="color: ${card.colours.text}; text-decoration: none;">${card.email}</a>
-      </div>
-      <div style="font-size: 14px; color: ${card.colours.text};">
-        <a href="tel:${card.phone}" style="color: ${card.colours.text}; text-decoration: none;">${card.phone}</a>
-      </div>
-      <div style="font-size: 14px; color: ${card.colours.text};">
-        <a href="${card.website}" style="color: ${card.colours.text}; text-decoration: none;">${card.website}</a>
-      </div>
-    </td>
-  </tr>
-  
-  <tr>
-    <td colspan="4" style="border-top: 1px solid ${card.colours.text}; padding-top: 10px;"></td>
-  </tr>
-  
-  <tr>
-    <td colspan="3" style="font-size: 14px; color: ${card.colours.text}; vertical-align: middle;">${card.company}</td>
-    <td style="text-align: right; vertical-align: middle;">
-      ${
-				card.linkedIn
-					? `<a href="${card.linkedIn}" style="text-decoration: none; color: ${card.colours.primary}; font-size: 14px;">in</a>`
-					: ''
-			}
-      ${
-				card.twitter
-					? `<a href="${card.twitter}" style="text-decoration: none; color: ${card.colours.primary}; font-size: 14px; margin-left: 12px;">𝕏</a>`
-					: ''
-			}
-    </td>
-  </tr>
-</table>
+					<td style="vertical-align: middle; width: 64px;height:64px;padding-left:20px;padding-top:20px">
+					${
+						card.photos.profile
+							? `<img src="${card.photos.profile}" alt="${card.name}"
+						style="width: 64px; height: 64px; border-radius: 50%; object-fit: cover" />`
+							: ''
+					}
+					</td>
 
+					<td colspan="2" style="vertical-align: middle; padding-left: 5px;padding-top:18px">
+					<div style="font-size: 16px; font-weight: bold; color: ${card.colours.primary};">
+						${card.name}
+					</div>
+					<div style="font-size: 14px; color: ${card.colours.text}">${card.title}</div>
+					</td>
+
+					<td style="vertical-align: middle; text-align: right;padding-right: 20px;padding-top: 20px;">
+					<div style="font-size: 14px; color: #666666">
+						<a href="mailto:john@techcorp.com" style="color: ${card.colours.text}; text-decoration: none">${card.email}</a>
+					</div>
+					<div style="font-size: 14px; color: #666666">
+						<a href="tel:+15551234567" style="color:${card.colours.text}; text-decoration: none">${card.phone}</a>
+					</div>
+					<div style="font-size: 14px; color: #666666">
+						<a href="https://www.techcorp.com" style="color:${card.colours.text}; text-decoration: none">${card.website}</a>
+					</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td colspan="5">
+						<div style="border-top: 1px solid #ddd; width: 90%; margin: 0 auto;"></div>
+					</td>
+				</tr>
+
+				<tr>
+					<td colspan="3"
+					style="font-size: 14px; color: ${card.colours.text}; vertical-align: middle;padding-left: 20px;padding-bottom:20px">
+					${card.company}
+					</td>
+					<td style="text-align: right; vertical-align: middle;padding-right: 20px;padding-bottom:20px">
+					${
+						card.linkedIn
+							? `<a href="${card.linkedIn}"
+						style="text-decoration: none; color: ${card.colours.primary}; font-size: 14px;">in</a>`
+							: ''
+					} ${
+						card.twitter
+							? `<a href="${card.twitter}"
+						style="text-decoration: none; color: ${card.colours.primary}; font-size: 14px; margin-left: 12px;">𝕏</a>`
+							: ''
+					}
+					</td>
+				</tr>
+			</table>
 		`;
 	}
 
