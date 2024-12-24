@@ -37,7 +37,8 @@ export async function generateCard(card: Card): Promise<string> {
 		phone: await svgToPng(generateSVG('mdi:phone', '16px', card.colours.primary)),
 		web: await svgToPng(generateSVG('mdi:web', '16px', card.colours.primary)),
 		linkedin: await svgToPng(generateSVG('mdi:linkedin', '16px', card.colours.primary)),
-		twitter: await svgToPng(generateSVG('mdi:twitter', '16px', card.colours.primary))
+		twitter: await svgToPng(generateSVG('mdi:twitter', '16px', card.colours.primary)),
+		location: await svgToPng(generateSVG('mdi:map-marker', '16px', card.colours.primary))
 	};
 
 	if (card.template === 'modern-stack') {
@@ -203,6 +204,104 @@ export async function generateCard(card: Card): Promise<string> {
 			</td>
 
 			</tr>
+			</table>
+		`;
+	} else if (card.template === 'elegant-minimal') {
+		tailwindHTML += `
+			<table id="email-signature"
+				style="background-color: ${card.colours.background}; border-radius: 8px; box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); width: 100%; max-width: 650px; font-family: Arial, sans-serif; line-height: 1.5; margin: 0;">
+				<tr>
+					<td style="vertical-align: middle; width: 64px;height:64px;">
+						${
+							card.photos.profile
+								? `<img src="${card.photos.profile}" alt="${card.name}"
+							style="width: 56px; height: 56px; border-radius: 50%; object-fit: cover;margin-left:20px;margin-top:20px;" />`
+								: ''
+						}
+					</td>
+					<td colspan="3">
+						<table width="100%">
+							<tr>
+								<td colspan="2">
+									<table width="100%" style="margin-top:30px;">
+										<tr>
+											<td colspan="2"
+												style="font-size: 16px; font-weight: bold; color: ${card.colours.primary};">
+												${card.name}</td>
+										</tr>
+										<tr>
+											<td style="font-size: 14px; color: ${card.colours.text}">${card.title} - ${card.company}
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				<tr>
+					<td rowspan="1" style="width: 96px;height:96px; padding:5px;padding-right:8px;">
+						${
+							card.photos.company
+								? `<img src="${card.photos.company}" alt="Company Logo"
+							style="width: 97px; height: 80px; object-fit: cover; border-radius: 8px;" />`
+								: ''
+						}
+					</td>
+					<td colspan="3">
+						<table width="100%">
+							<tr>
+								<td colspan="2">
+									<table width="100%" style="margin-bottom:30px;">
+										<tr>
+											<!-- First cell: left-aligned -->
+											<td style="padding: 5px; text-align: left;">
+												<a target="_blank" href="mailto:${card.email}"
+													style="color: ${card.colours.text}; text-decoration: none; display: inline-block;">
+													<span style="display: flex; align-items: center;">
+														<img src="${icons.mail}" alt="Email"
+															style="width: 16px; height: 16px; margin-right: 4px;" />
+														${card.email}
+													</span>
+												</a>
+											</td>
+											<td style="padding: 5px; text-align: center;">
+												<a href="tel:${card.phone}"
+													style="color: ${card.colours.text}; text-decoration: none; display: inline-block;">
+													<span style="display: flex; justify-content: center; align-items: center;">
+														<img src="${icons.phone}" alt="Phone"
+															style="width: 16px; height: 16px; margin-right: 4px;" />
+														${card.phone}
+													</span>
+												</a>
+											</td>
+											<td style="padding: 5px; text-align: right;">
+												<a target="_blank" href="${card.website}"
+													style="color: ${card.colours.text}; text-decoration: none; display: inline-block;">
+													<span style="display: flex; justify-content: flex-end; align-items: center;">
+														<img src="${icons.web}" alt="Website"
+															style="width: 16px; height: 16px; margin-right: 4px;" />
+														${card.website}
+													</span>
+												</a>
+											</td>
+										</tr>
+										<tr>
+											<td colspan="3"><a target="_blank" href="${card.location}"
+													style="color: ${card.colours.text}; text-decoration: none; display: inline-block; text-align: right;">
+													<span style="display: flex; justify-content: flex-start; align-items: center;">
+														<img src="${icons.location}" alt="Website"
+															style="width: 16px; height: 16px; margin-right: 4px;" />
+														${card.location}
+													</span>
+												</a></td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
 			</table>
 		`;
 	} else if (card.template === 'modern-compact') {
