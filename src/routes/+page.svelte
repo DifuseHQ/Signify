@@ -38,7 +38,7 @@
 	});
 
 	let card = $state<Card>({
-		template: 'modern-stack',
+		template: 'modern-compact',
 		name: 'Hayzam Sherif',
 		title: 'Senior Developer',
 		company: 'Alchemilla Ventures Private Limited',
@@ -363,7 +363,7 @@
 				</div>
 
 				<a
-					href="https://difuse.io/"
+					href="https://x.com/DifuseHQ "
 					target="_blank"
 					class="flex items-center justify-center gap-1 rounded-lg bg-white p-4 shadow hover:bg-gray-100"
 					><Icon icon="mdi:twitter" class="text-[#1da1f2]" /> DM me for feedback</a
