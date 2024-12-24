@@ -56,9 +56,9 @@ export async function generateCard(card: Card): Promise<string> {
 									}
 								</td>
 								<td style="vertical-align: middle; padding: 0; padding-left: 8px;">
-									<span style="font-size: 1.25rem; font-weight: 700; color:${card.colours.primary};">${card.name}</span><br />
-									<span style="font-size: 0.875rem; color:${card.colours.text};">${card.title}</span><br />
-									<span style="font-size: 0.875rem; color:${card.colours.text};">${card.company}</span>
+									<span style="font-size: 1.25rem; font-weight: 700; color:${card.colours.primary};white-space: nowrap;">${card.name}</span><br />
+									<span style="font-size: 0.875rem; color:${card.colours.text};white-space: nowrap;">${card.title}</span><br />
+									<span style="font-size: 0.875rem; color:${card.colours.text};white-space: nowrap;">${card.company}</span>
 								</td>
 							</tr>
 						</table>
@@ -78,19 +78,19 @@ export async function generateCard(card: Card): Promise<string> {
 								<td style="padding-left: 12px; padding-bottom: 5px;">
 									<table style="width: 100%; font-size: 0.875rem; color:${card.colours.text};">
 										<tr>
-											<td style="padding: 4px 0; display: flex; align-items: center;">
+											<td style="padding: 4px 0; display: flex; align-items: center;white-space: nowrap;">
 												<img src="${icons.mail}" alt="Email" style="width: 16px; height: 16px; margin-right: 2px;" />
 												<a href="mailto:${card.email}" style="color: ${card.colours.text}; text-decoration: none; margin-left: 8px;">${card.email}</a>
 											</td>
 										</tr>
 										<tr>
-											<td style="padding: 4px 0; display: flex; align-items: center;">
+											<td style="padding: 4px 0; display: flex; align-items: center;white-space: nowrap;">
 												<img src="${icons.phone}" alt="Email" style="width: 16px; height: 16px; margin-right: 2px;" />
 												<a href="tel:${card.phone}" style="color: ${card.colours.text}; text-decoration: none; margin-left: 8px;">${card.phone}</a>
 											</td>
 										</tr>
 										<tr>
-											<td style="padding: 4px 0; display: flex; align-items: center;">
+											<td style="padding: 4px 0; display: flex; align-items: center;white-space: nowrap;">
 												<img src="${icons.web}" alt="Email" style="width: 16px; height: 16px; margin-right: 2px;" />
 												<a href="${card.website}" style="color: ${card.colours.text}; text-decoration: none; margin-left: 8px;">${card.website}</a>
 											</td>
@@ -108,7 +108,7 @@ export async function generateCard(card: Card): Promise<string> {
 			<table id="email-signature"
 				style="background-color: ${card.colours.background}; border-radius: 8px; box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); width: 100%; max-width: 550px; font-family: Arial, sans-serif; line-height: 1.5; margin: 0;">
 				<tr>
-					<td rowspan="2" style="vertical-align: middle; width: 96px;height:96px; padding:10px;">
+					<td rowspan="2" style="vertical-align: middle; width: 96px;height:96px;">
 						${
 							card.photos.company
 								? `<img src="${card.photos.company}" alt="Company Logo"
@@ -121,29 +121,32 @@ export async function generateCard(card: Card): Promise<string> {
 						<table>
 							<tr>
 								<td>
-									<table>
-										<tr>
-											<td style="vertical-align: middle; width: 64px;height:64px; padding:10px;">
-												${
-													card.photos.profile
-														? `<img src="${card.photos.profile}" alt="${card.name}"
-													style="width: 64px; height: 64px; border-radius: 50%; object-fit: cover" />`
-														: ''
-												}</td>
-											<td style="">
-												<table>
-													<tr>
-														<td colspan="2"
-															style="font-size: 16px; font-weight: bold; color: ${card.colours.primary};">
-															${card.name}</td>
-													</tr>
-													<tr>
-														<td style="font-size: 14px; color: ${card.colours.text}">${card.title}</td>
-													</tr>
-												</table>
-											</td>
-										</tr>
-									</table>
+								<table>
+    <tr>
+        <td style="vertical-align: middle; width: 64px; height: 64px;">
+            ${
+							card.photos.profile
+								? `<img src="${card.photos.profile}" alt="${card.name}"
+                        style="width: 64px; height: 64px; border-radius: 50%; object-fit: cover;" />`
+								: ''
+						}
+        </td>
+        <td>
+            <table>
+                <tr>
+                    <td colspan="2" style="font-size: 12px; font-weight: bold; color: ${card.colours.primary}; white-space: nowrap;">
+                        ${card.name}
+                    </td>
+                </tr>
+                <tr>
+                    <td style="font-size: 14px; color: ${card.colours.text};white-space: nowrap;">
+                        ${card.title}
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
 								</td>
 
 								<td style="text-align: right; padding: 10px;">
@@ -186,17 +189,23 @@ export async function generateCard(card: Card): Promise<string> {
 				</tr>
 				<tr>
 					<td
-						style="font-size: 14px; color: ${card.colours.text}; vertical-align: middle; padding:10px;border-top: 1px solid ${card.colours.primary};">
+						style="font-size: 14px; color: ${card.colours.text}; vertical-align: middle; padding:10px;border-top: 1px solid ${card.colours.primary};white-space: nowrap;">
 						${card.company}</td>
-					<td style="text-align: right; vertical-align: middle; padding:10px;border-top: 1px solid #e5e7eb"> ${
+
+
+					<td style="display:flex;justify-content:end;border-top: 1px solid ${card.colours.primary};padding-top:10px"> ${
 						card.linkedIn
 							? `<a href="${card.linkedIn}"
-							style="text-decoration: none; color: ${card.colours.primary}; font-size: 14px;">in</a>`
+							target="_blank"
+							style="text-decoration: none; color: ${card.colours.primary};">
+							<img src="${icons.linkedin}" alt="Website" style="width: 16px; height: 16px; margin-right: 4px;" /></a>`
 							: ''
 					} ${
 						card.twitter
 							? `<a href="${card.twitter}"
-							style="text-decoration: none; color: ${card.colours.primary}; font-size: 14px; margin-left: 12px;">𝕏</a>`
+							target="_blank"
+							style="text-decoration: none; color: ${card.colours.primary}; font-size: 14px; margin-left: 12px;">
+							<img src="${icons.twitter}" alt="Website" style="width: 16px; height: 16px; margin-right: 4px;" /></a>`
 							: ''
 					}</td>
 				</tr>
@@ -215,7 +224,7 @@ export async function generateCard(card: Card): Promise<string> {
 						${
 							card.photos.profile
 								? `<img src="${card.photos.profile}" alt="${card.name}"
-							style="width: 56px; height: 56px; border-radius: 50%; object-fit: cover;margin-left:20px;margin-top:20px;" />`
+							style="width: 56px; height: 56px; border-radius: 50%; object-fit: fit;margin-left:20px;margin-top:20px;" />`
 								: ''
 						}
 					</td>
@@ -226,11 +235,11 @@ export async function generateCard(card: Card): Promise<string> {
 									<table width="100%" style="margin-top:30px;">
 										<tr>
 											<td colspan="2"
-												style="font-size: 16px; font-weight: bold; color: ${card.colours.primary};">
+												style="font-size: 16px; font-weight: bold; color: ${card.colours.primary};white-space: nowrap;">
 												${card.name}</td>
 										</tr>
 										<tr>
-											<td style="font-size: 14px; color: ${card.colours.text}">${card.title} - ${card.company}
+											<td style="font-size: 14px; color: ${card.colours.text};white-space: nowrap;">${card.title} - ${card.company}
 											</td>
 										</tr>
 									</table>
@@ -244,7 +253,7 @@ export async function generateCard(card: Card): Promise<string> {
 						${
 							card.photos.company
 								? `<img src="${card.photos.company}" alt="Company Logo"
-							style="width: 97px; height: 80px; object-fit: cover; border-radius: 8px;" />`
+							style="width: 97px; height: 80px; object-fit: fit; border-radius: 8px;" />`
 								: ''
 						}
 					</td>
@@ -255,7 +264,7 @@ export async function generateCard(card: Card): Promise<string> {
 									<table width="100%" style="margin-bottom:30px;">
 										<tr>
 											<!-- First cell: left-aligned -->
-											<td style="padding: 5px; text-align: left;">
+											<td style="padding: 5px; text-align: left;white-space: nowrap;">
 												<a target="_blank" href="mailto:${card.email}"
 													style="color: ${card.colours.text}; text-decoration: none; display: inline-block;">
 													<span style="display: flex; align-items: center;">
@@ -265,7 +274,7 @@ export async function generateCard(card: Card): Promise<string> {
 													</span>
 												</a>
 											</td>
-											<td style="padding: 5px; text-align: center;">
+											<td style="padding: 5px; text-align: center;white-space: nowrap;">
 												<a href="tel:${card.phone}"
 													style="color: ${card.colours.text}; text-decoration: none; display: inline-block;">
 													<span style="display: flex; justify-content: center; align-items: center;">
@@ -275,7 +284,7 @@ export async function generateCard(card: Card): Promise<string> {
 													</span>
 												</a>
 											</td>
-											<td style="padding: 5px; text-align: right;">
+											<td style="padding: 5px; text-align: right;white-space: nowrap;white-space: nowrap;">
 												<a target="_blank" href="${card.website}"
 													style="color: ${card.colours.text}; text-decoration: none; display: inline-block;">
 													<span style="display: flex; justify-content: flex-end; align-items: center;">
@@ -319,7 +328,7 @@ export async function generateCard(card: Card): Promise<string> {
 						}
 					</td>
 
-					<td style="border-left: 1px solid #ddd;padding:2px"></td>
+					<td style="border-left: 1px solid ${card.colours.primary};padding:2px"></td>
 
 
 					<td colspan="3">
@@ -329,19 +338,20 @@ export async function generateCard(card: Card): Promise<string> {
 									${
 										card.photos.profile
 											? `<img src="${card.photos.profile}" alt="${card.name}"
-										style="width: 56px; height: 56px; border-radius: 50%; object-fit: cover;" />`
+										style="width: 64px; height: 64px; border-radius: 50%;mix-blend-mode: multiply; object-fit: fit;" />`
 											: ''
 									}
 								</td>
+								
 								<td colspan="2">
 									<table width="100%">
 										<tr>
 											<td colspan="2"
-												style="font-size: 16px; font-weight: bold; color: ${card.colours.primary};">
+												style="font-size: 16px; font-weight: bold; color: ${card.colours.primary};white-space: nowrap;">
 												${card.name}</td>
 										</tr>
 										<tr>
-											<td style="font-size: 14px; color: ${card.colours.text}">${card.title} - ${card.company}
+											<td style="font-size: 14px; color: ${card.colours.text};white-space: nowrap;">${card.title} - ${card.company}
 											</td>
 										</tr>
 									</table>
@@ -354,7 +364,7 @@ export async function generateCard(card: Card): Promise<string> {
 
 					<td style="border-left: 1px solid ${card.colours.primary};padding:5px"></td>
 
-					<td style="text-align: right;padding-left:20px;><a target=" _blank" href="mailto:${card.email}"
+					<td style="text-align: right;padding-left:20px;white-space: nowrap;><a target=" _blank" href="mailto:${card.email}"
 						style="color: ${card.colours.text}; text-decoration: none; display: inline-block; text-align: right;">
 						<span style="display: flex; justify-content: flex-start; align-items: center;">
 							<img src="${icons.mail}" alt="Email" style="width: 16px; height: 16px; margin-right: 4px;" />
@@ -362,14 +372,14 @@ export async function generateCard(card: Card): Promise<string> {
 						</span>
 						</a>
 					</td>
-					<td style="padding:5px"><a href="tel:${card.phone}"
+					<td style="white-space: nowrap;"><a href="tel:${card.phone}"
 							style="color: ${card.colours.text}; text-decoration: none; display: inline-block; text-align: right;">
 							<span style="display: flex; justify-content: flex-start; align-items: center;">
 								<img src="${icons.phone}" alt="Phone" style="width: 16px; height: 16px; margin-right: 4px;" />
 								${card.phone}
 							</span>
 						</a></td>
-					<td style="padding:5px"><a target="_blank" href="${card.website}"
+					<td style="white-space: nowrap;"><a target="_blank" href="${card.website}"
 							style="color: ${card.colours.text}; text-decoration: none; display: inline-block; text-align: right;">
 							<span style="display: flex; justify-content: flex-start; align-items: center;">
 								<img src="${icons.web}" alt="Website" style="width: 16px; height: 16px; margin-right: 4px;" />
@@ -390,7 +400,7 @@ export async function generateCard(card: Card): Promise<string> {
 						${
 							card.photos.profile
 								? `<img src="${card.photos.profile}" alt="${card.name}"
-							style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px;" />`
+							style="width: 80px; height: 80px; object-fit: fit; border-radius: 8px;mix-blend-mode: multiply;" />`
 								: ''
 						}
 					</td>
@@ -401,15 +411,15 @@ export async function generateCard(card: Card): Promise<string> {
 									<table width="100%">
 										<tr>
 											<td colspan="2"
-												style="font-size: 16px; font-weight: bold; color: ${card.colours.primary};">
+												style="font-size: 16px; font-weight: bold; color: ${card.colours.primary};white-space: nowrap;">
 												${card.name}</td>
 										</tr>
 										<tr>
-											<td style="font-size: 14px; color: ${card.colours.text}">${card.title}
+											<td style="font-size: 14px; color: ${card.colours.text};white-space: nowrap;">${card.title}
 											</td>
 										</tr>
 										<tr>
-											<td style="font-size: 14px; color: ${card.colours.text}">${card.company}
+											<td style="font-size: 14px; color: ${card.colours.text};white-space: nowrap;">${card.company}
 											</td>
 										</tr>
 									</table>
@@ -423,7 +433,7 @@ export async function generateCard(card: Card): Promise<string> {
 						${
 							card.photos.company
 								? `<img src="${card.photos.company}" alt="Company Logo"
-							style="width: 64px; height: 64px; object-fit: cover; border-radius: 8px; margin-bottom: 10px; display: block; margin-left: auto; margin-right: auto;" />`
+							style="width: 64px; height: 64px; object-fit: fit; border-radius: 8px; margin-bottom: 10px; display: block; margin-left: auto; margin-right: auto;" />`
 								: ''
 						}
 					</td>
@@ -433,7 +443,7 @@ export async function generateCard(card: Card): Promise<string> {
 								<td>
 									<table style="border-top: 1px solid ${card.colours.primary}" width="100%">
 										<tr>
-											<td style=" text-align: left;">
+											<td style=" text-align: left;white-space: nowrap;">
 												<a target="_blank" href="mailto:${card.email}"
 													style="color: ${card.colours.text}; text-decoration: none; display: inline-block;">
 													<span style="display: flex; align-items: center;">
@@ -443,7 +453,7 @@ export async function generateCard(card: Card): Promise<string> {
 													</span>
 												</a>
 											</td>
-											<td style="text-align: left;">
+											<td style="text-align: left;white-space: nowrap;">
 												<a href="tel:${card.phone}"
 													style="color: ${card.colours.text}; text-decoration: none; display: inline-block;">
 													<span style="display: flex; justify-content: center; align-items: center;">
@@ -455,7 +465,7 @@ export async function generateCard(card: Card): Promise<string> {
 											</td>
 										</tr>
 										<tr>
-											<td style="text-align: left;">
+											<td style="text-align: left;white-space: nowrap;">
 												<a target="_blank" href="${card.website}"
 													style="color: ${card.colours.text}; text-decoration: none; display: inline-block;">
 													<span style="display: flex; align-items: center;">
@@ -466,7 +476,7 @@ export async function generateCard(card: Card): Promise<string> {
 												</a>
 											</td>
 											<td colspan="3"><a target="_blank" href="${card.location}"
-													style="color: ${card.colours.text}; text-decoration: none; display: inline-block; text-align: right;">
+													style="color: ${card.colours.text}; text-decoration: none; display: inline-block; text-align: right;white-space: nowrap;">
 													<span style="display: flex; align-items: center;">
 														<img src="${icons.location}" alt="Website"
 															style="width: 16px; height: 16px; margin-right: 4px;" />
@@ -475,15 +485,22 @@ export async function generateCard(card: Card): Promise<string> {
 												</a></td>
 										</tr>
 										<tr>
-											<td style="text-align: left;"> ${
+											<td style="display:flex;justify-content:felx-start;white-space: nowrap;"> ${
 												card.linkedIn
 													? `<a href="${card.linkedIn}"
-													style="text-decoration: none; color: ${card.colours.primary}; font-size: 14px;">in</a>`
+													target="_blank"
+													style="text-decoration: none; color: ${card.colours.primary}; font-size: 14px;">
+													<img src="${icons.linkedin}" alt="Website"
+															style="width: 16px; height: 16px; margin-right: 4px;" />
+													</a>`
 													: ''
 											} ${
 												card.twitter
 													? `<a href="${card.twitter}"
-													style="text-decoration: none; color: ${card.colours.primary}; font-size: 14px; margin-left: 12px;">𝕏</a>`
+													target="_blank"
+													style="text-decoration: none; color: ${card.colours.primary}; font-size: 14px; margin-left: 12px;">
+													<img src="${icons.twitter}" alt="Website"
+															style="width: 16px; height: 16px; margin-right: 4px;" /></a>`
 													: ''
 											}</td>
 										</tr>
