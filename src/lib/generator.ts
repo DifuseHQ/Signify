@@ -65,7 +65,7 @@ export async function generateCard(card: Card): Promise<string> {
 					</td>
 				</tr>
 				<tr>
-					<td style="border-top: 1px solid #e5e7eb; padding: 16px 16px 0;">
+					<td style="border-top: 1px solid ${card.colours.primary}; padding: 16px 16px 0;">
 						<table style="width: 100%; border-collapse: collapse;">
 							<tr>
 								<td style="vertical-align: middle; width: 48px;">
@@ -186,7 +186,7 @@ export async function generateCard(card: Card): Promise<string> {
 				</tr>
 				<tr>
 					<td
-						style="font-size: 14px; color: ${card.colours.text}; vertical-align: middle; padding:10px;;border-top: 1px solid #e5e7eb">
+						style="font-size: 14px; color: ${card.colours.text}; vertical-align: middle; padding:10px;border-top: 1px solid ${card.colours.primary};">
 						${card.company}</td>
 					<td style="text-align: right; vertical-align: middle; padding:10px;border-top: 1px solid #e5e7eb"> ${
 						card.linkedIn
@@ -352,7 +352,7 @@ export async function generateCard(card: Card): Promise<string> {
 				</tr>
 				<tr>
 
-					<td style="border-left: 1px solid #ddd;padding:5px"></td>
+					<td style="border-left: 1px solid ${card.colours.primary};padding:5px"></td>
 
 					<td style="text-align: right;padding-left:20px;><a target=" _blank" href="mailto:${card.email}"
 						style="color: ${card.colours.text}; text-decoration: none; display: inline-block; text-align: right;">
@@ -379,6 +379,121 @@ export async function generateCard(card: Card): Promise<string> {
 				</tr>
 			</table>
 
+		`;
+	} else if (card.template === 'professional-grid') {
+		tailwindHTML += `
+				<table id="email-signature"
+				style="background-color: ${card.colours.background}; border-radius: 8px; box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); width: 100%; max-width: 630px; font-family: Arial, sans-serif; line-height: 1.5; margin: 0;padding: 20px;">
+
+				<tr>
+					<td rowspan="1" style="vertical-align: middle; width: 80px;height:80px; padding:5px;">
+						${
+							card.photos.profile
+								? `<img src="${card.photos.profile}" alt="${card.name}"
+							style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px;" />`
+								: ''
+						}
+					</td>
+					<td colspan="3">
+						<table width="100%">
+							<tr>
+								<td colspan="2">
+									<table width="100%">
+										<tr>
+											<td colspan="2"
+												style="font-size: 16px; font-weight: bold; color: ${card.colours.primary};">
+												${card.name}</td>
+										</tr>
+										<tr>
+											<td style="font-size: 14px; color: ${card.colours.text}">${card.title}
+											</td>
+										</tr>
+										<tr>
+											<td style="font-size: 14px; color: ${card.colours.text}">${card.company}
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				<tr>
+					<td rowspan="1" style="width: 64px;height:64px;padding:5px;">
+						${
+							card.photos.company
+								? `<img src="${card.photos.company}" alt="Company Logo"
+							style="width: 64px; height: 64px; object-fit: cover; border-radius: 8px; margin-bottom: 10px; display: block; margin-left: auto; margin-right: auto;" />`
+								: ''
+						}
+					</td>
+					<td colspan="3">
+						<table width="100%">
+							<tr>
+								<td>
+									<table style="border-top: 1px solid ${card.colours.primary}" width="100%">
+										<tr>
+											<td style=" text-align: left;">
+												<a target="_blank" href="mailto:${card.email}"
+													style="color: ${card.colours.text}; text-decoration: none; display: inline-block;">
+													<span style="display: flex; align-items: center;">
+														<img src="${icons.mail}" alt="Email"
+															style="width: 16px; height: 16px; margin-right: 4px;" />
+														${card.email}
+													</span>
+												</a>
+											</td>
+											<td style="text-align: left;">
+												<a href="tel:${card.phone}"
+													style="color: ${card.colours.text}; text-decoration: none; display: inline-block;">
+													<span style="display: flex; justify-content: center; align-items: center;">
+														<img src="${icons.phone}" alt="Phone"
+															style="width: 16px; height: 16px; margin-right: 4px;" />
+														${card.phone}
+													</span>
+												</a>
+											</td>
+										</tr>
+										<tr>
+											<td style="text-align: left;">
+												<a target="_blank" href="${card.website}"
+													style="color: ${card.colours.text}; text-decoration: none; display: inline-block;">
+													<span style="display: flex; align-items: center;">
+														<img src="${icons.web}" alt="Website"
+															style="width: 16px; height: 16px; margin-right: 4px;" />
+														${card.website}
+													</span>
+												</a>
+											</td>
+											<td colspan="3"><a target="_blank" href="${card.location}"
+													style="color: ${card.colours.text}; text-decoration: none; display: inline-block; text-align: right;">
+													<span style="display: flex; align-items: center;">
+														<img src="${icons.location}" alt="Website"
+															style="width: 16px; height: 16px; margin-right: 4px;" />
+														${card.location}
+													</span>
+												</a></td>
+										</tr>
+										<tr>
+											<td style="text-align: left;"> ${
+												card.linkedIn
+													? `<a href="${card.linkedIn}"
+													style="text-decoration: none; color: ${card.colours.primary}; font-size: 14px;">in</a>`
+													: ''
+											} ${
+												card.twitter
+													? `<a href="${card.twitter}"
+													style="text-decoration: none; color: ${card.colours.primary}; font-size: 14px; margin-left: 12px;">𝕏</a>`
+													: ''
+											}</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
 		`;
 	}
 
