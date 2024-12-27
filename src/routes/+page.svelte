@@ -3,6 +3,7 @@
 	import Icon from '@iconify/svelte';
 	import { onMount } from 'svelte';
 	import ColorPicker from 'svelte-awesome-color-picker';
+	import html2canvas from 'html2canvas';
 
 	interface SelectedColors {
 		primary: string;
@@ -37,14 +38,31 @@
 		handleColorChange(selectedColors.primary);
 	});
 
+	let photoUrl = $state('');
+
+	async function handleAddUrl(type: 'profile' | 'company') {
+		const inputUrl = prompt('Please enter a URL:', 'https://');
+		if (inputUrl) {
+			photoUrl = inputUrl;
+			const response = await fetch(photoUrl);
+			const blob = await response.blob();
+			const reader = new FileReader();
+			reader.onload = () => {
+				card.photos[type] = reader.result as string;
+			};
+
+			reader.readAsDataURL(blob);
+		}
+	}
+
 	let card = $state<Card>({
 		template: 'modern-stack',
-		name: 'Hayzam Sherif',
+		name: 'John Doe',
 		title: 'Senior Developer',
-		company: 'Alchemilla Ventures Private Limited',
-		email: 'hayzam@alchemilla.io',
-		phone: '+91 9072188888',
-		website: 'alchemilla.io',
+		company: 'Iridia Solutions Private Limited',
+		email: 'hello@difuse.io',
+		phone: '+91 8787878111',
+		website: 'difuse.io',
 		location: 'Chennai, Tamil Nadu, India',
 		linkedIn: 'https://linkedin.com/in/johndoe',
 		twitter: 'https://twitter.com/johndoe',
@@ -55,12 +73,20 @@
 	let generated: string = $state('');
 
 	onMount(() => {
-		// photos local storage
 		const photos = localStorage.getItem('photos');
 		if (photos) {
 			card.photos = JSON.parse(photos);
 		} else {
 			localStorage.setItem('photos', JSON.stringify(card.photos));
+		}
+
+		if (!card.photos.profile) {
+			card.photos.profile =
+				'https://avatars.githubusercontent.com/u/3922884?s=400&u=441b2ae32a36f919fa3dc4bea6ce478f0f42e1fc&v=4';
+		}
+
+		if (!card.photos.company) {
+			card.photos.company = 'https://avatars.githubusercontent.com/u/118109979?s=200&v=4';
 		}
 	});
 
@@ -93,6 +119,16 @@
 		document.body.appendChild(element);
 		element.click();
 	}
+
+	function downloadPNG() {
+		const element = document.querySelector('#preview');
+		html2canvas(element).then((canvas) => {
+			const link = document.createElement('a');
+			link.download = 'business-card.png';
+			link.href = canvas.toDataURL('image/png');
+			link.click();
+		});
+	}
 </script>
 
 <Icon icon="mdi:phone" class="hidden h-5 w-5 text-indigo-500" />
@@ -101,10 +137,14 @@
 
 <div class="mt-8 bg-gray-50 text-gray-900">
 	<div class="container mx-auto px-4">
+		<button class="flex flex-row gap-3" onclick={() => (window.location.href = '/')}>
+			<img src="/favicon/favicon.ico" alt="favicon" class="h-10 w-10" />
+			<h1 class="mt-1 text-2xl font-semibold">MailSig</h1>
+		</button>
+
 		<div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
 			<div class="rounded-lg bg-white p-6 shadow">
 				<div class="mb-6 flex items-start justify-between">
-					<!-- Profile Photo Section -->
 					<div class="flex max-w-[45%] flex-grow items-start space-x-4">
 						<div
 							class="flex h-16 w-16 items-center justify-center overflow-hidden rounded-xl bg-gray-100"
@@ -130,6 +170,7 @@
 							</label>
 							<button
 								class="flex items-center rounded-lg border border-gray-300 px-4 py-1 text-gray-600 hover:bg-gray-100 focus:ring-2 focus:ring-gray-300"
+								onclick={() => handleAddUrl('profile')}
 							>
 								<Icon icon="mdi:link" class="mr-2 h-5 w-5" />
 								Add URL
@@ -137,7 +178,6 @@
 						</div>
 					</div>
 
-					<!-- Company Logo Section -->
 					<div class="flex max-w-[45%] flex-grow items-start space-x-4">
 						<div
 							class="flex h-16 w-16 items-center justify-center overflow-hidden rounded-xl bg-gray-100"
@@ -163,6 +203,7 @@
 							</label>
 							<button
 								class="flex items-center rounded-lg border border-gray-300 px-4 py-1 text-gray-600 hover:bg-gray-100 focus:ring-2 focus:ring-gray-300"
+								onclick={() => handleAddUrl('company')}
 							>
 								<Icon icon="mdi:link" class="mr-2 h-5 w-5" />
 								Add URL
@@ -271,16 +312,25 @@
 						<Icon icon="lucide:sparkles" class="h-5 w-5 text-indigo-500" />
 						<h2 class="text-lg font-semibold">Preview</h2>
 					</div>
-					<div class="rounded border border-gray-50 p-4">
+					<div class="rounded border border-gray-50 p-4" id="preview">
 						<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 						{@html generated}
 					</div>
-					<button
-						class="mt-4 rounded bg-indigo-600 px-4 py-2 text-white"
-						onclick={() => downloadHTML()}
-					>
-						Download
-					</button>
+
+					<div class="flex flex-row gap-2">
+						<button
+							class="mt-4 rounded bg-indigo-600 px-4 py-2 text-white"
+							onclick={() => downloadHTML()}
+						>
+							Download HTML
+						</button>
+						<button
+							class="mt-4 hidden rounded bg-indigo-600 px-4 py-2 text-white"
+							onclick={() => downloadPNG()}
+						>
+							Download PNG
+						</button>
+					</div>
 				</div>
 			</div>
 
@@ -355,6 +405,7 @@
 							position="responsive"
 							isDialog={false}
 							on:input={() => handleColorChange(hex)}
+							textInputModes={['hex']}
 							--picker-width="{pickerWidth - 60}px"
 							--cp-border-color="white"
 							--cp-text-color="black"

@@ -112,7 +112,7 @@ export async function generateCard(card: Card): Promise<string> {
 						${
 							card.photos.company
 								? `<img src="${card.photos.company}" alt="Company Logo"
-							style="width: 96px; height: 96px; object-fit: cover" />`
+							style="width: 96px; height: 96px; object-fit: cover; border-radius: 8px;" />`
 								: ''
 						}
 					</td>
