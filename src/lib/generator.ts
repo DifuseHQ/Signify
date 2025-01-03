@@ -55,7 +55,7 @@ export async function generateCard(card: Card): Promise<string> {
 											: ''
 									}
 								</td>
-								<td style="vertical-align: middle; padding: 0; padding-left: 8px;">
+								<td style="padding-left: 12px; padding-bottom: 5px;">
 									<span style="font-size: 1.25rem; font-weight: 700; color:${card.colours.primary};white-space: nowrap;">${card.name}</span><br />
 									<span style="font-size: 0.875rem; color:${card.colours.text};white-space: nowrap;">${card.title}</span><br />
 									<span style="font-size: 0.875rem; color:${card.colours.text};white-space: nowrap;">${card.company}</span>
@@ -68,10 +68,10 @@ export async function generateCard(card: Card): Promise<string> {
 					<td style="border-top: 1px solid ${card.colours.primary}; padding: 16px 16px 0;">
 						<table style="width: 100%; border-collapse: collapse;">
 							<tr>
-								<td style="vertical-align: middle; width: 48px;">
+								<td style="vertical-align: middle; padding: 0; width: 70px;">
 									${
 										card.photos.company
-											? `<img src="${card.photos.company}" alt="Company Logo" style="width: 48px; height: 48px; border-radius: 50%; object-fit: cover;" />`
+											? `<img src="${card.photos.company}" alt="Company Logo" style="width: 70px; height: 70px; border-radius: 50%; object-fit: cover;" />`
 											: ''
 									}
 								</td>
