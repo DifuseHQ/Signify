@@ -310,7 +310,7 @@ export async function generateCard(card: Card): Promise<string> {
 									${
 										card.photos.profile
 											? `<img src="${card.photos.profile}" alt="${card.name}"
-										style="width: 64px; height: 64px; border-radius: 50%;mix-blend-mode: multiply; object-fit: fit;" />`
+										style="width: 64px; height: 64px; border-radius: 8px;" />`
 											: ''
 									}
 								</td>
@@ -336,28 +336,32 @@ export async function generateCard(card: Card): Promise<string> {
 
 					<td style="border-left: 1px solid ${card.colours.primary};padding:5px"></td>
 
-					<td style="text-align: right;padding-left:20px;white-space: nowrap;><a target=" _blank" href="mailto:${card.email}"
-						style="color: ${card.colours.text}; text-decoration: none; display: inline-block; text-align: right;">
+					<td style="padding:5px">
+						<a target=" _blank" href="mailto:${card.email}"
+						style="color: ${card.colours.text}; text-decoration: none;display: inline-block; text-align: right;margin-right:20px;">
 						<span style="display: flex; justify-content: flex-start; align-items: center;">
 							<img src="${icons.mail}" alt="Email" style="width: 16px; height: 16px; margin-right: 4px;" />
 							${card.email}
 						</span>
 						</a>
-					</td>
-					<td style="white-space: nowrap;"><a href="tel:${card.phone}"
-							style="color: ${card.colours.text}; text-decoration: none; display: inline-block; text-align: right;">
+					
+					
+					
+					<a href="tel:${card.phone}"
+							style="color: ${card.colours.text}; text-decoration: none; display: inline-block; text-align: right;margin-right:20px;">
 							<span style="display: flex; justify-content: flex-start; align-items: center;">
 								<img src="${icons.phone}" alt="Phone" style="width: 16px; height: 16px; margin-right: 4px;" />
 								${card.phone}
 							</span>
-						</a></td>
-					<td style="white-space: nowrap;"><a target="_blank" href="${card.website}"
+						</a>
+					<a target="_blank" href="${card.website}"
 							style="color: ${card.colours.text}; text-decoration: none; display: inline-block; text-align: right;">
 							<span style="display: flex; justify-content: flex-start; align-items: center;">
 								<img src="${icons.web}" alt="Website" style="width: 16px; height: 16px; margin-right: 4px;" />
 								${card.website}
 							</span>
-						</a></td>
+						</a>
+					</td>
 				</tr>
 			</table>
 
