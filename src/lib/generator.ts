@@ -118,7 +118,7 @@ export async function generateCard(card: Card): Promise<string> {
 									 <table cellspacing="0" cellpadding="0">
 							<tr>
 								<td style="width: 64px; padding-right: 12px;">
-								${card.photos.profile ? `<img src="${card.photos.profile}" alt="${card.name}" style="width: 64px; height: 64px; border-radius: 50%; object-fit: cover;" />` : ''}
+								${card.photos.profile ? `<img src="${card.photos.profile}" alt="${card.name}" style="width: 64px; height: 64px; border-radius: 50%; " />` : ''}
 								</td>
 								<td style="vertical-align: middle;">
 									<p style="margin: 0; white-space: nowrap; color: ${card.colours.primary}; font-size: 12px; font-weight: bold;">${card.name}</p>
@@ -194,11 +194,11 @@ export async function generateCard(card: Card): Promise<string> {
 			<table id="email-signature"
 				style="background-color: ${card.colours.background}; border-radius: 8px; box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); width: 100%; max-width: 650px; font-family: Arial, sans-serif; line-height: 1.5; margin: 0;">
 				<tr>
-					<td style="vertical-align: middle; width: 64px;height:64px;">
+					<td style="vertical-align: middle; width: 122px;height:96px;">
 						${
 							card.photos.profile
 								? `<img src="${card.photos.profile}" alt="${card.name}"
-							style="width: 56px; height: 56px; border-radius: 50%; object-fit: fit;margin-left:20px;margin-top:20px;" />`
+							style="width: 97px; height: 80px; border-radius: 50% / 40%;  object-fit: fit;margin-left:20px;" />`
 								: ''
 						}
 					</td>
@@ -223,7 +223,7 @@ export async function generateCard(card: Card): Promise<string> {
 					</td>
 				</tr>
 				<tr>
-					<td rowspan="1" style="width: 96px;height:96px; padding:5px;padding-right:8px;">
+					<td rowspan="1" style="width: 96px;height:96px; padding-left:20px;padding-right:8px;">
 						${
 							card.photos.company
 								? `<img src="${card.photos.company}" alt="Company Logo"
@@ -236,29 +236,27 @@ export async function generateCard(card: Card): Promise<string> {
 							<tr>
 								<td colspan="2">
 									<table width="100%" style="margin-bottom:30px;">
-										<tr>
-											<!-- First cell: left-aligned -->
-											<td style="padding: 5px; text-align: left;white-space: nowrap;">
+									<tr>
+											<td style=" text-align: left;white-space: nowrap;vertical-align: top;">
 												<a target="_blank" href="mailto:${card.email}"
-													style="color: ${card.colours.text}; text-decoration: none; display: inline-block;">
+													style="color: ${card.colours.text}; text-decoration: none; display: inline-block;margin-right:20px;">
 													<span style="display: flex; align-items: center;">
 														<img src="${icons.mail}" alt="Email"
 															style="width: 16px; height: 16px; margin-right: 4px;" />
 														${card.email}
 													</span>
 												</a>
-											</td>
-											<td style="padding: 5px; text-align: center;white-space: nowrap;">
+											
+											
 												<a href="tel:${card.phone}"
-													style="color: ${card.colours.text}; text-decoration: none; display: inline-block;">
+													style="color: ${card.colours.text}; text-decoration: none; display: inline-block;margin-right:20px;">
 													<span style="display: flex; justify-content: center; align-items: center;">
 														<img src="${icons.phone}" alt="Phone"
 															style="width: 16px; height: 16px; margin-right: 4px;" />
 														${card.phone}
 													</span>
 												</a>
-											</td>
-											<td style="padding: 5px; text-align: right;white-space: nowrap;white-space: nowrap;">
+										
 												<a target="_blank" href="${card.website}"
 													style="color: ${card.colours.text}; text-decoration: none; display: inline-block;">
 													<span style="display: flex; justify-content: flex-end; align-items: center;">
