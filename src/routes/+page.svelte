@@ -121,7 +121,7 @@
 	}
 
 	function downloadPNG() {
-		const element = document.querySelector('#preview');
+		const element = document.querySelector('#email-signature');
 		html2canvas(element).then((canvas) => {
 			const link = document.createElement('a');
 			link.download = 'business-card.png';
@@ -325,7 +325,8 @@
 							Download HTML
 						</button>
 						<button
-							class="mt-4 hidden rounded bg-indigo-600 px-4 py-2 text-white"
+							class="mt-4
+							 rounded bg-indigo-600 px-4 py-2 text-white"
 							onclick={() => downloadPNG()}
 						>
 							Download PNG
