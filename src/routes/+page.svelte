@@ -71,7 +71,7 @@
 		website: 'difuse.io',
 		websiteLink: 'https://difuse.io',
 		location: 'Dubai, UAE',
-		linkedIn: '',
+		linkedIn: 'https://www.linkedin.com/company/iridiasolutions/',
 		twitter: 'https://twitter.com/DifuseHQ',
 		colours: selectedColors,
 		photos: { profile: null, company: null }
