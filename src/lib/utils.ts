@@ -1,4 +1,6 @@
 import { toPng } from 'html-to-image';
+import type { Card } from './types';
+import QRCode from 'qrcode';
 
 export async function downloadSignature(type = 'html') {
 	let signatureContainer;
@@ -32,5 +34,50 @@ export async function downloadSignature(type = 'html') {
 		}
 	} else {
 		console.error('Invalid download type specified. Use "html" or "png".');
+	}
+}
+
+export function generateVCard(card: Card): string {
+	function formatName(name: string): string {
+		if (name.includes(' ')) {
+			const [firstName, ...rest] = name.split(' ');
+			const lastName = rest.join(' ');
+			return `${lastName};${firstName};;;`;
+		}
+
+		return `;${name};;;`;
+	}
+
+	return `
+  BEGIN:VCARD
+  VERSION:4.0
+  FN:${card.name}
+  N:${formatName(card.name)}
+  ORG:${card.company}
+  TITLE:${card.title}
+  EMAIL:${card.email}
+  TEL;TYPE=work,voice:${card.phone}
+  URL:${card.websiteLink}
+  ADR:${card.location}
+  URL;TYPE=LinkedIn:${card.linkedIn}
+  URL;TYPE=Twitter:${card.twitter}
+  END:VCARD
+  `.trim();
+}
+
+export async function generateQR(data: string, size: number): Promise<string> {
+	const qrCodeOptions = {
+		width: size,
+		errorCorrectionLevel: 'L',
+		type: 'image/png',
+		margin: 0
+	};
+
+	try {
+		const qrCodeDataUri = await QRCode.toDataURL(data, qrCodeOptions);
+		return qrCodeDataUri;
+	} catch (error) {
+		console.error('Failed to generate QR code:', error);
+		return '';
 	}
 }

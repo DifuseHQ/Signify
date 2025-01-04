@@ -62,7 +62,7 @@
 	}
 
 	let card = $state<Card>({
-		template: 'modern-stack',
+		template: 'professional-grid',
 		name: 'Hayzam Sherif',
 		title: 'VP - Development',
 		company: 'Iridia Solutions Private Limited',

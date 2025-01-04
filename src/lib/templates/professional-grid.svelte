@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { getIcons } from '$lib/icon';
 	import type { Card } from '$lib/types';
+	import { generateQR, generateVCard } from '$lib/utils';
+	import { onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
 
 	interface Props {
@@ -9,10 +11,16 @@
 
 	let icons: { [key: string]: string } = $state({});
 	let { card }: Props = $props();
+	let qrCode: string = $state('');
 
 	$effect(() => {
 		getIcons('16px', card.colours.primary).then((data) => {
 			icons = data;
+		});
+
+		generateQR(generateVCard(card), 128).then((data) => {
+			console.log(data, 'effect');
+			qrCode = data;
 		});
 	});
 </script>
@@ -50,6 +58,15 @@
 							>{card.company}</span
 						>
 					</td>
+					<td width="128" style="text-align: right; padding: 5px;">
+						{#if qrCode !== ''}
+							<img
+								src={qrCode}
+								alt="QR Code"
+								style="width: 128px; height: 128px; display: block; padding: 5px;"
+							/>
+						{/if}
+					</td>
 				</tr>
 				<tr>
 					<td rowspan="2" width="80" style="vertical-align: middle; padding: 5px;">
@@ -61,7 +78,7 @@
 							/>
 						{/if}
 					</td>
-					<td colspan="2" style="padding-top: 10px; border-top: 1px solid {card.colours.primary};">
+					<td colspan="3" style="padding-top: 10px; border-top: 1px solid {card.colours.primary};">
 						<table cellspacing="0" cellpadding="0" border="0" width="100%">
 							<tbody>
 								<tr>
