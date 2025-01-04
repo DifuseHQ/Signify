@@ -247,10 +247,10 @@ export async function generateCard(card: Card): Promise<string> {
 			style="background-color: ${card.colours.background};  width: 100%; max-width: 580px; font-family: Arial, sans-serif; line-height: 1.5; margin: 0; border-radius: 8px;">
 			<tr>
 				<!-- Profile Image -->
-				<td width="120"  style="padding: 5px;">
+				<td width="80"  style="padding: 5px;">
 					${card.photos.profile
 				? `<img src="${card.photos.profile}" alt="${card.name}"
-							style="width: 97px; height: 80px;  border-radius: 50% / 40%; display: block;" />`
+							style="width: 80px; height: 70px;  border-radius: 50% / 40%; display: block;" />`
 				: ''
 			}
 				</td>
@@ -258,12 +258,12 @@ export async function generateCard(card: Card): Promise<string> {
 				<td colspan="3">
 					<table width="100%" cellspacing="0" cellpadding="0" border="0"  style="margin-top: 25px;">
 						<tr>
-							<td style="font-size: 16px; font-weight: bold; color: ${card.colours.primary};">
+							<td style="font-size: 16px; font-weight: bold; color: ${card.colours.primary};padding-left:10px;">
 								${card.name}
 							</td>
 						</tr>
 						<tr>
-							<td style="font-size: 14px; color: ${card.colours.text};">
+							<td style="font-size: 14px; color: ${card.colours.text};padding-left:10px;">
 								${card.title} - ${card.company}
 							</td>
 						</tr>
@@ -273,10 +273,10 @@ export async function generateCard(card: Card): Promise<string> {
 
 			<tr>
 				<!-- Company Logo -->
-				<td width="96" style="padding: 5px;">
+				<td width="80" style="padding: 5px;">
 					${card.photos.company
 				? `<img src="${card.photos.company}" alt="Company Logo"
-							style="width: 97px; height: 80px; border-radius: 8px; display: block;" />`
+							style="width: 80px; height: 70px; border-radius: 8px; display: block;" />`
 				: ''
 			}
 				</td>
@@ -284,7 +284,7 @@ export async function generateCard(card: Card): Promise<string> {
 				<td colspan="3">
 					<table width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-bottom: 40px;">
 						<tr>
-							<td style="">
+							<td style="padding-left:10px;">
 							<a target=" _blank" href="mailto:${card.email}"
 									style="color: ${card.colours.text}; text-decoration: none;display: inline-block; text-align: right;margin-right:20px;white-space: nowrap;">
 									<span style="display: flex; justify-content: flex-start; align-items: center;">
@@ -313,7 +313,7 @@ export async function generateCard(card: Card): Promise<string> {
 							</td>
 						</tr>
 						<tr>
-							<td colspan="3" style="">
+							<td colspan="3" style="padding-left:9px;">
 								<a href="${card.location}" target="_blank" style="color: ${card.colours.text}; text-decoration: none;display:flex;">
 									<span style="display: flex; justify-content: flex-start; align-items: center;white-space: nowrap;">
 										<img src="${icons.location}" alt="Location" width="16" height="16" style="vertical-align: middle;margin-right: 4px;"/> 
