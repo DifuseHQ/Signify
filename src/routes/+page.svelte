@@ -4,6 +4,8 @@
 	import { onMount } from 'svelte';
 	import ColorPicker from 'svelte-awesome-color-picker';
 	import html2canvas from 'html2canvas';
+	import * as htmlToImage from 'html-to-image';
+	import { toPng, toJpeg, toBlob, toPixelData, toSvg } from 'html-to-image';
 
 	interface SelectedColors {
 		primary: string;
@@ -56,7 +58,7 @@
 	}
 
 	let card = $state<Card>({
-		template: 'modern-stack',
+		template: 'corporate-clean',
 		name: 'John Doe',
 		title: 'Senior Developer',
 		company: 'Iridia Solutions Private Limited',
@@ -86,7 +88,7 @@
 		}
 
 		if (!card.photos.company) {
-			card.photos.company = 'https://avatars.githubusercontent.com/u/118109979?s=200&v=4';
+			card.photos.company = '';
 		}
 	});
 
@@ -122,12 +124,17 @@
 
 	function downloadPNG() {
 		const element = document.querySelector('#email-signature');
-		html2canvas(element).then((canvas) => {
-			const link = document.createElement('a');
-			link.download = 'business-card.png';
-			link.href = canvas.toDataURL('image/png');
-			link.click();
-		});
+		htmlToImage
+			.toPng(element)
+			.then(function (dataUrl) {
+				const link = document.createElement('a');
+				link.download = 'business-card.png';
+				link.href = dataUrl;
+				link.click();
+			})
+			.catch(function (error) {
+				console.error('Oops, something went wrong!', error);
+			});
 	}
 </script>
 
