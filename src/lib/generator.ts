@@ -49,11 +49,10 @@ export async function generateCard(card: Card): Promise<string> {
 						<table style="width: 100%; border-collapse: collapse;">
 							<tr>
 								<td style="vertical-align: middle; padding: 0; width: 70px;">
-									${
-										card.photos.profile
-											? `<img src="${card.photos.profile}" alt="${card.name}" style="width: 70px; height: 70px; border-radius: 50%; object-fit: cover;" />`
-											: ''
-									}
+									${card.photos.profile
+				? `<img src="${card.photos.profile}" alt="${card.name}" style="width: 70px; height: 70px; border-radius: 50%; object-fit: cover;" />`
+				: ''
+			}
 								</td>
 								<td style="padding-left: 12px; padding-bottom: 5px;">
 									<span style="font-size: 1.25rem; font-weight: 700; color:${card.colours.primary};white-space: nowrap;">${card.name}</span><br />
@@ -69,11 +68,10 @@ export async function generateCard(card: Card): Promise<string> {
 						<table style="width: 100%; border-collapse: collapse;">
 							<tr>
 								<td style="vertical-align: middle; padding: 0; width: 70px;">
-									${
-										card.photos.company
-											? `<img src="${card.photos.company}" alt="Company Logo" style="width: 70px; height: 70px; border-radius: 50%; object-fit: cover;" />`
-											: ''
-									}
+									${card.photos.company
+				? `<img src="${card.photos.company}" alt="Company Logo" style="width: 70px; height: 70px; border-radius: 50%; object-fit: cover;" />`
+				: ''
+			}
 								</td>
 								<td style="padding-left: 12px; padding-bottom: 5px;">
 									<table style="width: 100%; font-size: 0.875rem; color:${card.colours.text};">
@@ -191,99 +189,89 @@ export async function generateCard(card: Card): Promise<string> {
 		`;
 	} else if (card.template === 'elegant-minimal') {
 		tailwindHTML += `
-			<table id="email-signature"
-				style="background-color: ${card.colours.background}; border-radius: 8px; box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); width: 100%; max-width: 650px; font-family: Arial, sans-serif; line-height: 1.5; margin: 0;">
-				<tr>
-					<td style="vertical-align: middle; width: 122px;height:96px;">
-						${
-							card.photos.profile
-								? `<img src="${card.photos.profile}" alt="${card.name}"
-							style="width: 97px; height: 80px; border-radius: 50% / 40%;  object-fit: fit;margin-left:20px;" />`
-								: ''
-						}
-					</td>
-					<td colspan="3">
-						<table width="100%">
-							<tr>
-								<td colspan="2">
-									<table width="100%" style="margin-top:30px;">
-										<tr>
-											<td colspan="2"
-												style="font-size: 16px; font-weight: bold; color: ${card.colours.primary};white-space: nowrap;">
-												${card.name}</td>
-										</tr>
-										<tr>
-											<td style="font-size: 14px; color: ${card.colours.text};white-space: nowrap;">${card.title} - ${card.company}
-											</td>
-										</tr>
-									</table>
-								</td>
-							</tr>
-						</table>
-					</td>
-				</tr>
-				<tr>
-					<td rowspan="1" style="width: 96px;height:96px; padding-left:20px;padding-right:8px;">
-						${
-							card.photos.company
-								? `<img src="${card.photos.company}" alt="Company Logo"
-							style="width: 97px; height: 80px; object-fit: fit; border-radius: 8px;" />`
-								: ''
-						}
-					</td>
-					<td colspan="3">
-						<table width="100%">
-							<tr>
-								<td colspan="2">
-									<table width="100%" style="margin-bottom:30px;">
-									<tr>
-											<td style=" text-align: left;white-space: nowrap;vertical-align: top;">
-												<a target="_blank" href="mailto:${card.email}"
-													style="color: ${card.colours.text}; text-decoration: none; display: inline-block;margin-right:20px;">
-													<span style="display: flex; align-items: center;">
-														<img src="${icons.mail}" alt="Email"
-															style="width: 16px; height: 16px; margin-right: 4px;" />
-														${card.email}
-													</span>
-												</a>
-											
-											
-												<a href="tel:${card.phone}"
-													style="color: ${card.colours.text}; text-decoration: none; display: inline-block;margin-right:20px;">
-													<span style="display: flex; justify-content: center; align-items: center;">
-														<img src="${icons.phone}" alt="Phone"
-															style="width: 16px; height: 16px; margin-right: 4px;" />
-														${card.phone}
-													</span>
-												</a>
-										
-												<a target="_blank" href="${card.website}"
-													style="color: ${card.colours.text}; text-decoration: none; display: inline-block;">
-													<span style="display: flex; justify-content: flex-end; align-items: center;">
-														<img src="${icons.web}" alt="Website"
-															style="width: 16px; height: 16px; margin-right: 4px;" />
-														${card.website}
-													</span>
-												</a>
-											</td>
-										</tr>
-										<tr>
-											<td colspan="3"><a target="_blank" href="${card.location}"
-													style="color: ${card.colours.text}; text-decoration: none; display: inline-block; text-align: right;">
-													<span style="display: flex; justify-content: flex-start; align-items: center;">
-														<img src="${icons.location}" alt="Website"
-															style="width: 16px; height: 16px; margin-right: 4px;" />
-														${card.location}
-													</span>
-												</a></td>
-										</tr>
-									</table>
-								</td>
-							</tr>
-						</table>
-					</td>
-				</tr>
-			</table>
+		<table id="email-signature" width="100%" cellspacing="" cellpadding="0" border="0" 
+			style="background-color: ${card.colours.background};  width: 100%; max-width: 580px; font-family: Arial, sans-serif; line-height: 1.5; margin: 0; border-radius: 8px;">
+			<tr>
+				<!-- Profile Image -->
+				<td width="120"  style="padding: 5px;">
+					${card.photos.profile
+				? `<img src="${card.photos.profile}" alt="${card.name}"
+							style="width: 97px; height: 80px;  border-radius: 50% / 40%; display: block;" />`
+				: ''
+			}
+				</td>
+
+				<td colspan="3">
+					<table width="100%" cellspacing="0" cellpadding="0" border="0"  style="margin-top: 25px;">
+						<tr>
+							<td style="font-size: 16px; font-weight: bold; color: ${card.colours.primary};">
+								${card.name}
+							</td>
+						</tr>
+						<tr>
+							<td style="font-size: 14px; color: ${card.colours.text};">
+								${card.title} - ${card.company}
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+
+			<tr>
+				<!-- Company Logo -->
+				<td width="96" style="padding: 5px;">
+					${card.photos.company
+				? `<img src="${card.photos.company}" alt="Company Logo"
+							style="width: 97px; height: 80px; border-radius: 8px; display: block;" />`
+				: ''
+			}
+				</td>
+
+				<td colspan="3">
+					<table width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-bottom: 40px;">
+						<tr>
+							<td style="">
+							<a target=" _blank" href="mailto:${card.email}"
+									style="color: ${card.colours.text}; text-decoration: none;display: inline-block; text-align: right;margin-right:20px;white-space: nowrap;">
+									<span style="display: flex; justify-content: flex-start; align-items: center;">
+										<img src="${icons.mail}" alt="Email" style="width: 16px; height: 16px; margin-right: 4px;" />
+										${card.email}
+									</span>
+								</a>
+							</td>
+							<td style="">
+							<a href="tel:${card.phone}"
+									style="color: ${card.colours.text}; text-decoration: none; display: inline-block; text-align: right;margin-right:20px;white-space: nowrap;">
+									<span style="display: flex; justify-content: flex-start; align-items: center;">
+										<img src="${icons.phone}" alt="Phone" style="width: 16px; height: 16px; margin-right: 4px;" />
+										${card.phone}
+									</span>
+								</a>
+							</td>
+							<td style="">
+								<a target="_blank" href="${card.website}"
+									style="color: ${card.colours.text}; text-decoration: none; display: inline-block; text-align: right;white-space: nowrap;">
+									<span style="display: flex; justify-content: flex-start; align-items: center;">
+										<img src="${icons.web}" alt="Website" style="width: 16px; height: 16px; margin-right: 4px;" />
+										${card.website}
+									</span>
+								</a>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="3" style="">
+								<a href="${card.location}" target="_blank" style="color: ${card.colours.text}; text-decoration: none;display:flex;">
+									<span style="display: flex; justify-content: flex-start; align-items: center;white-space: nowrap;">
+										<img src="${icons.location}" alt="Location" width="16" height="16" style="vertical-align: middle;margin-right: 4px;"/> 
+											<span>${card.location}</span>
+									</span>
+								</a>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
 		`;
 	} else if (card.template === 'modern-compact') {
 		tailwindHTML += `
@@ -291,12 +279,11 @@ export async function generateCard(card: Card): Promise<string> {
 				style="background-color: ${card.colours.background};  width: 100%; max-width: 580px; font-family: Arial, sans-serif; line-height: 1.5; margin: 0; padding: 5px;  border-radius: 8px;">
 				<tr>
 					<td rowspan="2" width="96" style="vertical-align: middle; padding: 5px; padding-right: 15px;">
-						${
-							card.photos.company
-								? `<img src="${card.photos.company}" alt="Company Logo"
+						${card.photos.company
+				? `<img src="${card.photos.company}" alt="Company Logo"
 								style="width: 97px; height: 80px; border-radius: 8px; display: block;" />`
-								: ''
-						}
+				: ''
+			}
 					</td>
 
 					<td width="1" style="border-left: 1px solid ${card.colours.primary}; padding: 2px;"></td>
@@ -305,12 +292,11 @@ export async function generateCard(card: Card): Promise<string> {
 						<table width="100%">
 							<tr>
 								<td width="96" style="vertical-align: middle; padding: 5px;">
-									${
-										card.photos.profile
-											? `<img src="${card.photos.profile}" alt="${card.name}"
+									${card.photos.profile
+				? `<img src="${card.photos.profile}" alt="${card.name}"
 											style="width: 97px; height: 80px; border-radius: 50%; display: block;" />`
-											: ''
-									}
+				: ''
+			}
 								</td>
 
 								<td colspan="2">
@@ -380,12 +366,11 @@ export async function generateCard(card: Card): Promise<string> {
 					<tr>
 						<td  width="80" style="vertical-align: middle; padding: 5px;">
 							<!-- Profile Image -->
-							${
-								card.photos.profile
-									? `<img src="${card.photos.profile}" alt="${card.name}"
+							${card.photos.profile
+				? `<img src="${card.photos.profile}" alt="${card.name}"
 									style="width: 80px; height: 80px; display: block;border-radius:8px" />`
-									: ''
-							}
+				: ''
+			}
 						</td>
 						<td colspan="2" style="padding-left: 10px;">
 							<strong style="font-size: 16px; color: ${card.colours.primary};white-space: nowrap;">${card.name}</strong><br>
@@ -396,12 +381,11 @@ export async function generateCard(card: Card): Promise<string> {
 					<tr>
 					<td rowspan="2" width="80" style="vertical-align: middle; padding: 5px;">
 							<!-- Profile Image -->
-							${
-								card.photos.profile
-									? `<img src="${card.photos.profile}" alt="${card.name}"
+							${card.photos.profile
+				? `<img src="${card.photos.profile}" alt="${card.name}"
 									style="width: 80px; height: 80px; display: block;border-radius:8px" />`
-									: ''
-							}
+				: ''
+			}
 						</td>
 						<td colspan="2" style="padding-top: 10px; border-top: 1px solid ${card.colours.primary};">
 							<table cellspacing="0" cellpadding="0" border="0" width="100%">
@@ -446,20 +430,18 @@ export async function generateCard(card: Card): Promise<string> {
 								</tr>
 								<tr>
 									<td colspan="2" style="padding-bottom:5px;padding-left: 10px;display:flex;">
-										${
-											card.linkedIn
-												? `<a href="${card.linkedIn}" target="_blank" style="text-decoration: none; margin-right: 10px;">
+										${card.linkedIn
+				? `<a href="${card.linkedIn}" target="_blank" style="text-decoration: none; margin-right: 10px;">
 													<img src="${icons.linkedin}" alt="LinkedIn" width="16" height="16" style="vertical-align: middle;"/>
 												</a>`
-												: ''
-										}
-										${
-											card.twitter
-												? `<a href="${card.twitter}" target="_blank" style="text-decoration: none;">
+				: ''
+			}
+										${card.twitter
+				? `<a href="${card.twitter}" target="_blank" style="text-decoration: none;">
 													<img src="${icons.twitter}" alt="Twitter" width="16" height="16" style="vertical-align: middle;"/>
 												</a>`
-												: ''
-										}
+				: ''
+			}
 									</td>
 								</tr>
 							</table>
