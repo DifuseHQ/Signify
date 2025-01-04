@@ -103,88 +103,117 @@ export async function generateCard(card: Card): Promise<string> {
 		`;
 	} else if (card.template === 'corporate-clean') {
 		tailwindHTML += `
-				<table  id="email-signature" cellspacing="0" cellpadding="0" style="background-color: ${card.colours.background}; border-radius: 8px; width: 100%; max-width: 600px;font-family: Arial, sans-serif; line-height: 1.5; margin: 0;">
-				<tr>
-					  <td style="width: 96px; padding: 16px; vertical-align: middle;">
-						${card.photos.company ? `<img src="${card.photos.company}" alt="Company Logo"
-							style="width: 96px; height: 96px; object-fit: cover; border-radius: 8px;" />` : ''}
-					</td>
-					<td style="padding: 0px;">
-						<table cellspacing="0" cellpadding="0" style="width: 100%;">
-							<tr>
-								<td>
-									 <table cellspacing="0" cellpadding="0">
-							<tr>
-								<td style="width: 64px; padding-right: 12px;">
-								${card.photos.profile ? `<img src="${card.photos.profile}" alt="${card.name}" style="width: 64px; height: 64px; border-radius: 50%; " />` : ''}
-								</td>
-								<td style="vertical-align: middle;">
-									<p style="margin: 0; white-space: nowrap; color: ${card.colours.primary}; font-size: 12px; font-weight: bold;">${card.name}</p>
-									<p style="margin: 4px 0 0; color: ${card.colours.text}; white-space: nowrap;font-size: 14px;">${card.title}</p>
-								</td>
-						</table>
-								</td>
-								<td style="text-align: right; padding: 10px;">
-									<table style="width: 100%; border-spacing: 0;">
-										<tr>
-											<td style="text-align: right;">
-												<a target="_blank" href="mailto:${card.email}" 
-													style="color: ${card.colours.text}; text-decoration: none; display: inline-block;">
-													<span style="display: flex; justify-content: flex-end; align-items: center;">
-														<img src="${icons.mail}" alt="Email" style="width: 16px; height: 16px; margin-right: 4px;margin-bottom:5px;" />
-														${card.email}
-													</span>
-												</a>
-											</td>
-										</tr>
-										<tr>
-											<td style="text-align: right;">
-												<a href="tel:${card.phone}" 
-													style="color: ${card.colours.text}; text-decoration: none; display: inline-block;">
-													<span style="display: flex; justify-content: flex-end; align-items: center;">
-														<img src="${icons.phone}" alt="Phone" style="width: 16px; height: 16px; margin-right: 4px;margin-bottom:5px;" />
-														${card.phone}
-													</span>
-												</a>
-											</td>
-										</tr>
-										<tr>
-											<td style="text-align: right;">
-												<a target="_blank" href="${card.website}" 
-													style="color: ${card.colours.text}; text-decoration: none; display: inline-block;">
-													<span style="display: flex; justify-content: flex-end; align-items: center;">
-														<img src="${icons.web}" alt="Website" style="width: 16px; height: 16px; margin-right: 4px;margin-bottom:5px;" />
-														${card.website}
-													</span>
-												</a>
-											</td>
-										</tr>
-									</table>
-								</td>
-							</tr>
-							<tr>
-								<td style="font-size: 14px; color: ${card.colours.text}; vertical-align: middle; padding: 10px; border-top: 1px solid ${card.colours.primary}; white-space: nowrap;">
-									${card.company}
-								</td>
-								<td style="text-align: right; border-top: 1px solid ${card.colours.primary}; padding-top: 10px; padding-right: 10px;">
-								<table cellspacing="0" cellpadding="0" style="display: inline-block;">
-									<tr>
-										${card.linkedIn ? `<td style="padding-right: 8px;"><a href="${card.linkedIn}" target="_blank"
-											style="text-decoration: none; color: ${card.colours.primary};">
-											<img src="${icons.linkedin}" alt="LinkedIn" style="width: 16px; height: 16px;" /></a></td>` : ''}
-										${card.twitter ? `<td><a href="${card.twitter}" target="_blank"
-											style="text-decoration: none; color: ${card.colours.primary}; font-size: 14px;">
-											<img src="${icons.twitter}" alt="Twitter" style="width: 16px; height: 16px;" /></a></td>` : ''}
-									</tr>
-								</table>
-							</td>
+				<table id="email-signature" cellspacing="10" cellpadding="0" width="100%" 
+			style="background-color: ${card.colours.background};  width: 100%; max-width: 580px; font-family: Arial, sans-serif; line-height: 1.5; margin: 0; border-radius: 8px;">
+    <tr>
+        <!-- Company Logo -->
+        <td width="96" style="padding: 10px; vertical-align: middle;">
+            ${card.photos.company
+				? `<img src="${card.photos.company}" alt="Company Logo"
+                    style="width: 96px; height: 96px; border-radius: 8px; display: block;" />`
+				: ''
+			}
+        </td>
 
+        <td style="padding: 0;">
+            <table cellspacing="0" cellpadding="0" width="100%">
+                <tr>
+                    <td>
+                        <table cellspacing="0" cellpadding="0">
+                            <tr>
+                               <td width="89" style="vertical-align: middle; padding: 5px;">
+									${card.photos.profile
+				? `<img src="${card.photos.profile}" alt="${card.name}"
+											style="width: 86px; height: 80px; border-radius: 50%; display: block;" />`
+				: ''
+			}
+								</td>
+                                <td style="vertical-align: middle;">
+                                    <p style="font-size: 16px; font-weight: bold; color: ${card.colours.primary};margin:0px;white-space: nowrap;">
+                                        ${card.name}
+                                    </p>
+                                    <p style="font-size: 14px; color: ${card.colours.text};margin:0px;white-space: nowrap;">
+                                        ${card.title}
+                                    </p>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
 
-							</tr>
-						</table>
-					</td>
-				</tr>
-			</table>
+                    <td style="text-align: right; padding: 10px;">
+                        <table cellspacing="0" cellpadding="0" width="100%">
+                            <tr>
+							 <td style="text-align: right; padding-bottom: 4px;">
+                                <a target=" _blank" href="mailto:${card.email}"
+									style="color: ${card.colours.text}; text-decoration: none; display: inline-block; text-align: right;white-space: nowrap;">
+									<span style="display: flex; justify-content: flex-start; align-items: center;">
+										<img src="${icons.mail}" alt="Email" style="width: 16px; height: 16px; margin-right: 4px;" />
+										${card.email}
+									</span>
+								</a>
+								</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: right; padding-bottom: 4px;">
+                                    <a href="tel:${card.phone}"
+									style="color: ${card.colours.text}; text-decoration: none; display: inline-block; text-align: right;white-space: nowrap;">
+									<span style="display: flex; justify-content: flex-start; align-items: center;">
+										<img src="${icons.phone}" alt="Phone" style="width: 16px; height: 16px; margin-right: 4px;" />
+										${card.phone}
+									</span>
+								</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: right;">
+                                   <a target="_blank" href="${card.website}"
+									style="color: ${card.colours.text}; text-decoration: none; display: inline-block; text-align: right;white-space: nowrap;">
+									<span style="display: flex; justify-content: flex-start; align-items: center;">
+										<img src="${icons.web}" alt="Website" style="width: 16px; height: 16px; margin-right: 4px;" />
+										${card.website}
+									</span>
+								</a>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="font-size: 12px; color: ${card.colours.text}; vertical-align: middle; padding: 10px; 
+                               border-top: 1px solid ${card.colours.primary};white-space: nowrap;">
+                        ${card.company}
+                    </td>
+                    <td style="text-align: right; border-top: 1px solid ${card.colours.primary}; padding-top: 10px; padding-right: 10px;white-space: nowrap;">
+                        <table cellspacing="0" cellpadding="0" style="display: inline-block;">
+                            <tr>
+                                ${card.linkedIn
+				? `<td style="padding-right: 8px;">
+                                            <a href="${card.linkedIn}" target="_blank" 
+                                                style="text-decoration: none; color: ${card.colours.primary};">
+                                                <img src="${icons.linkedin}" alt="LinkedIn" width="16" height="16" />
+                                            </a>
+                                        </td>`
+				: ''
+			}
+                                ${card.twitter
+				? `<td>
+                                            <a href="${card.twitter}" target="_blank" 
+                                                style="text-decoration: none; color: ${card.colours.primary};">
+                                                <img src="${icons.twitter}" alt="Twitter" width="16" height="16" />
+                                            </a>
+                                        </td>`
+				: ''
+			}
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+
 
 		`;
 	} else if (card.template === 'elegant-minimal') {
