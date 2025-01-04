@@ -1,38 +1,31 @@
-# sv
+# Signify
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+Signify is a simple tool to create cool looking email signautres. You can download the signature as an image or copy the HTML code to use it in your email client.
 
-## Creating a project
+## Features
 
-If you're seeing this, you've probably already done this step. Congrats!
+- Create a signature with your name, title, email, phone, website, and social media links
+- Customize the colors
+- Download the signature as an image or copy the HTML code
+- Multiple templates to choose from
 
-```bash
-# create a new project in the current directory
-npx sv create
+## Running the project
 
-# create a new project in my-app
-npx sv create my-app
-```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+Signify is written with svelte and uses svelte-kit. To run the project, you need to have node.js installed. Then you can run the following commands:
 
 ```bash
+npm install
 npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
 ```
 
-## Building
+## Contributing
 
-To create a production version of your app:
+If you have any ideas on how to improve the project, feel free to open an issue or create a pull request.
 
-```bash
-npm run build
-```
+## License
 
-You can preview the production build with `npm run preview`.
+This project is licensed under the AGPLv3 - see the [LICENSE](LICENSE) file for details.
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+## Acknowledgements
+
+This project was heavily inspired by [esigna](https://esigna.vercel.app/), we wanted to use it but it only allowed exporting the signature as an image. We wanted to have the option to copy the HTML code to use it in our email client.
