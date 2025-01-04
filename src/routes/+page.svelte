@@ -6,6 +6,7 @@
 	import ModernStack from '$lib/templates/modern-stack.svelte';
 	import CorporateClean from '$lib/templates/corporate-clean.svelte';
 	import ElegantMinimal from '$lib/templates/elegant-minimal.svelte';
+	import ModernCompact from '$lib/templates/modern-compact.svelte';
 	import type { Card, Template } from '$lib/types';
 
 	interface SelectedColors {
@@ -59,7 +60,7 @@
 	}
 
 	let card = $state<Card>({
-		template: 'elegant-minimal',
+		template: 'modern-compact',
 		name: 'John Doe',
 		title: 'Senior Developer',
 		company: 'Iridia Solutions Private Limited',
@@ -105,6 +106,9 @@
 					break;
 				case 'elegant-minimal':
 					mount(ElegantMinimal, { target, props: { card } });
+					break;
+				case 'modern-compact':
+					mount(ModernCompact, { target, props: { card } });
 					break;
 			}
 		}
