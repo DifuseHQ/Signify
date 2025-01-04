@@ -122,7 +122,7 @@
 												alt="Phone"
 												style="width: 16px; height: 16px; margin-right: 4px;"
 											/>
-											${card.phone}
+											{card.phone}
 										</span>
 									</a>
 								</td>

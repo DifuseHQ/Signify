@@ -7,6 +7,7 @@
 	import CorporateClean from '$lib/templates/corporate-clean.svelte';
 	import ElegantMinimal from '$lib/templates/elegant-minimal.svelte';
 	import ModernCompact from '$lib/templates/modern-compact.svelte';
+	import ProfessionalGrid from '$lib/templates/professional-grid.svelte';
 	import type { Card, Template } from '$lib/types';
 
 	interface SelectedColors {
@@ -60,7 +61,7 @@
 	}
 
 	let card = $state<Card>({
-		template: 'modern-compact',
+		template: 'modern-stack',
 		name: 'John Doe',
 		title: 'Senior Developer',
 		company: 'Iridia Solutions Private Limited',
@@ -109,6 +110,9 @@
 					break;
 				case 'modern-compact':
 					mount(ModernCompact, { target, props: { card } });
+					break;
+				case 'professional-grid':
+					mount(ProfessionalGrid, { target, props: { card } });
 					break;
 			}
 		}
