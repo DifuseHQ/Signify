@@ -67,7 +67,7 @@
 		title: 'VP - Development',
 		company: 'Iridia Solutions Private Limited',
 		email: 'hayzam@difuse.io',
-		phone: '+914973540633',
+		phone: '+91-4973540633',
 		website: 'difuse.io',
 		websiteLink: 'https://difuse.io',
 		location: 'Dubai, UAE',
