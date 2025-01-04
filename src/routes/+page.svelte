@@ -29,7 +29,7 @@
 		{ id: 'corporate-clean', label: 'Corporate Clean' },
 		{ id: 'elegant-minimal', label: 'Elegant Minimal' },
 		{ id: 'modern-compact', label: 'Modern Compact' },
-		{ id: 'professional-grid', label: 'Professional Grid' }
+		{ id: 'professional-grid', label: 'Professional Grid (QR)' }
 	];
 
 	let pickerWidth: number = $state(0);
