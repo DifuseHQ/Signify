@@ -466,6 +466,8 @@
 			</div>
 		</div>
 
-		<p class="py-5 text-center">© 2025 Signify - Made with ❤️ by Difuse</p>
+		<p class="py-5 text-center">
+			© 2025 Signify - Made with ❤️ by <a href="https://difuse.io" target="_blank">Difuse</a>
+		</p>
 	</div>
 </div>
