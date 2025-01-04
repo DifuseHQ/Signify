@@ -1,7 +1,13 @@
 import { toPng } from 'html-to-image';
 
 export async function downloadSignature(type = 'html') {
-	const signatureContainer = document.getElementById('email-signature-container');
+	let signatureContainer;
+	if (type === 'html') {
+		signatureContainer = document.getElementById('email-signature-container');
+	} else if (type === 'png') {
+		signatureContainer = document.getElementById('email-signature');
+	}
+
 	if (!signatureContainer) return;
 
 	if (type === 'html') {

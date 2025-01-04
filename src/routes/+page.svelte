@@ -34,9 +34,9 @@
 
 	let pickerWidth: number = $state(0);
 	let hex: string = $state('#031159');
-
 	let selectedColorKey: keyof SelectedColors = $state('primary');
 	let dropdown: boolean = $state(false);
+	let photoUrl = $state('');
 
 	function handleColorChange(newColor: string) {
 		selectedColors[selectedColorKey] = newColor;
@@ -45,8 +45,6 @@
 	onMount(() => {
 		handleColorChange(selectedColors.primary);
 	});
-
-	let photoUrl = $state('');
 
 	async function handleAddUrl(type: 'profile' | 'company') {
 		const inputUrl = prompt('Please enter a URL:', 'https://');
@@ -74,7 +72,7 @@
 		websiteLink: 'https://difuse.io',
 		location: 'Chennai, Tamil Nadu, India',
 		linkedIn: 'https://linkedin.com/in/johndoe',
-		twitter: 'https://twitter.com/johndoe',
+		twitter: 'https://twitter.com/DifuseHQ',
 		colours: selectedColors,
 		photos: { profile: null, company: null }
 	});
@@ -148,15 +146,11 @@
 	});
 </script>
 
-<Icon icon="mdi:phone" class="hidden h-5 w-5 text-indigo-500" />
-<Icon icon="lucide:mail" class="hidden h-5 w-5 text-indigo-500" />
-<Icon icon="mdi:web" class="hidden h-5 w-5 text-indigo-500" />
-
 <div class="mt-8 bg-gray-50 text-gray-900">
 	<div class="container mx-auto px-4">
 		<button class="flex flex-row gap-3" onclick={() => (window.location.href = '/')}>
 			<img src="/favicon/favicon.ico" alt="favicon" class="h-10 w-10" />
-			<h1 class="mt-1 text-2xl font-semibold">MailSig</h1>
+			<h1 class="mt-1 text-2xl font-semibold">Signify</h1>
 		</button>
 
 		<div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
@@ -455,11 +449,13 @@
 				</div>
 
 				<a
-					href="https://x.com/DifuseHQ "
+					href="mailto:hello@difuse.io"
 					target="_blank"
-					class="flex items-center justify-center gap-1 rounded-lg bg-white p-4 shadow hover:bg-gray-100"
-					><Icon icon="mdi:twitter" class="text-[#1da1f2]" /> DM me for feedback</a
+					class="flex items-center justify-center gap-2 rounded-lg bg-white p-4 shadow transition duration-300 hover:bg-gray-100"
 				>
+					<Icon icon="lucide:mail" class="text-[#1da1f2]" />
+					<span>Share Your Feedback via Email</span>
+				</a>
 			</div>
 		</div>
 	</div>
