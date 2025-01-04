@@ -35,7 +35,7 @@
 	let hex: string = $state('#031159');
 
 	let selectedColorKey: keyof SelectedColors = $state('primary');
-	let dropdown = $state(false);
+	let dropdown = $state(true);
 
 	function handleColorChange(newColor: string) {
 		selectedColors[selectedColorKey] = newColor;
@@ -362,7 +362,7 @@
 								<div
 									in:fade={{ duration: 300 }}
 									out:fade={{ duration: 300 }}
-									class={`absolute left-0 z-10 mt-2 w-44 origin-top-left rounded-md border border-gray-200 bg-white shadow-xl ring-1 ring-black ring-opacity-5 focus:outline-none ${
+									class={`absolute left-1/2 z-10 mt-2 w-44 origin-top-left -translate-x-1/2 rounded-md border border-gray-200 bg-white shadow-xl ring-1 ring-black ring-opacity-5 focus:outline-none ${
 										dropdown ? 'block' : 'hidden'
 									}`}
 								>
