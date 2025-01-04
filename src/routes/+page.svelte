@@ -146,6 +146,13 @@
 	});
 </script>
 
+<Icon icon="lucide:mail" class="hidden" />
+<Icon icon="mdi:phone" class="hidden" />
+<Icon icon="mdi:web" class="hidden" />
+<Icon icon="mdi:linkedin" class="hidden" />
+<Icon icon="mdi:twitter" class="hidden" />
+<Icon icon="mdi:map-marker" class="hidden" />
+
 <div class="mt-8 bg-gray-50 text-gray-900">
 	<div class="container mx-auto px-4">
 		<button class="flex flex-row gap-3" onclick={() => (window.location.href = '/')}>
