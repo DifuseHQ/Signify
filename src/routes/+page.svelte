@@ -63,15 +63,15 @@
 
 	let card = $state<Card>({
 		template: 'modern-stack',
-		name: 'John Doe',
-		title: 'Senior Developer',
+		name: 'Hayzam Sherif',
+		title: 'VP - Development',
 		company: 'Iridia Solutions Private Limited',
-		email: 'hello@difuse.io',
-		phone: '1800-599-TECH',
+		email: 'hayzam@difuse.io',
+		phone: '+914973540633',
 		website: 'difuse.io',
 		websiteLink: 'https://difuse.io',
-		location: 'Chennai, Tamil Nadu, India',
-		linkedIn: 'https://linkedin.com/in/johndoe',
+		location: 'Dubai, UAE',
+		linkedIn: '',
 		twitter: 'https://twitter.com/DifuseHQ',
 		colours: selectedColors,
 		photos: { profile: null, company: null }
