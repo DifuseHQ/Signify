@@ -67,7 +67,7 @@
 		title: 'Senior Developer',
 		company: 'Iridia Solutions Private Limited',
 		email: 'hello@difuse.io',
-		phone: '1800-599-5324',
+		phone: '1800-599-TECH',
 		website: 'difuse.io',
 		websiteLink: 'https://difuse.io',
 		location: 'Chennai, Tamil Nadu, India',
