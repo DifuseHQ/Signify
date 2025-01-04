@@ -28,4 +28,4 @@ This project is licensed under the AGPLv3 - see the [LICENSE](LICENSE) file for 
 
 ## Acknowledgements
 
-This project was heavily inspired by [esigna](https://esigna.vercel.app/), we wanted to use it but it only allowed exporting the signature as an image. We wanted to have the option to copy the HTML code to use it in our email client.
+This project was heavily inspired by [eSigna](https://esigna.vercel.app/), we wanted to use it but it only allowed exporting the signature as an image. We wanted to have the option to copy the HTML code to use it in our email client.
