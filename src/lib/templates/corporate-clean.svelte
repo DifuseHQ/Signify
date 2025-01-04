@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { getIcons } from '$lib/icon';
 	import type { Card } from '$lib/types';
-	import { onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
 
 	interface Props {
@@ -9,12 +8,13 @@
 	}
 
 	let icons: { [key: string]: string } = $state({});
-
-	onMount(async () => {
-		icons = await getIcons();
-	});
-
 	let { card }: Props = $props();
+
+	$effect(() => {
+		getIcons('16px', card.colours.primary).then((data) => {
+			icons = data;
+		});
+	});
 </script>
 
 <div in:fade={{ duration: 300 }} out:fade={{ duration: 300 }}>
@@ -34,7 +34,7 @@
 							<img
 								src={card.photos.company}
 								alt={card.company}
-								style="width: 96px; height: 96px; border-radius: 8px; display: block;"
+								style="width: 96px; height: 80px; border-radius: 8px; display: block;"
 							/>
 						{/if}
 					</td>

@@ -79,7 +79,7 @@ export async function svgToPng(svg: string): Promise<string> {
 	return canvas.toDataURL('image/png');
 }
 
-export async function getIcons(): Promise<{ [key: string]: string }> {
+export async function getIcons(size: string, color: string): Promise<{ [key: string]: string }> {
 	const icons = [
 		'lucide:mail',
 		'mdi:phone',
@@ -92,7 +92,7 @@ export async function getIcons(): Promise<{ [key: string]: string }> {
 	const iconData: { [key: string]: string } = {};
 
 	for (const icon of icons) {
-		iconData[icon] = await svgToPng(generateSVG(icon));
+		iconData[icon] = await svgToPng(generateSVG(icon, size, color));
 	}
 
 	return iconData;

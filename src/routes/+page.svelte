@@ -1,15 +1,16 @@
 <script lang="ts">
 	import Icon from '@iconify/svelte';
 	import { mount, onMount } from 'svelte';
+	import type { Card, Template } from '$lib/types';
+	import { fade } from 'svelte/transition';
+	import { downloadSignature } from '$lib/utils';
+
 	import ColorPicker from 'svelte-awesome-color-picker';
-	import { toPng } from 'html-to-image';
 	import ModernStack from '$lib/templates/modern-stack.svelte';
 	import CorporateClean from '$lib/templates/corporate-clean.svelte';
 	import ElegantMinimal from '$lib/templates/elegant-minimal.svelte';
 	import ModernCompact from '$lib/templates/modern-compact.svelte';
 	import ProfessionalGrid from '$lib/templates/professional-grid.svelte';
-	import type { Card, Template } from '$lib/types';
-	import { fade } from 'svelte/transition';
 
 	interface SelectedColors {
 		primary: string;
@@ -68,7 +69,7 @@
 		title: 'Senior Developer',
 		company: 'Iridia Solutions Private Limited',
 		email: 'hello@difuse.io',
-		phone: '+91 8787878111',
+		phone: '1800-599-5324',
 		website: 'difuse.io',
 		websiteLink: 'https://difuse.io',
 		location: 'Chennai, Tamil Nadu, India',
@@ -97,7 +98,7 @@
 	});
 
 	$effect(() => {
-		const target = document.getElementById('email-signature');
+		const target = document.getElementById('email-signature-container');
 		if (target) {
 			target.innerHTML = '';
 			switch (card.template) {
@@ -131,29 +132,9 @@
 		}
 	}
 
-	function downloadHTML() {
-		const element = document.createElement('a');
-		const signature = document.getElementById('email-signature');
-
-		if (!signature) return;
-
-		const file = new Blob([signature.outerHTML], { type: 'text/html' });
-
-		element.href = URL.createObjectURL(file);
-		element.download = 'business-card.html';
-		document.body.appendChild(element);
-		element.click();
-	}
-
-	async function downloadPNG() {
-		const element = document.getElementById('email-signature');
-		if (!element) return;
-		const dataUrl = await toPng(element);
-		const link = document.createElement('a');
-		link.download = 'business-card.png';
-		link.href = dataUrl;
-		link.click();
-	}
+	$effect(() => {
+		localStorage.setItem('photos', JSON.stringify(card.photos));
+	});
 
 	$effect(() => {
 		const handleClickOutside = (event: MouseEvent) => {
@@ -370,7 +351,7 @@
 										<li>
 											<button
 												class="w-full cursor-pointer rounded px-4 py-2 text-left hover:bg-gray-200"
-												onclick={() => downloadHTML()}
+												onclick={() => downloadSignature('html')}
 											>
 												Download HTML
 											</button>
@@ -378,7 +359,7 @@
 										<li>
 											<button
 												class=" w-full cursor-pointer rounded px-4 py-2 text-left hover:bg-gray-200"
-												onclick={() => downloadPNG()}
+												onclick={() => downloadSignature('png')}
 											>
 												Download PNG
 											</button>
@@ -388,7 +369,7 @@
 							</div>
 						</div>
 						<div class="rounded border border-gray-50 p-4" id="preview">
-							<div id="email-signature"></div>
+							<div id="email-signature-container"></div>
 						</div>
 					</div>
 				</div>

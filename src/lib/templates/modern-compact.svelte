@@ -9,12 +9,13 @@
 	}
 
 	let icons: { [key: string]: string } = $state({});
-
-	onMount(async () => {
-		icons = await getIcons();
-	});
-
 	let { card }: Props = $props();
+
+	$effect(() => {
+		getIcons('16px', card.colours.primary).then((data) => {
+			icons = data;
+		});
+	});
 </script>
 
 <div in:fade={{ duration: 300 }} out:fade={{ duration: 300 }}>
