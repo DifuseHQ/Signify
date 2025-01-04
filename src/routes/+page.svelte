@@ -65,6 +65,7 @@
 		email: 'hello@difuse.io',
 		phone: '+91 8787878111',
 		website: 'difuse.io',
+		websiteLink: 'https://difuse.io',
 		location: 'Chennai, Tamil Nadu, India',
 		linkedIn: 'https://linkedin.com/in/johndoe',
 		twitter: 'https://twitter.com/johndoe',

@@ -15,6 +15,7 @@ export interface Card {
 	email: string;
 	phone: string;
 	website: string;
+	websiteLink: string;
 	location: string;
 	linkedIn: string;
 	twitter: string;
@@ -109,7 +110,7 @@ export async function generateCard(card: Card): Promise<string> {
 										</tr>
 										<tr>
 											<td style="">
-												<a target="_blank" href="${card.website}"
+												<a target="_blank" href="${card.websiteLink}"
 												style="color: ${card.colours.text}; text-decoration: none; display: inline-block; text-align: right;white-space: nowrap;">
 												<span style="display: flex; justify-content: flex-start; align-items: center;">
 													<img src="${icons.web}" alt="Website" style="width: 16px; height: 16px; margin-right: 4px;" />
@@ -191,7 +192,7 @@ export async function generateCard(card: Card): Promise<string> {
                             </tr>
                             <tr>
                                 <td style="text-align: right;">
-                                   <a target="_blank" href="${card.website}"
+                                   <a target="_blank" href="${card.websiteLink}"
 									style="color: ${card.colours.text}; text-decoration: none; display: inline-block; text-align: right;white-space: nowrap;">
 									<span style="display: flex; justify-content: flex-start; align-items: center;">
 										<img src="${icons.web}" alt="Website" style="width: 16px; height: 16px; margin-right: 4px;" />
@@ -303,7 +304,7 @@ export async function generateCard(card: Card): Promise<string> {
 								</a>
 							</td>
 							<td style="">
-								<a target="_blank" href="${card.website}"
+								<a target="_blank" href="${card.websiteLink}"
 									style="color: ${card.colours.text}; text-decoration: none; display: inline-block; text-align: right;white-space: nowrap;">
 									<span style="display: flex; justify-content: flex-start; align-items: center;">
 										<img src="${icons.web}" alt="Website" style="width: 16px; height: 16px; margin-right: 4px;" />
@@ -398,7 +399,7 @@ export async function generateCard(card: Card): Promise<string> {
 									</a>
 								</td>
 								<td>
-								<a target="_blank" href="${card.website}"
+								<a target="_blank" href="${card.websiteLink}"
 										style="color: ${card.colours.text}; text-decoration: none; display: inline-block; text-align: right;white-space: nowrap;">
 										<span style="display: flex; justify-content: flex-start; align-items: center;">
 											<img src="${icons.web}" alt="Website" style="width: 16px; height: 16px; margin-right: 4px;" />
@@ -465,7 +466,7 @@ export async function generateCard(card: Card): Promise<string> {
 								</tr>
 								<tr>
 									<td style="padding-bottom: 5px;padding-left:10px">
-									<a target="_blank" href="${card.website}"
+									<a target="_blank" href="${card.websiteLink}"
 											style="color: ${card.colours.text}; text-decoration: none; display: inline-block; text-align: right;white-space: nowrap;">
 											<span style="display: flex; justify-content: flex-start; align-items: center;">
 												<img src="${icons.web}" alt="Website" style="width: 16px; height: 16px; margin-right: 4px;" />
