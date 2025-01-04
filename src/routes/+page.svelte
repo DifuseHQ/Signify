@@ -35,7 +35,7 @@
 	let hex: string = $state('#031159');
 
 	let selectedColorKey: keyof SelectedColors = $state('primary');
-	let dropdown = $state(true);
+	let dropdown: boolean = $state(false);
 
 	function handleColorChange(newColor: string) {
 		selectedColors[selectedColorKey] = newColor;
