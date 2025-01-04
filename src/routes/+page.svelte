@@ -9,6 +9,7 @@
 	import ModernCompact from '$lib/templates/modern-compact.svelte';
 	import ProfessionalGrid from '$lib/templates/professional-grid.svelte';
 	import type { Card, Template } from '$lib/types';
+	import { fade } from 'svelte/transition';
 
 	interface SelectedColors {
 		primary: string;
@@ -34,6 +35,7 @@
 	let hex: string = $state('#031159');
 
 	let selectedColorKey: keyof SelectedColors = $state('primary');
+	let dropdown = $state(false);
 
 	function handleColorChange(newColor: string) {
 		selectedColors[selectedColorKey] = newColor;
@@ -152,6 +154,17 @@
 		link.href = dataUrl;
 		link.click();
 	}
+
+	$effect(() => {
+		const handleClickOutside = (event: MouseEvent) => {
+			if (!(event.target as HTMLElement).closest('.dropdown-container')) {
+				dropdown = false;
+			}
+		};
+
+		document.addEventListener('click', handleClickOutside);
+		return () => document.removeEventListener('click', handleClickOutside);
+	});
 </script>
 
 <Icon icon="mdi:phone" class="hidden h-5 w-5 text-indigo-500" />
@@ -166,193 +179,217 @@
 		</button>
 
 		<div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
-			<div class="rounded-lg bg-white p-6 shadow">
-				<div class="mb-6 flex items-start justify-between">
-					<div class="flex max-w-[45%] flex-grow items-start space-x-4">
-						<div
-							class="flex h-16 w-16 items-center justify-center overflow-hidden rounded-xl bg-gray-100"
-						>
-							{#if card.photos.profile}
-								<img src={card.photos.profile} class="h-full w-full object-cover" alt="" />
-							{:else}
-								<Icon icon="mdi:account-circle" class="h-10 w-10 text-gray-400" />
-							{/if}
+			<div>
+				<div class="mb-6 rounded-lg bg-white p-6 shadow">
+					<div class="mb-6 flex items-start justify-between">
+						<div class="flex max-w-[45%] flex-grow items-start space-x-4">
+							<div
+								class="flex h-16 w-16 items-center justify-center overflow-hidden rounded-xl bg-gray-100"
+							>
+								{#if card.photos.profile}
+									<img src={card.photos.profile} class="h-full w-full object-cover" alt="" />
+								{:else}
+									<Icon icon="mdi:account-circle" class="h-10 w-10 text-gray-400" />
+								{/if}
+							</div>
+							<div class="flex flex-col space-y-2">
+								<label
+									class="flex cursor-pointer items-center rounded-lg bg-blue-50 px-4 py-1 text-blue-600 hover:bg-blue-100 focus:ring-2 focus:ring-blue-300"
+								>
+									<Icon icon="mdi:upload" class="mr-2 h-5 w-5" />
+									Upload Photo
+									<input
+										type="file"
+										accept="image/*"
+										class="hidden"
+										onchange={(e) => handleImageUpload(e, (url) => (card.photos.profile = url))}
+									/>
+								</label>
+								<button
+									class="flex items-center rounded-lg border border-gray-300 px-4 py-1 text-gray-600 hover:bg-gray-100 focus:ring-2 focus:ring-gray-300"
+									onclick={() => handleAddUrl('profile')}
+								>
+									<Icon icon="mdi:link" class="mr-2 h-5 w-5" />
+									Add URL
+								</button>
+							</div>
 						</div>
-						<div class="flex flex-col space-y-2">
-							<label
-								class="flex cursor-pointer items-center rounded-lg bg-blue-50 px-4 py-1 text-blue-600 hover:bg-blue-100 focus:ring-2 focus:ring-blue-300"
+
+						<div class="flex max-w-[45%] flex-grow items-start space-x-4">
+							<div
+								class="flex h-16 w-16 items-center justify-center overflow-hidden rounded-xl bg-gray-100"
 							>
-								<Icon icon="mdi:upload" class="mr-2 h-5 w-5" />
-								Upload Photo
-								<input
-									type="file"
-									accept="image/*"
-									class="hidden"
-									onchange={(e) => handleImageUpload(e, (url) => (card.photos.profile = url))}
-								/>
-							</label>
-							<button
-								class="flex items-center rounded-lg border border-gray-300 px-4 py-1 text-gray-600 hover:bg-gray-100 focus:ring-2 focus:ring-gray-300"
-								onclick={() => handleAddUrl('profile')}
-							>
-								<Icon icon="mdi:link" class="mr-2 h-5 w-5" />
-								Add URL
-							</button>
+								{#if card.photos.company}
+									<img src={card.photos.company} class="h-full w-full object-cover" alt="" />
+								{:else}
+									<Icon icon="mdi:image-outline" class="h-10 w-10 text-gray-400" />
+								{/if}
+							</div>
+							<div class="flex flex-col space-y-2">
+								<label
+									class="flex cursor-pointer items-center rounded-lg bg-blue-50 px-4 py-1 text-blue-600 hover:bg-blue-100 focus:ring-2 focus:ring-blue-300"
+								>
+									<Icon icon="mdi:upload" class="mr-2 h-5 w-5" />
+									Upload Logo
+									<input
+										type="file"
+										accept="image/*"
+										class="hidden"
+										onchange={(e) => handleImageUpload(e, (url) => (card.photos.company = url))}
+									/>
+								</label>
+								<button
+									class="flex items-center rounded-lg border border-gray-300 px-4 py-1 text-gray-600 hover:bg-gray-100 focus:ring-2 focus:ring-gray-300"
+									onclick={() => handleAddUrl('company')}
+								>
+									<Icon icon="mdi:link" class="mr-2 h-5 w-5" />
+									Add URL
+								</button>
+							</div>
 						</div>
 					</div>
 
-					<div class="flex max-w-[45%] flex-grow items-start space-x-4">
-						<div
-							class="flex h-16 w-16 items-center justify-center overflow-hidden rounded-xl bg-gray-100"
-						>
-							{#if card.photos.company}
-								<img src={card.photos.company} class="h-full w-full object-cover" alt="" />
-							{:else}
-								<Icon icon="mdi:image-outline" class="h-10 w-10 text-gray-400" />
-							{/if}
-						</div>
-						<div class="flex flex-col space-y-2">
-							<label
-								class="flex cursor-pointer items-center rounded-lg bg-blue-50 px-4 py-1 text-blue-600 hover:bg-blue-100 focus:ring-2 focus:ring-blue-300"
-							>
-								<Icon icon="mdi:upload" class="mr-2 h-5 w-5" />
-								Upload Logo
+					<div>
+						<form class="grid grid-cols-2 gap-4">
+							<div class="flex items-center space-x-2">
+								<Icon icon="mdi:account" class="text-gray-500" />
 								<input
-									type="file"
-									accept="image/*"
-									class="hidden"
-									onchange={(e) => handleImageUpload(e, (url) => (card.photos.company = url))}
+									id="name"
+									type="text"
+									placeholder="Full Name"
+									class="w-full rounded-md border border-gray-300 px-3 py-2"
+									bind:value={card.name}
 								/>
-							</label>
-							<button
-								class="flex items-center rounded-lg border border-gray-300 px-4 py-1 text-gray-600 hover:bg-gray-100 focus:ring-2 focus:ring-gray-300"
-								onclick={() => handleAddUrl('company')}
-							>
-								<Icon icon="mdi:link" class="mr-2 h-5 w-5" />
-								Add URL
-							</button>
-						</div>
+							</div>
+							<div class="flex items-center space-x-2">
+								<Icon icon="mdi:badge-account" class="text-gray-500" />
+								<input
+									id="title"
+									type="text"
+									placeholder="Job Title"
+									class="w-full rounded-md border border-gray-300 px-3 py-2"
+									bind:value={card.title}
+								/>
+							</div>
+							<div class="flex items-center space-x-2">
+								<Icon icon="mdi:domain" class="text-gray-500" />
+								<input
+									id="company"
+									type="text"
+									placeholder="Company"
+									class="w-full rounded-md border border-gray-300 px-3 py-2"
+									bind:value={card.company}
+								/>
+							</div>
+							<div class="flex items-center space-x-2">
+								<Icon icon="mdi:email" class="text-gray-500" />
+								<input
+									id="email"
+									type="email"
+									placeholder="Email"
+									class="w-full rounded-md border border-gray-300 px-3 py-2"
+									bind:value={card.email}
+								/>
+							</div>
+							<div class="flex items-center space-x-2">
+								<Icon icon="mdi:phone" class="text-gray-500" />
+								<input
+									id="phone"
+									type="text"
+									placeholder="Phone"
+									class="w-full rounded-md border border-gray-300 px-3 py-2"
+									bind:value={card.phone}
+								/>
+							</div>
+							<div class="flex items-center space-x-2">
+								<Icon icon="mdi:web" class="text-gray-500" />
+								<input
+									id="website"
+									type="url"
+									placeholder="Website"
+									class="w-full rounded-md border border-gray-300 px-3 py-2"
+									bind:value={card.website}
+								/>
+							</div>
+							<div class="flex items-center space-x-2">
+								<Icon icon="mdi:map-marker" class="text-gray-500" />
+								<input
+									id="location"
+									type="text"
+									placeholder="Location"
+									class="w-full rounded-md border border-gray-300 px-3 py-2"
+									bind:value={card.location}
+								/>
+							</div>
+							<div class="flex items-center space-x-2">
+								<Icon icon="mdi:linkedin" class="text-gray-500" />
+								<input
+									id="linkedIn"
+									type="url"
+									placeholder="LinkedIn URL"
+									class="w-full rounded-md border border-gray-300 px-3 py-2"
+									bind:value={card.linkedIn}
+								/>
+							</div>
+							<div class="flex items-center space-x-2">
+								<Icon icon="mdi:twitter" class="text-gray-500" />
+								<input
+									id="twitter"
+									type="url"
+									placeholder="Twitter URL"
+									class="w-full rounded-md border border-gray-300 px-3 py-2"
+									bind:value={card.twitter}
+								/>
+							</div>
+						</form>
 					</div>
 				</div>
 
-				<div>
-					<form class="grid grid-cols-2 gap-4">
-						<div class="flex items-center space-x-2">
-							<Icon icon="mdi:account" class="text-gray-500" />
-							<input
-								id="name"
-								type="text"
-								placeholder="Full Name"
-								class="w-full rounded-md border border-gray-300 px-3 py-2"
-								bind:value={card.name}
-							/>
+				<div class="rounded-lg bg-white p-6 shadow">
+					<div class="">
+						<div class="mb-5 flex items-center justify-between">
+							<div class="flex items-center space-x-2">
+								<Icon icon="lucide:sparkles" class="h-5 w-5 text-indigo-500" />
+								<h2 class="text-lg font-semibold">Preview</h2>
+							</div>
+							<div class="dropdown-container relative inline-block">
+								<button
+									class="flex rounded-md bg-blue-500 px-4 py-2 text-white focus:outline-none"
+									onclick={() => (dropdown = !dropdown)}
+								>
+									Download
+								</button>
+								<div
+									in:fade={{ duration: 300 }}
+									out:fade={{ duration: 300 }}
+									class={`absolute left-0 z-10 mt-2 w-44 origin-top-left rounded-md border border-gray-200 bg-white shadow-xl ring-1 ring-black ring-opacity-5 focus:outline-none ${
+										dropdown ? 'block' : 'hidden'
+									}`}
+								>
+									<ul class="divide-y divide-gray-300">
+										<li>
+											<button
+												class="w-full cursor-pointer rounded px-4 py-2 text-left hover:bg-gray-200"
+												onclick={() => downloadHTML()}
+											>
+												Download HTML
+											</button>
+										</li>
+										<li>
+											<button
+												class=" w-full cursor-pointer rounded px-4 py-2 text-left hover:bg-gray-200"
+												onclick={() => downloadPNG()}
+											>
+												Download PNG
+											</button>
+										</li>
+									</ul>
+								</div>
+							</div>
 						</div>
-						<div class="flex items-center space-x-2">
-							<Icon icon="mdi:badge-account" class="text-gray-500" />
-							<input
-								id="title"
-								type="text"
-								placeholder="Job Title"
-								class="w-full rounded-md border border-gray-300 px-3 py-2"
-								bind:value={card.title}
-							/>
+						<div class="rounded border border-gray-50 p-4" id="preview">
+							<div id="email-signature"></div>
 						</div>
-						<div class="flex items-center space-x-2">
-							<Icon icon="mdi:domain" class="text-gray-500" />
-							<input
-								id="company"
-								type="text"
-								placeholder="Company"
-								class="w-full rounded-md border border-gray-300 px-3 py-2"
-								bind:value={card.company}
-							/>
-						</div>
-						<div class="flex items-center space-x-2">
-							<Icon icon="mdi:email" class="text-gray-500" />
-							<input
-								id="email"
-								type="email"
-								placeholder="Email"
-								class="w-full rounded-md border border-gray-300 px-3 py-2"
-								bind:value={card.email}
-							/>
-						</div>
-						<div class="flex items-center space-x-2">
-							<Icon icon="mdi:phone" class="text-gray-500" />
-							<input
-								id="phone"
-								type="text"
-								placeholder="Phone"
-								class="w-full rounded-md border border-gray-300 px-3 py-2"
-								bind:value={card.phone}
-							/>
-						</div>
-						<div class="flex items-center space-x-2">
-							<Icon icon="mdi:web" class="text-gray-500" />
-							<input
-								id="website"
-								type="url"
-								placeholder="Website"
-								class="w-full rounded-md border border-gray-300 px-3 py-2"
-								bind:value={card.website}
-							/>
-						</div>
-						<div class="flex items-center space-x-2">
-							<Icon icon="mdi:map-marker" class="text-gray-500" />
-							<input
-								id="location"
-								type="text"
-								placeholder="Location"
-								class="w-full rounded-md border border-gray-300 px-3 py-2"
-								bind:value={card.location}
-							/>
-						</div>
-						<div class="flex items-center space-x-2">
-							<Icon icon="mdi:linkedin" class="text-gray-500" />
-							<input
-								id="linkedIn"
-								type="url"
-								placeholder="LinkedIn URL"
-								class="w-full rounded-md border border-gray-300 px-3 py-2"
-								bind:value={card.linkedIn}
-							/>
-						</div>
-						<div class="flex items-center space-x-2">
-							<Icon icon="mdi:twitter" class="text-gray-500" />
-							<input
-								id="twitter"
-								type="url"
-								placeholder="Twitter URL"
-								class="w-full rounded-md border border-gray-300 px-3 py-2"
-								bind:value={card.twitter}
-							/>
-						</div>
-					</form>
-				</div>
-
-				<div class="mt-5">
-					<div class="mb-2 flex items-center space-x-2">
-						<Icon icon="lucide:sparkles" class="h-5 w-5 text-indigo-500" />
-						<h2 class="text-lg font-semibold">Preview</h2>
-					</div>
-					<div class="rounded border border-gray-50 p-4" id="preview">
-						<div id="email-signature"></div>
-					</div>
-
-					<div class="flex flex-row gap-2">
-						<button
-							class="mt-4 rounded bg-indigo-600 px-4 py-2 text-white"
-							onclick={() => downloadHTML()}
-						>
-							Download HTML
-						</button>
-						<button
-							class="mt-4
-							 rounded bg-indigo-600 px-4 py-2 text-white"
-							onclick={() => downloadPNG()}
-						>
-							Download PNG
-						</button>
 					</div>
 				</div>
 			</div>
