@@ -458,5 +458,7 @@
 				</a>
 			</div>
 		</div>
+
+		<p class="py-5 text-center">© 2025 Signify - Made with ❤️ by Difuse</p>
 	</div>
 </div>
