@@ -4,6 +4,8 @@
 	import ColorPicker from 'svelte-awesome-color-picker';
 	import { toPng } from 'html-to-image';
 	import ModernStack from '$lib/templates/modern-stack.svelte';
+	import CorporateClean from '$lib/templates/corporate-clean.svelte';
+	import ElegantMinimal from '$lib/templates/elegant-minimal.svelte';
 	import type { Card, Template } from '$lib/types';
 
 	interface SelectedColors {
@@ -57,7 +59,7 @@
 	}
 
 	let card = $state<Card>({
-		template: 'modern-stack',
+		template: 'elegant-minimal',
 		name: 'John Doe',
 		title: 'Senior Developer',
 		company: 'Iridia Solutions Private Limited',
@@ -86,15 +88,24 @@
 		}
 
 		if (!card.photos.company) {
-			card.photos.company = '';
+			card.photos.company = 'https://cdn.pixabay.com/photo/2021/08/25/20/42/field-6574455_640.jpg';
 		}
 	});
 
 	$effect(() => {
 		const target = document.getElementById('email-signature');
 		if (target) {
-			if (card.template === 'modern-stack') {
-				mount(ModernStack, { target, props: { card } });
+			target.innerHTML = '';
+			switch (card.template) {
+				case 'modern-stack':
+					mount(ModernStack, { target, props: { card } });
+					break;
+				case 'corporate-clean':
+					mount(CorporateClean, { target, props: { card } });
+					break;
+				case 'elegant-minimal':
+					mount(ElegantMinimal, { target, props: { card } });
+					break;
 			}
 		}
 	});
