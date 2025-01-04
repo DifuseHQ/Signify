@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { getIcons } from '$lib/icon';
 	import type { Card } from '$lib/types';
-	import { onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
 
 	interface Props {
@@ -18,7 +17,7 @@
 	});
 </script>
 
-<div in:fade={{ duration: 300 }} out:fade={{ duration: 300 }}>
+<div in:fade={{ duration: 300 }} out:fade={{ duration: 300 }} class="flex justify-center">
 	{#if icons && card}
 		<table
 			id="email-signature"

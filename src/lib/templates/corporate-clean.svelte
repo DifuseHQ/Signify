@@ -17,7 +17,7 @@
 	});
 </script>
 
-<div in:fade={{ duration: 300 }} out:fade={{ duration: 300 }}>
+<div in:fade={{ duration: 300 }} out:fade={{ duration: 300 }} class="flex justify-center">
 	{#if icons && card}
 		<table
 			id="email-signature"
