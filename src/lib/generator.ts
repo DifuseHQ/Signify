@@ -43,54 +43,79 @@ export async function generateCard(card: Card): Promise<string> {
 
 	if (card.template === 'modern-stack') {
 		tailwindHTML += `
-			<table id="email-signature" style="background-color: ${card.colours.background}; border-radius: 8px; box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); width: 100%; max-width: 530px; font-family: Arial, sans-serif; line-height: 1.5; margin: 0;">
+			<table id="email-signature" width="100%" cellspacing="0" cellpadding="0" border="0" 
+					style="background-color: ${card.colours.background};  width: 100%; max-width: 580px; font-family: Arial, sans-serif; line-height: 1.5; margin: 0; border-radius: 8px;">
 				<tr>
 					<td style="padding: 16px;">
-						<table style="width: 100%; border-collapse: collapse;">
+						<table cellspacing="0" cellpadding="0" width="100%">
 							<tr>
-								<td style="vertical-align: middle; padding: 0; width: 70px;">
+								<td width="70" style="vertical-align: middle; padding: 0;">
 									${card.photos.profile
-				? `<img src="${card.photos.profile}" alt="${card.name}" style="width: 70px; height: 70px; border-radius: 50%; object-fit: cover;" />`
+				? `<img src="${card.photos.profile}" alt="${card.name}" 
+											style="width: 70px; height: 70px; border-radius: 50%; display: block;" />`
 				: ''
 			}
 								</td>
-								<td style="padding-left: 12px; padding-bottom: 5px;">
-									<span style="font-size: 1.25rem; font-weight: 700; color:${card.colours.primary};white-space: nowrap;">${card.name}</span><br />
-									<span style="font-size: 0.875rem; color:${card.colours.text};white-space: nowrap;">${card.title}</span><br />
-									<span style="font-size: 0.875rem; color:${card.colours.text};white-space: nowrap;">${card.company}</span>
+								<td style="padding-left: 12px;">
+									<p style="margin: 0; font-size: 16px; font-weight: bold; color: ${card.colours.primary};white-space: nowrap;">
+										${card.name}
+									</p>
+									<p style="margin: 4px 0 0; font-size: 14px; color: ${card.colours.text};white-space: nowrap;">
+										${card.title}
+									</p>
+									<p style="margin: 0; font-size: 14px; color: ${card.colours.text};white-space: nowrap;">
+										${card.company}
+									</p>
 								</td>
 							</tr>
 						</table>
 					</td>
 				</tr>
 				<tr>
-					<td style="border-top: 1px solid ${card.colours.primary}; padding: 16px 16px 0;">
-						<table style="width: 100%; border-collapse: collapse;">
+					<td style="border-top: 1px solid ${card.colours.primary}; padding: 16px;">
+						<table cellspacing="0" cellpadding="0" width="100%">
 							<tr>
-								<td style="vertical-align: middle; padding: 0; width: 70px;">
+								<!-- Company Logo -->
+								<td width="70" style="vertical-align: middle; padding: 0;">
 									${card.photos.company
-				? `<img src="${card.photos.company}" alt="Company Logo" style="width: 70px; height: 70px; border-radius: 50%; object-fit: cover;" />`
+				? `<img src="${card.photos.company}" alt="Company Logo" 
+											style="width: 70px; height: 70px; border-radius: 50%; display: block;" />`
 				: ''
 			}
 								</td>
-								<td style="padding-left: 12px; padding-bottom: 5px;">
-									<table style="width: 100%; font-size: 0.875rem; color:${card.colours.text};">
+								<td style="padding-left: 12px;">
+									<table cellspacing="0" cellpadding="0" width="100%" style="font-size: 14px; color: ${card.colours.text};">
 										<tr>
-											<td style="padding: 4px 0; display: flex; align-items: center;white-space: nowrap;">
-												<img src="${icons.mail}" alt="Email" style="width: 16px; height: 16px; margin-right: 2px;" />
-												<a href="mailto:${card.email}" style="color: ${card.colours.text}; text-decoration: none; margin-left: 8px;">${card.email}</a>
+											<td style="padding-bottom: 6px;">
+												<a target=" _blank" href="mailto:${card.email}"
+												style="color: ${card.colours.text}; text-decoration: none;display: inline-block; text-align: right;margin-right:20px;white-space: nowrap;">
+												<span style="display: flex; justify-content: flex-start; align-items: center;">
+													<img src="${icons.mail}" alt="Email" style="width: 16px; height: 16px; margin-right: 4px;" />
+													${card.email}
+												</span>
+											</a>
 											</td>
 										</tr>
 										<tr>
-											<td style="padding: 4px 0; display: flex; align-items: center;white-space: nowrap;">
-												<img src="${icons.phone}" alt="Email" style="width: 16px; height: 16px; margin-right: 2px;" />
-												<a href="tel:${card.phone}" style="color: ${card.colours.text}; text-decoration: none; margin-left: 8px;">${card.phone}</a>
+											<td style="padding-bottom: 6px;">
+												<a href="tel:${card.phone}"
+												style="color: ${card.colours.text}; text-decoration: none; display: inline-block; text-align: right;margin-right:20px;white-space: nowrap;">
+												<span style="display: flex; justify-content: flex-start; align-items: center;">
+													<img src="${icons.phone}" alt="Phone" style="width: 16px; height: 16px; margin-right: 4px;" />
+													${card.phone}
+												</span>
+											</a>
 											</td>
 										</tr>
 										<tr>
-											<td style="padding: 4px 0; display: flex; align-items: center;white-space: nowrap;">
-												<img src="${icons.web}" alt="Email" style="width: 16px; height: 16px; margin-right: 2px;" />
-												<a href="${card.website}" style="color: ${card.colours.text}; text-decoration: none; margin-left: 8px;">${card.website}</a>
+											<td style="">
+												<a target="_blank" href="${card.website}"
+												style="color: ${card.colours.text}; text-decoration: none; display: inline-block; text-align: right;white-space: nowrap;">
+												<span style="display: flex; justify-content: flex-start; align-items: center;">
+													<img src="${icons.web}" alt="Website" style="width: 16px; height: 16px; margin-right: 4px;" />
+													${card.website}
+												</span>
+											</a>
 											</td>
 										</tr>
 									</table>
