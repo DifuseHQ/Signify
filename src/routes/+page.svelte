@@ -1,11 +1,10 @@
 <script lang="ts">
-	import { generateCard, type Card, type Template } from '$lib/generator';
 	import Icon from '@iconify/svelte';
-	import { onMount } from 'svelte';
+	import { mount, onMount } from 'svelte';
 	import ColorPicker from 'svelte-awesome-color-picker';
-	import html2canvas from 'html2canvas';
-	import * as htmlToImage from 'html-to-image';
-	import { toPng, toJpeg, toBlob, toPixelData, toSvg } from 'html-to-image';
+	import { toPng } from 'html-to-image';
+	import ModernStack from '$lib/templates/modern-stack.svelte';
+	import type { Card, Template } from '$lib/types';
 
 	interface SelectedColors {
 		primary: string;
@@ -58,7 +57,7 @@
 	}
 
 	let card = $state<Card>({
-		template: 'corporate-clean',
+		template: 'modern-stack',
 		name: 'John Doe',
 		title: 'Senior Developer',
 		company: 'Iridia Solutions Private Limited',
@@ -72,8 +71,6 @@
 		colours: selectedColors,
 		photos: { profile: null, company: null }
 	});
-
-	let generated: string = $state('');
 
 	onMount(() => {
 		const photos = localStorage.getItem('photos');
@@ -94,11 +91,12 @@
 	});
 
 	$effect(() => {
-		const snapshot = $state.snapshot(card);
-		generateCard(snapshot).then((html) => {
-			generated = html;
-			localStorage.setItem('photos', JSON.stringify(card.photos));
-		});
+		const target = document.getElementById('email-signature');
+		if (target) {
+			if (card.template === 'modern-stack') {
+				mount(ModernStack, { target, props: { card } });
+			}
+		}
 	});
 
 	function handleImageUpload(event: Event, setImage: (value: string | null) => void) {
@@ -114,28 +112,26 @@
 
 	function downloadHTML() {
 		const element = document.createElement('a');
-		console.log('element', element);
+		const signature = document.getElementById('email-signature');
 
-		const file = new Blob([generated], { type: 'text/html' });
+		if (!signature) return;
+
+		const file = new Blob([signature.outerHTML], { type: 'text/html' });
+
 		element.href = URL.createObjectURL(file);
 		element.download = 'business-card.html';
 		document.body.appendChild(element);
 		element.click();
 	}
 
-	function downloadPNG() {
-		const element = document.querySelector('#email-signature');
-		htmlToImage
-			.toPng(element)
-			.then(function (dataUrl) {
-				const link = document.createElement('a');
-				link.download = 'business-card.png';
-				link.href = dataUrl;
-				link.click();
-			})
-			.catch(function (error) {
-				console.error('Oops, something went wrong!', error);
-			});
+	async function downloadPNG() {
+		const element = document.getElementById('email-signature');
+		if (!element) return;
+		const dataUrl = await toPng(element);
+		const link = document.createElement('a');
+		link.download = 'business-card.png';
+		link.href = dataUrl;
+		link.click();
 	}
 </script>
 
@@ -321,8 +317,7 @@
 						<h2 class="text-lg font-semibold">Preview</h2>
 					</div>
 					<div class="rounded border border-gray-50 p-4" id="preview">
-						<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-						{@html generated}
+						<div id="email-signature"></div>
 					</div>
 
 					<div class="flex flex-row gap-2">
