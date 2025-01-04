@@ -381,9 +381,9 @@ export async function generateCard(card: Card): Promise<string> {
             }
         </td>
         <td colspan="2" style="padding-left: 10px;">
-            <strong style="font-size: 16px; color: ${card.colours.primary};">${card.name}</strong><br>
-            <span style="font-size: 14px; color: ${card.colours.text};">${card.title}</span><br>
-            <span style="font-size: 14px; color: ${card.colours.text};">${card.company}</span>
+            <strong style="font-size: 16px; color: ${card.colours.primary};white-space: nowrap;">${card.name}</strong><br>
+            <span style="font-size: 14px; color: ${card.colours.text};white-space: nowrap;">${card.title}</span><br>
+            <span style="font-size: 14px; color: ${card.colours.text};white-space: nowrap;">${card.company}</span>
         </td>
     </tr>
     <tr>
@@ -401,7 +401,7 @@ export async function generateCard(card: Card): Promise<string> {
                 <tr>
                     <td style="padding-bottom: 5px;padding-left:10px">
                       	<a target=" _blank" href="mailto:${card.email}"
-						style="color: ${card.colours.text}; text-decoration: none;display: inline-block; text-align: right;margin-right:20px;">
+						style="color: ${card.colours.text}; text-decoration: none;display: inline-block; text-align: right;margin-right:20px;white-space: nowrap;">
 						<span style="display: flex; justify-content: flex-start; align-items: center;">
 							<img src="${icons.mail}" alt="Email" style="width: 16px; height: 16px; margin-right: 4px;" />
 							${card.email}
@@ -410,7 +410,7 @@ export async function generateCard(card: Card): Promise<string> {
                     </td>
                     <td style="padding-bottom: 5px;padding-left:10px">
                       <a href="tel:${card.phone}"
-							style="color: ${card.colours.text}; text-decoration: none; display: inline-block; text-align: right;margin-right:20px;">
+							style="color: ${card.colours.text}; text-decoration: none; display: inline-block; text-align: right;margin-right:20px;white-space: nowrap;">
 							<span style="display: flex; justify-content: flex-start; align-items: center;">
 								<img src="${icons.phone}" alt="Phone" style="width: 16px; height: 16px; margin-right: 4px;" />
 								${card.phone}
@@ -421,7 +421,7 @@ export async function generateCard(card: Card): Promise<string> {
                 <tr>
                     <td style="padding-bottom: 5px;padding-left:10px">
                       <a target="_blank" href="${card.website}"
-							style="color: ${card.colours.text}; text-decoration: none; display: inline-block; text-align: right;">
+							style="color: ${card.colours.text}; text-decoration: none; display: inline-block; text-align: right;white-space: nowrap;">
 							<span style="display: flex; justify-content: flex-start; align-items: center;">
 								<img src="${icons.web}" alt="Website" style="width: 16px; height: 16px; margin-right: 4px;" />
 								${card.website}
@@ -430,7 +430,7 @@ export async function generateCard(card: Card): Promise<string> {
                     </td>
                     <td style="padding-bottom: 5px;padding-left:10px">
                         <a href="${card.location}" target="_blank" style="color: ${card.colours.text}; text-decoration: none;display:flex;">
-                        	<span style="display: flex; justify-content: flex-start; align-items: center;">
+                        	<span style="display: flex; justify-content: flex-start; align-items: center;white-space: nowrap;">
    								<img src="${icons.location}" alt="Location" width="16" height="16" style="vertical-align: middle;margin-right: 4px;"/> 
                             	<span>${card.location}</span>
 							</span>
