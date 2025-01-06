@@ -2,7 +2,6 @@
 	import { getIcons } from '$lib/icon';
 	import type { Card } from '$lib/types';
 	import { generateQR, generateVCard } from '$lib/utils';
-	import { onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
 
 	interface Props {

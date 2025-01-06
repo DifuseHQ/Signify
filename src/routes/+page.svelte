@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Icon, { getIcon } from '@iconify/svelte';
+	import Icon from '@iconify/svelte';
 	import { mount, onMount } from 'svelte';
 	import type { Card, SelectedColors, Template } from '$lib/types';
 	import { fade } from 'svelte/transition';
@@ -37,10 +37,6 @@
 		selectedColors[selectedColorKey] = newColor;
 	}
 
-	onMount(() => {
-		handleColorChange(selectedColors.primary);
-	});
-
 	async function handleAddUrl(type: 'profile' | 'company') {
 		const inputUrl = prompt('Please enter a URL:', 'https://');
 		if (inputUrl) {
@@ -58,22 +54,20 @@
 
 	const defaultCard = getDefaultCard(selectedColors);
 	let card = $state<Card>(defaultCard);
+	let { data }: { data: { icons: string } } = $props();
 
 	onMount(() => {
-		const photos = localStorage.getItem('photos');
-		if (photos) {
-			card.photos = JSON.parse(photos);
-		} else {
-			localStorage.setItem('photos', JSON.stringify(card.photos));
-		}
+		if (data.icons) {
+			if (data.icons === 'loaded') {
+				handleColorChange(selectedColors.primary);
 
-		if (!card.photos.profile) {
-			card.photos.profile =
-				'https://avatars.githubusercontent.com/u/3922884?s=400&u=441b2ae32a36f919fa3dc4bea6ce478f0f42e1fc&v=4';
-		}
-
-		if (!card.photos.company) {
-			card.photos.company = 'https://downloads-bucket.difuse.io/98e83c79_logo-only.png';
+				const photos = localStorage.getItem('photos');
+				if (photos) {
+					card.photos = JSON.parse(photos);
+				} else {
+					localStorage.setItem('photos', JSON.stringify(card.photos));
+				}
+			}
 		}
 	});
 
@@ -127,13 +121,6 @@
 		return () => document.removeEventListener('click', handleClickOutside);
 	});
 </script>
-
-<Icon icon="lucide:mail" class="hidden" />
-<Icon icon="mdi:phone" class="hidden" />
-<Icon icon="mdi:web" class="hidden" />
-<Icon icon="mdi:linkedin" class="hidden" />
-<Icon icon="mdi:twitter" class="hidden" />
-<Icon icon="mdi:map-marker" class="hidden" />
 
 <div class="mt-8 bg-gray-50 text-gray-900">
 	<div class="container mx-auto px-4">
