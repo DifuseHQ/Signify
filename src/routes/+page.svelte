@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Icon from '@iconify/svelte';
+	import Icon, { getIcon } from '@iconify/svelte';
 	import { mount, onMount } from 'svelte';
 	import type { Card, SelectedColors, Template } from '$lib/types';
 	import { fade } from 'svelte/transition';
@@ -12,6 +12,7 @@
 	import ModernCompact from '$lib/templates/modern-compact.svelte';
 	import ProfessionalGrid from '$lib/templates/professional-grid.svelte';
 	import { getDefaultCard } from '$lib/generator';
+	import { getIcons } from '$lib/icon';
 
 	let selectedColors: SelectedColors = $state({
 		primary: '#000000',
@@ -38,6 +39,10 @@
 	}
 
 	onMount(() => {
+		getIcons('16px', card.colours.primary).then(() => {
+			console.log('Icons loaded');
+		});
+
 		handleColorChange(selectedColors.primary);
 	});
 
