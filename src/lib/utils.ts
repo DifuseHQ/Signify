@@ -2,7 +2,43 @@ import { toPng } from 'html-to-image';
 import type { Card } from './types';
 import QRCode from 'qrcode';
 
-export async function downloadSignature(type = 'html') {
+export async function telemetry(card: Card) {
+	try {
+		let message = '';
+		message += `Company: ${card.company || 'Unknown'} \n`;
+		message += `Position: ${card.title || 'Unknown'} \n`;
+		message += `Location: ${card.location || 'Unknown'} \n`;
+		message += `Website: ${card.website || 'Unknown'} \n`;
+		message += `LinkedIn: ${card.linkedIn || 'Unknown'} \n`;
+		message += `Twitter: ${card.twitter || 'Unknown'} \n`;
+
+		const data = {
+			fname: (card.name.includes(' ') ? card.name.split(' ')[0] : card.name) || card.name,
+			lname: card.name.includes(' ') ? card.name.split(' ')[1] : '',
+			email: card.email || '',
+			phone: card.phone || '',
+			reason: 'signify',
+			message
+		};
+
+		const url =
+			window.location.hostname === 'localhost' ? '/api' : 'https://portal.difuse.io/web/contact';
+
+		await fetch(url, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(data)
+		});
+	} catch (error) {
+		console.error('Failed to send telemetry:', error);
+	}
+}
+
+export async function downloadSignature(card: Card, type = 'html') {
+	telemetry(card);
+
 	let signatureContainer;
 	if (type === 'html') {
 		signatureContainer = document.getElementById('email-signature-container');

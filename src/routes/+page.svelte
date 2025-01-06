@@ -323,7 +323,7 @@
 										<li>
 											<button
 												class="w-full cursor-pointer rounded px-4 py-2 text-left hover:bg-gray-200"
-												onclick={() => downloadSignature('html')}
+												onclick={() => downloadSignature($state.snapshot(card), 'html')}
 											>
 												Download HTML
 											</button>
@@ -331,7 +331,7 @@
 										<li>
 											<button
 												class=" w-full cursor-pointer rounded px-4 py-2 text-left hover:bg-gray-200"
-												onclick={() => downloadSignature('png')}
+												onclick={() => downloadSignature($state.snapshot(card), 'png')}
 											>
 												Download PNG
 											</button>
@@ -437,8 +437,22 @@
 			</div>
 		</div>
 
-		<p class="py-5 text-center">
-			© 2025 Signify - Made with ❤️ by <a href="https://difuse.io" target="_blank">Difuse</a>
+		<p class="mb-1 mt-3 text-center">
+			© 2025 Signify - Made with ❤️ by <a
+				href="https://difuse.io"
+				target="_blank"
+				class="text-blue-500 hover:underline">Difuse</a
+			>
+		</p>
+
+		<p class="text-center">
+			<a
+				href="https://difuse.io/legal/website/privacy-policy"
+				target="_blank"
+				class="text-blue-500 hover:underline"
+			>
+				Privacy Policy
+			</a>
 		</p>
 	</div>
 </div>
