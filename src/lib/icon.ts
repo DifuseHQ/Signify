@@ -1,24 +1,32 @@
 import { getIcon } from '@iconify/svelte';
 import { browser } from '$app/environment';
 
-export const icons = [
-	'lucide:mail',
-	'mdi:phone',
-	'mdi:web',
-	'mdi:linkedin',
-	'mdi:twitter',
-	'mdi:map-marker'
-];
-
-export function generateSVG(
+export async function generateSVG(
 	iconName: string,
 	size: string = '24px',
 	color: string = 'currentColor'
-): string {
-	const iconData = getIcon(iconName);
-	if (!iconData) {
-		throw new Error(`Icon "${iconName}" not found.`);
-	}
+): Promise<string> {
+	const fetchIconData = async (): Promise<{ body: string; width: number; height: number }> => {
+		let iconData = getIcon(iconName);
+		let attempts = 0;
+		const maxAttempts = 10;
+		const delay = 1000;
+
+		while (!iconData && attempts < maxAttempts) {
+			console.warn(`Icon "${iconName}" not found. Attempt ${attempts + 1} of ${maxAttempts}.`);
+			await new Promise((resolve) => setTimeout(resolve, delay));
+			iconData = getIcon(iconName);
+			attempts++;
+		}
+
+		if (!iconData) {
+			throw new Error(`Icon "${iconName}" not found after ${maxAttempts} attempts.`);
+		}
+
+		return iconData;
+	};
+
+	const iconData = await fetchIconData();
 
 	const { body, width, height } = iconData;
 
@@ -89,10 +97,19 @@ export async function svgToPng(svg: string): Promise<string> {
 }
 
 export async function getIcons(size: string, color: string): Promise<{ [key: string]: string }> {
+	const icons = [
+		'lucide:mail',
+		'mdi:phone',
+		'mdi:web',
+		'mdi:linkedin',
+		'mdi:twitter',
+		'mdi:map-marker'
+	];
+
 	const iconData: { [key: string]: string } = {};
 
 	for (const icon of icons) {
-		iconData[icon] = await svgToPng(generateSVG(icon, size, color));
+		iconData[icon] = await svgToPng(await generateSVG(icon, size, color));
 	}
 
 	return iconData;

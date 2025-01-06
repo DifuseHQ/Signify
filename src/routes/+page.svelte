@@ -54,20 +54,15 @@
 
 	const defaultCard = getDefaultCard(selectedColors);
 	let card = $state<Card>(defaultCard);
-	let { data }: { data: { icons: string } } = $props();
 
 	onMount(() => {
-		if (data.icons) {
-			if (data.icons === 'loaded') {
-				handleColorChange(selectedColors.primary);
+		handleColorChange(selectedColors.primary);
 
-				const photos = localStorage.getItem('photos');
-				if (photos) {
-					card.photos = JSON.parse(photos);
-				} else {
-					localStorage.setItem('photos', JSON.stringify(card.photos));
-				}
-			}
+		const photos = localStorage.getItem('photos');
+		if (photos) {
+			card.photos = JSON.parse(photos);
+		} else {
+			localStorage.setItem('photos', JSON.stringify(card.photos));
 		}
 	});
 
