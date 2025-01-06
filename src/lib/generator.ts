@@ -28,8 +28,8 @@ export function getDefaultCard(selectedColors: SelectedColors): Card {
 		card.company = 'IP Technics L.L.C';
 		card.email = 'hayzam@iptechnics.com';
 		card.phone = '+971-4-2142025';
-		card.website = 'iptechnics.com';
-		card.websiteLink = 'https://iptechnics.com';
+		card.website = 'www.iptechnics.com';
+		card.websiteLink = 'https://www.iptechnics.com';
 		card.location = 'Dubai, UAE';
 		card.linkedIn = 'https://www.linkedin.com/company/ip-technics';
 		card.twitter = '';
