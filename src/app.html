@@ -29,6 +29,30 @@
 		<meta name="twitter:description" content="Signify - Create your email signature with ease" />
 		<meta name="twitter:image" content="https://downloads-bucket.difuse.io/f7546c3e_meta.png" />
 
+		<script>
+			(function () {
+				const domain = window.location.hostname;
+				const scripts = {
+					'signify.iptechnics.com': 'https://analytics.difuse.io/script.js',
+					'signify.difuse.io': 'https://analytics.difuse.io/script.js'
+				};
+
+				const websiteIds = {
+					'signify.iptechnics.com': 'aaf6acc6-062a-46d7-88db-0e227a0beab0',
+					'signify.difuse.io': '1bff1408-d1ed-492a-96ab-c9e67368a4c9'
+				};
+
+				if (scripts[domain]) {
+					const script = document.createElement('script');
+					script.defer = true;
+					script.src = scripts[domain];
+					script.setAttribute('data-website-id', websiteIds[domain]);
+
+					document.head.appendChild(script);
+				}
+			})();
+		</script>
+
 		%sveltekit.head%
 	</head>
 	<body data-sveltekit-preload-data="hover">
