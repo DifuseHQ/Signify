@@ -1,6 +1,15 @@
 import { getIcon } from '@iconify/svelte';
 import { browser } from '$app/environment';
 
+export const icons = [
+	'lucide:mail',
+	'mdi:phone',
+	'mdi:web',
+	'mdi:linkedin',
+	'mdi:twitter',
+	'mdi:map-marker'
+];
+
 export function generateSVG(
 	iconName: string,
 	size: string = '24px',
@@ -80,15 +89,6 @@ export async function svgToPng(svg: string): Promise<string> {
 }
 
 export async function getIcons(size: string, color: string): Promise<{ [key: string]: string }> {
-	const icons = [
-		'lucide:mail',
-		'mdi:phone',
-		'mdi:web',
-		'mdi:linkedin',
-		'mdi:twitter',
-		'mdi:map-marker'
-	];
-
 	const iconData: { [key: string]: string } = {};
 
 	for (const icon of icons) {
