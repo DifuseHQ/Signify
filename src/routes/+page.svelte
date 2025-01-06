@@ -117,6 +117,13 @@
 	});
 </script>
 
+<a
+	class="github-fork-ribbon"
+	href="https://github.com/DifuseHQ/Signify"
+	data-ribbon="Fork me on GitHub"
+	title="Fork me on GitHub">Fork me on GitHub</a
+>
+
 <div class="mt-8 bg-gray-50 text-gray-900">
 	<div class="container mx-auto px-4">
 		<button class="flex flex-row gap-3" onclick={() => (window.location.href = '/')}>
