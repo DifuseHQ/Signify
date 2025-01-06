@@ -1,3 +1,9 @@
+export interface SelectedColors {
+	primary: string;
+	text: string;
+	background: string;
+}
+
 export type Template =
 	| 'modern-stack'
 	| 'corporate-clean'

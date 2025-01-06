@@ -19,7 +19,6 @@
 		});
 
 		generateQR(generateVCard(card), 128).then((data) => {
-			console.log(data, 'effect');
 			qrCode = data;
 		});
 	});

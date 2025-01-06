@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Icon from '@iconify/svelte';
 	import { mount, onMount } from 'svelte';
-	import type { Card, Template } from '$lib/types';
+	import type { Card, SelectedColors, Template } from '$lib/types';
 	import { fade } from 'svelte/transition';
 	import { downloadSignature } from '$lib/utils';
 
@@ -11,17 +11,12 @@
 	import ElegantMinimal from '$lib/templates/elegant-minimal.svelte';
 	import ModernCompact from '$lib/templates/modern-compact.svelte';
 	import ProfessionalGrid from '$lib/templates/professional-grid.svelte';
-
-	interface SelectedColors {
-		primary: string;
-		text: string;
-		background: string;
-	}
+	import { getDefaultCard } from '$lib/generator';
 
 	let selectedColors: SelectedColors = $state({
-		primary: '#031159',
-		text: '#39447c',
-		background: '#f4f5fa'
+		primary: '#000000',
+		text: '#000000',
+		background: '#ffffff'
 	});
 
 	const templates: { id: Template; label: string }[] = [
@@ -33,7 +28,7 @@
 	];
 
 	let pickerWidth: number = $state(0);
-	let hex: string = $state('#031159');
+	let hex: string = $state('#000000');
 	let selectedColorKey: keyof SelectedColors = $state('primary');
 	let dropdown: boolean = $state(false);
 	let photoUrl = $state('');
@@ -61,21 +56,8 @@
 		}
 	}
 
-	let card = $state<Card>({
-		template: 'professional-grid',
-		name: 'Hayzam Sherif',
-		title: 'VP - Development',
-		company: 'Iridia Solutions Private Limited',
-		email: 'hayzam@difuse.io',
-		phone: '+971-4-2142025',
-		website: 'difuse.io',
-		websiteLink: 'https://difuse.io',
-		location: 'Dubai, UAE',
-		linkedIn: 'https://www.linkedin.com/company/iridiasolutions/',
-		twitter: 'https://twitter.com/DifuseHQ',
-		colours: selectedColors,
-		photos: { profile: null, company: null }
-	});
+	const defaultCard = getDefaultCard(selectedColors);
+	let card = $state<Card>(defaultCard);
 
 	onMount(() => {
 		const photos = localStorage.getItem('photos');
@@ -91,7 +73,7 @@
 		}
 
 		if (!card.photos.company) {
-			card.photos.company = 'https://cdn.pixabay.com/photo/2021/08/25/20/42/field-6574455_640.jpg';
+			card.photos.company = 'https://downloads-bucket.difuse.io/98e83c79_logo-only.png';
 		}
 	});
 
