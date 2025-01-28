@@ -213,6 +213,44 @@
 		document.addEventListener('click', handleClickOutside);
 		return () => document.removeEventListener('click', handleClickOutside);
 	});
+
+	type SocialInput = {
+		id: string;
+		icon: string;
+		placeholder: string;
+		value: string;
+	};
+
+	let socialInputs: SocialInput[] = $state([]);
+	let showModal: boolean = $state(false);
+
+	const socialMediaOptions = [
+		{ id: 'twitter', icon: 'mdi:twitter', placeholder: 'Twitter URL' },
+		{ id: 'linkedin', icon: 'mdi:linkedin', placeholder: 'LinkedIn URL' },
+		{ id: 'facebook', icon: 'mdi:facebook', placeholder: 'Facebook URL' },
+		{ id: 'instagram', icon: 'mdi:instagram', placeholder: 'Instagram URL' }
+	];
+
+	function addSocialInput(selectedOption: { id: string; icon: string; placeholder: string }) {
+		console.log('selectedOption', selectedOption);
+
+		if (!socialInputs.find((input) => input.id === selectedOption.id)) {
+			socialInputs = [
+				...socialInputs,
+				{
+					id: selectedOption.id,
+					icon: selectedOption.icon,
+					placeholder: selectedOption.placeholder,
+					value: ''
+				}
+			];
+		}
+		showModal = false;
+	}
+
+	function removeSocialInput(index: number) {
+		socialInputs = socialInputs.filter((_, i) => i !== index);
+	}
 </script>
 
 <a
@@ -232,8 +270,8 @@
 		<div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
 			<div>
 				<div class="mb-6 rounded-lg bg-white p-6 shadow">
-					<div class="mb-6 flex items-start justify-between">
-						<div class="flex max-w-[45%] flex-grow items-start space-x-4">
+					<div class="mb-6 flex flex-col gap-4 md:flex-row">
+						<div class="flex w-full flex-grow items-start space-x-4">
 							<div
 								class="flex h-16 w-16 items-center justify-center overflow-hidden rounded-xl bg-gray-100"
 							>
@@ -266,45 +304,7 @@
 							</div>
 						</div>
 
-						<div
-							class={`fixed inset-0 z-50 flex items-center justify-center bg-black/50 ${!imageSrc ? 'hidden' : ''}`}
-						>
-							<div class="relative w-full max-w-4xl rounded-lg bg-white p-6 shadow-xl">
-								<div class="mb-4 flex items-center justify-between border-b pb-4">
-									<h3 class="text-xl font-semibold text-gray-900">Crop Image</h3>
-									<button onclick={closeModal} class="text-gray-500 hover:text-gray-700">
-										<Icon icon="mdi:close" class="h-6 w-6" />
-									</button>
-								</div>
-
-								<div class="relative h-[60vh] min-h-[400px] w-full">
-									<!-- svelte-ignore a11y_img_redundant_alt -->
-									<img
-										bind:this={imageElement}
-										src=""
-										alt="Image to crop"
-										class="max-h-full max-w-full"
-									/>
-								</div>
-
-								<div class="mt-6 flex justify-end gap-3">
-									<button
-										onclick={closeModal}
-										class="w-full rounded-md bg-gray-200 px-4 py-2 text-gray-700 hover:bg-gray-300 md:w-40"
-									>
-										Cancel
-									</button>
-									<button
-										onclick={getCroppedImage}
-										class="w-full rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 md:w-40"
-									>
-										Crop
-									</button>
-								</div>
-							</div>
-						</div>
-
-						<div class="flex max-w-[45%] flex-grow items-start space-x-4">
+						<div class="flex w-full flex-grow items-start space-x-4">
 							<div
 								class="flex h-16 w-16 items-center justify-center overflow-hidden rounded-xl bg-gray-100"
 							>
@@ -336,10 +336,57 @@
 								</button>
 							</div>
 						</div>
+
+						<div class="flex items-center space-x-2" title="Add More social media">
+							<button
+								onclick={() => (showModal = true)}
+								class="py- flex w-auto items-center space-x-2 rounded-md px-4 focus:outline-none"
+							>
+								<Icon icon="simple-line-icons:plus" class="h-6 w-6 text-blue-500" />
+							</button>
+						</div>
+					</div>
+
+					<div
+						class={`fixed inset-0 z-50 flex items-center justify-center bg-black/50 ${!imageSrc ? 'hidden' : ''}`}
+					>
+						<div class="relative w-full max-w-4xl rounded-lg bg-white p-6 shadow-xl">
+							<div class="mb-4 flex items-center justify-between border-b pb-4">
+								<h3 class="text-xl font-semibold text-gray-900">Crop Image</h3>
+								<button onclick={closeModal} class="text-gray-500 hover:text-gray-700">
+									<Icon icon="mdi:close" class="h-6 w-6" />
+								</button>
+							</div>
+
+							<div class="relative h-[60vh] min-h-[400px] w-full">
+								<!-- svelte-ignore a11y_img_redundant_alt -->
+								<img
+									bind:this={imageElement}
+									src=""
+									alt="Image to crop"
+									class="max-h-full max-w-full"
+								/>
+							</div>
+
+							<div class="mt-6 flex justify-end gap-3">
+								<button
+									onclick={closeModal}
+									class="w-full rounded-md bg-gray-200 px-4 py-2 text-gray-700 hover:bg-gray-300 md:w-40"
+								>
+									Cancel
+								</button>
+								<button
+									onclick={getCroppedImage}
+									class="w-full rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 md:w-40"
+								>
+									Crop
+								</button>
+							</div>
+						</div>
 					</div>
 
 					<div>
-						<form class="grid grid-cols-2 gap-4">
+						<form class="grid grid-cols-1 gap-4 md:grid-cols-2">
 							<div class="flex items-center space-x-2">
 								<Icon icon="mdi:account" class="text-gray-500" />
 								<input
@@ -410,7 +457,7 @@
 									bind:value={card.location}
 								/>
 							</div>
-							<div class="flex items-center space-x-2">
+							<!-- <div class="flex items-center space-x-2">
 								<Icon icon="mdi:linkedin" class="text-gray-500" />
 								<input
 									id="linkedIn"
@@ -429,7 +476,60 @@
 									class="w-full rounded-md border border-gray-300 px-3 py-2"
 									bind:value={card.twitter}
 								/>
-							</div>
+							</div> -->
+
+							{#if showModal}
+								<div
+									class="fixed inset-0 z-10 flex items-center justify-center bg-black bg-opacity-50"
+									in:fade={{ duration: 300 }}
+									out:fade={{ duration: 300 }}
+								>
+									<div class="w-96 rounded-lg bg-white p-6">
+										<h2 class="mb-2 text-lg font-semibold">Select Social Media</h2>
+										<hr class="mb-2 border border-gray-300" />
+										<div class="max-h-[300px] space-y-3 overflow-y-auto">
+											{#each socialMediaOptions as option}
+												<button
+													onclick={() => addSocialInput(option)}
+													class="flex w-full items-center space-x-2 rounded-md p-2 hover:bg-gray-100
+													{socialInputs.some((input) => input.id === option.id) ? 'bg-blue-50 text-blue-600' : ''}"
+													disabled={socialInputs.some((input) => input.id === option.id)}
+												>
+													<Icon icon={option.icon} class="text-gray-500" />
+													<span>{option.placeholder}</span>
+													{#if socialInputs.some((input) => input.id === option.id)}
+														<Icon icon="mdi:check-circle" class="ml-auto text-blue-500" />
+													{/if}
+												</button>
+											{/each}
+										</div>
+										<button
+											onclick={() => (showModal = false)}
+											class="mt-4 w-full rounded-xl bg-blue-500 px-3 py-2 text-center text-white hover:bg-blue-700"
+										>
+											Cancel
+										</button>
+									</div>
+								</div>
+							{/if}
+
+							{#each socialInputs as input, index}
+								<div class="flex items-center space-x-2">
+									<Icon icon={input.icon} class="text-gray-500" />
+									<input
+										type="url"
+										placeholder={input.placeholder}
+										class="w-full rounded-md border border-gray-300 px-3 py-2"
+										bind:value={input.value}
+									/>
+									<button
+										onclick={() => removeSocialInput(index)}
+										class="text-gray-400 hover:text-red-500"
+									>
+										<Icon icon="mdi:close-circle" class="h-5 w-5" />
+									</button>
+								</div>
+							{/each}
 						</form>
 					</div>
 				</div>
