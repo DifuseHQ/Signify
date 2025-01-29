@@ -39,15 +39,13 @@
 		selectedColors[selectedColorKey] = newColor;
 	}
 
-	async function handleAddUrl(
-		type: 'profile' | 'company',
-		setImage: (value: string | null) => void
-	) {
+	let currentImageType: 'profile' | 'company' = $state('profile');
+
+	async function handleAddUrl(type: 'profile' | 'company') {
 		const inputUrl = prompt('Please enter a URL:', 'https://');
 		if (!inputUrl) return;
 
 		try {
-			onImageUpdate = setImage;
 			photoUrl = inputUrl;
 
 			const response = await fetch(photoUrl);
@@ -58,6 +56,9 @@
 				alert('The URL must point to an image file');
 				return;
 			}
+
+			card.photos[type] = await blob.text();
+			currentImageType = type;
 
 			const reader = new FileReader();
 			reader.onload = (e) => {
@@ -77,6 +78,7 @@
 							autoCropArea: 1,
 							ready() {
 								console.log('Cropper is ready');
+								currentImageType = type;
 							}
 						});
 					}, 50);
@@ -130,16 +132,14 @@
 		}
 	});
 
-	let onImageUpdate: (url: string | null) => void;
 	let imageSrc: boolean = $state(false);
 	let imageElement: HTMLImageElement;
 	let cropper: Cropper | null = $state(null);
 
-	function handleImageUpload(event: Event, setImage: (value: string | null) => void) {
+	function handleImageUpload(event: Event) {
 		const input = event.target as HTMLInputElement;
 		const file = input.files?.[0];
 		console.log('file', file);
-		onImageUpdate = setImage;
 		if (file) {
 			const reader = new FileReader();
 			reader.onload = (e) => {
@@ -180,9 +180,11 @@
 				if (blob) {
 					const reader = new FileReader();
 					reader.onload = () => {
-						console.log('onImageUpdate', onImageUpdate);
-
-						onImageUpdate(reader.result as string);
+						if (currentImageType === 'profile') {
+							card.photos.profile = reader.result as string;
+						} else {
+							card.photos.company = reader.result as string;
+						}
 					};
 					reader.readAsDataURL(blob);
 				}
@@ -253,12 +255,12 @@
 										type="file"
 										accept="image/*"
 										class="hidden"
-										onchange={(e) => handleImageUpload(e, (url) => (card.photos.profile = url))}
+										onchange={(e) => handleImageUpload(e)}
 									/>
 								</label>
 								<button
 									class="flex items-center rounded-lg border border-gray-300 px-4 py-1 text-gray-600 hover:bg-gray-100 focus:ring-2 focus:ring-gray-300"
-									onclick={() => handleAddUrl('profile', (url) => (card.photos.profile = url))}
+									onclick={() => handleAddUrl('profile')}
 								>
 									<Icon icon="mdi:link" class="mr-2 h-5 w-5" />
 									Add URL
@@ -286,12 +288,12 @@
 										type="file"
 										accept="image/*"
 										class="hidden"
-										onchange={(e) => handleImageUpload(e, (url) => (card.photos.company = url))}
+										onchange={(e) => handleImageUpload(e)}
 									/>
 								</label>
 								<button
 									class="flex items-center rounded-lg border border-gray-300 px-4 py-1 text-gray-600 hover:bg-gray-100 focus:ring-2 focus:ring-gray-300"
-									onclick={() => handleAddUrl('company', (url) => (card.photos.company = url))}
+									onclick={() => handleAddUrl('company')}
 								>
 									<Icon icon="mdi:link" class="mr-2 h-5 w-5" />
 									Add URL
