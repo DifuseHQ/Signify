@@ -1,5 +1,4 @@
 <script lang="ts">
-	import Cropper from 'cropperjs';
 	import Icon from '@iconify/svelte';
 	import { mount, onMount } from 'svelte';
 	import type { Card, SelectedColors, Template } from '$lib/types';
@@ -13,7 +12,13 @@
 	import ModernCompact from '$lib/templates/modern-compact.svelte';
 	import ProfessionalGrid from '$lib/templates/professional-grid.svelte';
 	import { getDefaultCard } from '$lib/generator';
-	import { addSocialInput, socialMediaOptions, extraInputs } from '$lib/extra-inputs.svelte';
+	import {
+		addSocialInput,
+		socialMediaOptions,
+		extraInputs,
+		closeCropperModal,
+		processImage
+	} from '$lib/extra-inputs.svelte';
 
 	let selectedColors: SelectedColors = $state({
 		primary: '#000000',
@@ -33,69 +38,14 @@
 	let hex: string = $state('#000000');
 	let selectedColorKey: keyof SelectedColors = $state('primary');
 	let dropdown: boolean = $state(false);
-	let photoUrl = $state('');
 
 	function handleColorChange(newColor: string) {
 		selectedColors[selectedColorKey] = newColor;
 	}
 
-	let currentImageType: 'profile' | 'company' = $state('profile');
-
-	async function handleAddUrl(type: 'profile' | 'company') {
-		const inputUrl = prompt('Please enter a URL:', 'https://');
-		if (!inputUrl) return;
-
-		try {
-			photoUrl = inputUrl;
-
-			const response = await fetch(photoUrl);
-			if (!response.ok) throw new Error('Failed to fetch image');
-
-			const blob = await response.blob();
-			if (!blob.type.startsWith('image/')) {
-				alert('The URL must point to an image file');
-				return;
-			}
-
-			card.photos[type] = await blob.text();
-			currentImageType = type;
-
-			const reader = new FileReader();
-			reader.onload = (e) => {
-				if (imageElement) {
-					if (cropper) {
-						cropper.destroy();
-						cropper = null;
-					}
-					imageElement.src = e.target?.result as string;
-					imageElement.style.display = 'block';
-
-					setTimeout(() => {
-						imageSrc = true;
-						cropper = new Cropper(imageElement, {
-							aspectRatio: 1,
-							viewMode: 3,
-							autoCropArea: 1,
-							ready() {
-								console.log('Cropper is ready');
-								currentImageType = type;
-							}
-						});
-					}, 50);
-				} else {
-					console.error('imageElement is undefined');
-				}
-			};
-
-			reader.readAsDataURL(blob);
-		} catch (error) {
-			console.error('Error loading image:', error);
-			alert('Failed to load image from URL. Please check the URL and try again.');
-		}
-	}
-
 	const defaultCard = getDefaultCard(selectedColors);
 	let card = $state<Card>(defaultCard);
+	let imageElement: HTMLImageElement;
 
 	onMount(() => {
 		handleColorChange(selectedColors.primary);
@@ -132,55 +82,45 @@
 		}
 	});
 
-	let imageSrc: boolean = $state(false);
-	let imageElement: HTMLImageElement;
-	let cropper: Cropper | null = $state(null);
+	async function handleImage(type: 'profile' | 'company', source: 'url' | 'file', event?: Event) {
+		let blob: Blob;
+		try {
+			if (source === 'url') {
+				const inputUrl = prompt('Please enter a URL:', 'https://');
+				if (!inputUrl) return;
 
-	function handleImageUpload(event: Event) {
-		const input = event.target as HTMLInputElement;
-		const file = input.files?.[0];
-		console.log('file', file);
-		if (file) {
-			const reader = new FileReader();
-			reader.onload = (e) => {
-				if (imageElement) {
-					if (cropper) {
-						cropper.destroy();
-						cropper = null;
-					}
+				const response = await fetch(inputUrl);
+				if (!response.ok) throw new Error('Failed to fetch image');
+				blob = await response.blob();
+			} else if (source === 'file' && event) {
+				const input = event.target as HTMLInputElement;
+				const file = input.files?.[0];
+				if (!file) return;
+				blob = file;
+				input.value = '';
+			} else {
+				throw new Error('Invalid source');
+			}
 
-					imageElement.src = e.target?.result as string;
-					imageElement.style.display = 'block';
+			if (!blob.type.startsWith('image/')) {
+				alert('The file must be an image');
+				return;
+			}
 
-					imageSrc = true;
-
-					setTimeout(() => {
-						imageSrc = true;
-						cropper = new Cropper(imageElement, {
-							aspectRatio: 1,
-							viewMode: 1,
-							autoCropArea: 1,
-							ready() {
-								console.log('Cropper is ready');
-							}
-						});
-					}, 50);
-				} else {
-					console.error('imageElement is undefined');
-				}
-			};
-			reader.readAsDataURL(file);
+			await processImage(blob, type, imageElement);
+		} catch (error) {
+			console.error('Error handling image:', error);
+			alert('Failed to load image. Please check the input and try again.');
 		}
-		input.value = '';
 	}
 
 	function getCroppedImage() {
-		if (cropper) {
-			cropper.getCroppedCanvas().toBlob((blob) => {
+		if (extraInputs.cropper) {
+			extraInputs.cropper.getCroppedCanvas().toBlob((blob) => {
 				if (blob) {
 					const reader = new FileReader();
 					reader.onload = () => {
-						if (currentImageType === 'profile') {
+						if (extraInputs.currentImageType === 'profile') {
 							card.photos.profile = reader.result as string;
 						} else {
 							card.photos.company = reader.result as string;
@@ -190,15 +130,7 @@
 				}
 			}, 'image/jpeg');
 		}
-		closeModal();
-	}
-
-	function closeModal() {
-		imageSrc = false;
-		if (cropper) {
-			cropper.destroy();
-			cropper = null;
-		}
+		closeCropperModal();
 	}
 
 	$effect(() => {
@@ -255,12 +187,12 @@
 										type="file"
 										accept="image/*"
 										class="hidden"
-										onchange={(e) => handleImageUpload(e)}
+										onchange={(e) => handleImage('profile', 'file', e)}
 									/>
 								</label>
 								<button
 									class="flex items-center rounded-lg border border-gray-300 px-4 py-1 text-gray-600 hover:bg-gray-100 focus:ring-2 focus:ring-gray-300"
-									onclick={() => handleAddUrl('profile')}
+									onclick={() => handleImage('profile', 'url')}
 								>
 									<Icon icon="mdi:link" class="mr-2 h-5 w-5" />
 									Add URL
@@ -288,12 +220,12 @@
 										type="file"
 										accept="image/*"
 										class="hidden"
-										onchange={(e) => handleImageUpload(e)}
+										onchange={(e) => handleImage('company', 'file', e)}
 									/>
 								</label>
 								<button
 									class="flex items-center rounded-lg border border-gray-300 px-4 py-1 text-gray-600 hover:bg-gray-100 focus:ring-2 focus:ring-gray-300"
-									onclick={() => handleAddUrl('company')}
+									onclick={() => handleImage('company', 'url')}
 								>
 									<Icon icon="mdi:link" class="mr-2 h-5 w-5" />
 									Add URL
@@ -312,12 +244,12 @@
 					</div>
 
 					<div
-						class={`fixed inset-0 z-50 flex items-center justify-center bg-black/50 ${!imageSrc ? 'hidden' : ''}`}
+						class={`fixed inset-0 z-50 flex items-center justify-center bg-black/50 ${!extraInputs.cropperModal ? 'hidden' : ''}`}
 					>
 						<div class="relative w-full max-w-4xl rounded-lg bg-white p-6 shadow-xl">
 							<div class="mb-4 flex items-center justify-between border-b pb-4">
 								<h3 class="text-xl font-semibold text-gray-900">Crop Image</h3>
-								<button onclick={closeModal} class="text-gray-500 hover:text-gray-700">
+								<button onclick={closeCropperModal} class="text-gray-500 hover:text-gray-700">
 									<Icon icon="mdi:close" class="h-6 w-6" />
 								</button>
 							</div>
@@ -334,7 +266,7 @@
 
 							<div class="mt-6 flex justify-end gap-3">
 								<button
-									onclick={closeModal}
+									onclick={closeCropperModal}
 									class="w-full rounded-md bg-gray-200 px-4 py-2 text-gray-700 hover:bg-gray-300 md:w-40"
 								>
 									Cancel
