@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Cropper from 'cropperjs';
 	import Icon from '@iconify/svelte';
 	import { mount, onMount } from 'svelte';
 	import type { Card, SelectedColors, Template } from '$lib/types';
@@ -12,8 +13,7 @@
 	import ModernCompact from '$lib/templates/modern-compact.svelte';
 	import ProfessionalGrid from '$lib/templates/professional-grid.svelte';
 	import { getDefaultCard } from '$lib/generator';
-	import Cropper from 'cropperjs';
-	import 'cropperjs/dist/cropper.css';
+	import { addSocialInput, socialMediaOptions, extraInputs } from '$lib/extra-inputs.svelte';
 
 	let selectedColors: SelectedColors = $state({
 		primary: '#000000',
@@ -133,7 +133,7 @@
 	let onImageUpdate: (url: string | null) => void;
 	let imageSrc: boolean = $state(false);
 	let imageElement: HTMLImageElement;
-	let cropper = $state(null);
+	let cropper: Cropper | null = $state(null);
 
 	function handleImageUpload(event: Event, setImage: (value: string | null) => void) {
 		const input = event.target as HTMLInputElement;
@@ -158,7 +158,7 @@
 						imageSrc = true;
 						cropper = new Cropper(imageElement, {
 							aspectRatio: 1,
-							viewMode: 3,
+							viewMode: 1,
 							autoCropArea: 1,
 							ready() {
 								console.log('Cropper is ready');
@@ -213,44 +213,6 @@
 		document.addEventListener('click', handleClickOutside);
 		return () => document.removeEventListener('click', handleClickOutside);
 	});
-
-	type SocialInput = {
-		id: string;
-		icon: string;
-		placeholder: string;
-		value: string;
-	};
-
-	let socialInputs: SocialInput[] = $state([]);
-	let showModal: boolean = $state(false);
-
-	const socialMediaOptions = [
-		{ id: 'twitter', icon: 'mdi:twitter', placeholder: 'Twitter URL' },
-		{ id: 'linkedin', icon: 'mdi:linkedin', placeholder: 'LinkedIn URL' },
-		{ id: 'facebook', icon: 'mdi:facebook', placeholder: 'Facebook URL' },
-		{ id: 'instagram', icon: 'mdi:instagram', placeholder: 'Instagram URL' }
-	];
-
-	function addSocialInput(selectedOption: { id: string; icon: string; placeholder: string }) {
-		console.log('selectedOption', selectedOption);
-
-		if (!socialInputs.find((input) => input.id === selectedOption.id)) {
-			socialInputs = [
-				...socialInputs,
-				{
-					id: selectedOption.id,
-					icon: selectedOption.icon,
-					placeholder: selectedOption.placeholder,
-					value: ''
-				}
-			];
-		}
-		showModal = false;
-	}
-
-	function removeSocialInput(index: number) {
-		socialInputs = socialInputs.filter((_, i) => i !== index);
-	}
 </script>
 
 <a
@@ -339,7 +301,7 @@
 
 						<div class="flex items-center space-x-2" title="Add More social media">
 							<button
-								onclick={() => (showModal = true)}
+								onclick={() => (extraInputs.showModal = true)}
 								class="py- flex w-auto items-center space-x-2 rounded-md px-4 focus:outline-none"
 							>
 								<Icon icon="simple-line-icons:plus" class="h-6 w-6 text-blue-500" />
@@ -441,7 +403,6 @@
 								<Icon icon="mdi:web" class="text-gray-500" />
 								<input
 									id="website"
-									type="url"
 									placeholder="Website"
 									class="w-full rounded-md border border-gray-300 px-3 py-2"
 									bind:value={card.website}
@@ -457,28 +418,8 @@
 									bind:value={card.location}
 								/>
 							</div>
-							<!-- <div class="flex items-center space-x-2">
-								<Icon icon="mdi:linkedin" class="text-gray-500" />
-								<input
-									id="linkedIn"
-									type="url"
-									placeholder="LinkedIn URL"
-									class="w-full rounded-md border border-gray-300 px-3 py-2"
-									bind:value={card.linkedIn}
-								/>
-							</div>
-							<div class="flex items-center space-x-2">
-								<Icon icon="mdi:twitter" class="text-gray-500" />
-								<input
-									id="twitter"
-									type="url"
-									placeholder="Twitter URL"
-									class="w-full rounded-md border border-gray-300 px-3 py-2"
-									bind:value={card.twitter}
-								/>
-							</div> -->
 
-							{#if showModal}
+							{#if extraInputs.showModal == true}
 								<div
 									class="fixed inset-0 z-10 flex items-center justify-center bg-black bg-opacity-50"
 									in:fade={{ duration: 300 }}
@@ -492,19 +433,23 @@
 												<button
 													onclick={() => addSocialInput(option)}
 													class="flex w-full items-center space-x-2 rounded-md p-2 hover:bg-gray-100
-													{socialInputs.some((input) => input.id === option.id) ? 'bg-blue-50 text-blue-600' : ''}"
-													disabled={socialInputs.some((input) => input.id === option.id)}
+													{extraInputs.socialInputs.some((input) => input.id === option.id)
+														? 'bg-blue-50 text-blue-600'
+														: ''}"
+													disabled={extraInputs.socialInputs.some(
+														(input) => input.id === option.id
+													)}
 												>
 													<Icon icon={option.icon} class="text-gray-500" />
 													<span>{option.placeholder}</span>
-													{#if socialInputs.some((input) => input.id === option.id)}
+													{#if extraInputs.socialInputs.some((input) => input.id === option.id)}
 														<Icon icon="mdi:check-circle" class="ml-auto text-blue-500" />
 													{/if}
 												</button>
 											{/each}
 										</div>
 										<button
-											onclick={() => (showModal = false)}
+											onclick={() => (extraInputs.showModal = false)}
 											class="mt-4 w-full rounded-xl bg-blue-500 px-3 py-2 text-center text-white hover:bg-blue-700"
 										>
 											Cancel
@@ -513,7 +458,7 @@
 								</div>
 							{/if}
 
-							{#each socialInputs as input, index}
+							{#each extraInputs.socialInputs as input, index}
 								<div class="flex items-center space-x-2">
 									<Icon icon={input.icon} class="text-gray-500" />
 									<input
@@ -523,7 +468,10 @@
 										bind:value={input.value}
 									/>
 									<button
-										onclick={() => removeSocialInput(index)}
+										onclick={() =>
+											(extraInputs.socialInputs = extraInputs.socialInputs.filter(
+												(_, i) => i !== index
+											))}
 										class="text-gray-400 hover:text-red-500"
 									>
 										<Icon icon="mdi:close-circle" class="h-5 w-5" />

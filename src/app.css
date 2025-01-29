@@ -1,6 +1,11 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+@import 'cropperjs/dist/cropper.css';
+
+body {
+	background: #f9fafb;
+}
 
 /*!
  * "Fork me on GitHub" CSS ribbon v0.2.3 | MIT License
@@ -19,13 +24,16 @@
 	text-decoration: none;
 	text-indent: -999999px;
 }
+
 .github-fork-ribbon.fixed {
 	position: fixed;
 }
+
 .github-fork-ribbon:active,
 .github-fork-ribbon:hover {
 	background-color: rgba(0, 0, 0, 0);
 }
+
 .github-fork-ribbon:after,
 .github-fork-ribbon:before {
 	position: absolute;
@@ -43,17 +51,16 @@
 	-o-transform: rotate(45deg);
 	transform: rotate(45deg);
 }
+
 .github-fork-ribbon:before {
 	content: '';
 	padding: 0.38em 0;
 	background-color: #a00;
-	background-image: -webkit-gradient(
-		linear,
-		left top,
-		left bottom,
-		from(rgba(0, 0, 0, 0)),
-		to(rgba(0, 0, 0, 0.15))
-	);
+	background-image: -webkit-gradient(linear,
+			left top,
+			left bottom,
+			from(rgba(0, 0, 0, 0)),
+			to(rgba(0, 0, 0, 0.15)));
 	background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15));
 	background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15));
 	background-image: -ms-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15));
@@ -64,6 +71,7 @@
 	box-shadow: 0 0.15em 0.23em 0 rgba(0, 0, 0, 0.5);
 	pointer-events: auto;
 }
+
 .github-fork-ribbon:after {
 	content: attr(data-ribbon);
 	color: #fff;
@@ -84,16 +92,19 @@
 	border-color: #fff;
 	border-color: rgba(255, 255, 255, 0.7);
 }
+
 .github-fork-ribbon.left-bottom,
 .github-fork-ribbon.left-top {
 	right: auto;
 	left: 0;
 }
+
 .github-fork-ribbon.left-bottom,
 .github-fork-ribbon.right-bottom {
 	top: auto;
 	bottom: 0;
 }
+
 .github-fork-ribbon.left-bottom:after,
 .github-fork-ribbon.left-bottom:before,
 .github-fork-ribbon.left-top:after,
@@ -101,6 +112,7 @@
 	right: auto;
 	left: -3.23em;
 }
+
 .github-fork-ribbon.left-bottom:after,
 .github-fork-ribbon.left-bottom:before,
 .github-fork-ribbon.right-bottom:after,
@@ -108,6 +120,7 @@
 	top: auto;
 	bottom: 3.23em;
 }
+
 .github-fork-ribbon.left-top:after,
 .github-fork-ribbon.left-top:before,
 .github-fork-ribbon.right-bottom:after,
