@@ -1,6 +1,3 @@
-import Cropper from "cropperjs";
-import { tick } from "svelte";
-
 export const socialMediaOptions = [
 	{ id: 'twitter', icon: 'mdi:twitter', placeholder: 'Twitter URL' },
 	{ id: 'linkedin', icon: 'mdi:linkedin', placeholder: 'LinkedIn URL' },
@@ -11,17 +8,11 @@ export const socialMediaOptions = [
 export interface ExtraInputs {
 	socialInputs: SocialInput[];
 	showModal: boolean;
-	cropperModal: boolean;
-	cropper: Cropper | null;
-	currentImageType: 'profile' | 'company';
 }
 
 export const extraInputs: ExtraInputs = $state({
 	socialInputs: [],
 	showModal: false,
-	cropperModal: false,
-	cropper: null,
-	currentImageType: 'profile' 
 });
 
 export interface SocialInput {
@@ -45,46 +36,4 @@ export function addSocialInput(selectedOption: { id: string; icon: string; place
 	}
 
 	extraInputs.showModal = false;
-}
-
-export function closeCropperModal() {
-	extraInputs.cropperModal = false;
-	if (extraInputs.cropper) {
-		extraInputs.cropper.destroy();
-		extraInputs.cropper = null;
-		}
-}
-
-export async function processImage(blob: Blob, type: 'profile' | 'company', imageElement: HTMLImageElement | null) {
-	extraInputs.cropperModal = true;
-	await tick();
-
-	if (!imageElement) {
-		console.error('imageElement is undefined after modal open');
-		return;
-	}
-
-	if (extraInputs.cropper) {
-		extraInputs.cropper.destroy();
-		extraInputs.cropper = null;
-	}
-
-	const reader = new FileReader();
-	reader.onload = async (e) => {
-		await tick();
-
-		imageElement.src = e.target?.result as string;
-		imageElement.style.display = 'block';
-
-		extraInputs.cropper = new Cropper(imageElement, {
-			aspectRatio: 1,
-			viewMode: 3,
-			autoCropArea: 1,
-			ready() {
-				extraInputs.currentImageType = type;
-			},
-		});
-	};
-
-	reader.readAsDataURL(blob);
 }

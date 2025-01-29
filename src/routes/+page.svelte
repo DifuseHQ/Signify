@@ -12,13 +12,8 @@
 	import ModernCompact from '$lib/templates/modern-compact.svelte';
 	import ProfessionalGrid from '$lib/templates/professional-grid.svelte';
 	import { getDefaultCard } from '$lib/generator';
-	import {
-		addSocialInput,
-		socialMediaOptions,
-		extraInputs,
-		closeCropperModal,
-		processImage
-	} from '$lib/extra-inputs.svelte';
+	import { addSocialInput, socialMediaOptions, extraInputs } from '$lib/extra-inputs.svelte';
+	import { cropperInputs, processImage, closeCropperModal } from '$lib/cropperUtils.svelte';
 
 	let selectedColors: SelectedColors = $state({
 		primary: '#000000',
@@ -115,12 +110,12 @@
 	}
 
 	function getCroppedImage() {
-		if (extraInputs.cropper) {
-			extraInputs.cropper.getCroppedCanvas().toBlob((blob) => {
+		if (cropperInputs.cropperInstance) {
+			cropperInputs.cropperInstance.getCroppedCanvas().toBlob((blob) => {
 				if (blob) {
 					const reader = new FileReader();
 					reader.onload = () => {
-						if (extraInputs.currentImageType === 'profile') {
+						if (cropperInputs.currentImageType === 'profile') {
 							card.photos.profile = reader.result as string;
 						} else {
 							card.photos.company = reader.result as string;
@@ -244,7 +239,7 @@
 					</div>
 
 					<div
-						class={`fixed inset-0 z-50 flex items-center justify-center bg-black/50 ${!extraInputs.cropperModal ? 'hidden' : ''}`}
+						class={`fixed inset-0 z-50 flex items-center justify-center bg-black/50 ${!cropperInputs.isOpen ? 'hidden' : ''}`}
 					>
 						<div class="relative w-full max-w-4xl rounded-lg bg-white p-6 shadow-xl">
 							<div class="mb-4 flex items-center justify-between border-b pb-4">
