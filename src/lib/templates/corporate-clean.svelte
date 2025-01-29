@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { extraInputs } from '$lib/extra-inputs.svelte';
 	import { getIcons } from '$lib/icon';
 	import type { Card } from '$lib/types';
 	import { fade } from 'svelte/transition';
@@ -160,7 +161,7 @@
 										<table cellspacing="0" cellpadding="0" style="display: inline-block;">
 											<tbody>
 												<tr>
-													{#if card.linkedIn}
+													<!-- {#if card.linkedIn}
 														<td style="padding-right: 8px;">
 															<a
 																href={card.linkedIn}
@@ -191,7 +192,20 @@
 																/>
 															</a>
 														</td>
-													{/if}
+													{/if} -->
+													{#each extraInputs.socialInputs as card}
+														<td>
+															<a href={card.value} target="_blank" style="text-decoration: none;">
+																<img
+																	src={icons[card.icon]}
+																	alt={card.id}
+																	width="16"
+																	height="16"
+																	style="vertical-align: middle;"
+																/>
+															</a>
+														</td>
+													{/each}
 												</tr>
 											</tbody>
 										</table>

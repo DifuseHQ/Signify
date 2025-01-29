@@ -103,7 +103,9 @@ export async function getIcons(size: string, color: string): Promise<{ [key: str
 		'mdi:web',
 		'mdi:linkedin',
 		'mdi:twitter',
-		'mdi:map-marker'
+		'mdi:map-marker',
+		'mdi:facebook',
+		'mdi:instagram'
 	];
 
 	const iconData: { [key: string]: string } = {};

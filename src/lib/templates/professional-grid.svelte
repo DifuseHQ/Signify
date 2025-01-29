@@ -3,6 +3,7 @@
 	import type { Card } from '$lib/types';
 	import { generateQR, generateVCard } from '$lib/utils';
 	import { fade } from 'svelte/transition';
+	import { extraInputs } from '$lib/extra-inputs.svelte';
 
 	interface Props {
 		card: Card;
@@ -161,7 +162,7 @@
 								</tr>
 								<tr>
 									<td colspan="2" style="padding-bottom:5px;padding-left: 10px;display:flex;">
-										{#if card.linkedIn}
+										<!-- {#if card.linkedIn}
 											<a
 												href={card.linkedIn}
 												target="_blank"
@@ -186,7 +187,19 @@
 													style="vertical-align: middle;"
 												/>
 											</a>
-										{/if}
+										{/if} -->
+
+										{#each extraInputs.socialInputs as card}
+											<a href={card.value} target="_blank" style="text-decoration: none;">
+												<img
+													src={icons[card.icon]}
+													alt={card.id}
+													width="16"
+													height="16"
+													style="vertical-align: middle;"
+												/>
+											</a>
+										{/each}
 									</td>
 								</tr>
 							</tbody>
