@@ -1,4 +1,4 @@
-import { getIcon } from '@iconify/svelte';
+import { getIcon, loadIcon } from '@iconify/svelte';
 import { browser } from '$app/environment';
 
 export async function generateSVG(
@@ -7,6 +7,7 @@ export async function generateSVG(
 	color: string = 'currentColor'
 ): Promise<string> {
 	const fetchIconData = async (): Promise<{ body: string; width: number; height: number }> => {
+		await loadIcon(iconName);
 		let iconData = getIcon(iconName);
 		let attempts = 0;
 		const maxAttempts = 10;
