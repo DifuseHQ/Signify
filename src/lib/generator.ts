@@ -3,7 +3,7 @@ import { type Card, type SelectedColors } from './types';
 export function getDefaultCard(selectedColors: SelectedColors): Card {
 	const hostname = window.location.hostname;
 	const card: Card = {
-		template: 'professional-grid',
+		template: 'corporate-highlight',
 		name: 'Hayzam Sherif',
 		title: 'VP - Development',
 		company: 'Iridia Solutions Private Limited',
@@ -19,6 +19,15 @@ export function getDefaultCard(selectedColors: SelectedColors): Card {
 			profile:
 				'https://avatars.githubusercontent.com/u/3922884?s=400&u=441b2ae32a36f919fa3dc4bea6ce478f0f42e1fc&v=4',
 			company: 'https://downloads-bucket.difuse.io/98e83c79_logo-only.png'
+		},
+		custom: {
+			corporateHighlight: {
+				photos: {
+					company: 'https://adhoc-bucket.iptechnics.com/ipt-sig-assets/logo4.png'
+				},
+				tollFree: '800-LINUX',
+				mobile: '+971-50-1234567'
+			}
 		}
 	};
 

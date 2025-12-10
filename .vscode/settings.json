@@ -1,15 +1,10 @@
 {
-    "eslint.validate": ["svelte", "typescript"],
-    "editor.formatOnSave": true,
-    "[svelte]": {
-      "editor.defaultFormatter": "svelte.svelte-vscode"
-    },
-    "[typescript]": {
-      "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-    "svelte.plugin.typescript.diagnostics.enable": true,
-    "svelte.plugin.svelte.diagnostics.enable": true,
-    "typescript.tsserver.experimental.enableProjectDiagnostics": true,
-    "css.customData": [".vscode/tailwind.json"]
-  }
-  
+	"editor.detectIndentation": false,
+	"explorer.sortOrder": "filesFirst",
+	"explorer.confirmDelete": false,
+	"workbench.tree.indent": 18,
+	"window.title": "${rootName}",
+	"explorer.compactFolders": false,
+	"workbench.startupEditor": "none",
+	"editor.formatOnSave": true
+}

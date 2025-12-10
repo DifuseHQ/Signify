@@ -9,7 +9,8 @@ export type Template =
 	| 'corporate-clean'
 	| 'elegant-minimal'
 	| 'modern-compact'
-	| 'professional-grid';
+	| 'professional-grid'
+	| 'corporate-highlight';
 
 export interface Card {
 	template: Template;
@@ -31,5 +32,14 @@ export interface Card {
 	photos: {
 		profile: string | null;
 		company: string | null;
+	};
+	custom?: {
+		corporateHighlight?: {
+			photos: {
+				company: string | null;
+			};
+			mobile?: string;
+			tollFree: string;
+		};
 	};
 }
