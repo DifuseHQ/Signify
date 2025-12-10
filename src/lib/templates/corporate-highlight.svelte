@@ -2,6 +2,7 @@
 	import { getIcons } from '$lib/icon';
 	import type { Card } from '$lib/types';
 	import { fade } from 'svelte/transition';
+	import { extraInputs } from '$lib/extra-inputs.svelte';
 
 	interface Props {
 		card: Card;
@@ -12,7 +13,7 @@
 
 	$effect(() => {
 		getIcons('16px', card.colours.primary).then((data) => {
-		    icons = data;
+			icons = data;
 		});
 	});
 </script>
@@ -21,239 +22,274 @@
 	{#if icons && card}
 		<table
 			id="email-signature"
-			width="100%"
-			cellspacing="0"
 			cellpadding="0"
+			cellspacing="0"
 			border="0"
-			style="background-color:{card.colours.background};width:100%;max-width:680px;
-				font-family:Arial, sans-serif;line-height:1.4;margin:0;padding:10px;border-radius:12px;"
+			style="font-family:Arial, sans-serif;font-size:13px;color:#333333;width:710px;background-color:{card
+				.colours.background};line-height:1.4;margin:0;padding:10px;border-radius:12px;"
 		>
 			<tbody>
 				<tr>
-                    <td
-                        style="padding:4px 32px 4px 4px;vertical-align:top;
-                        {card.custom?.corporateHighlight?.photos.company ? 'width:65%' : 'width:260px'};"
-                    >
-						<table
-							width="100%"
-							cellspacing="0"
-							cellpadding="0"
-							border="0"
-							style="background-color:#f4f7fb;border-radius:20px;padding:18px 20px;"
-						>
+					<td valign="top" style="padding:0 20px 10px 0; width:370px;">
+						<table cellpadding="0" cellspacing="0" border="0">
 							<tbody>
 								<tr>
-                                    <td style="vertical-align:middle;">
-                                        {#if card.custom?.corporateHighlight?.photos.company}
-                                            <img
-                                                src={card.custom.corporateHighlight.photos.company}
-                                                alt={card.company}
-                                                style="max-width:100%;height:auto;display:block;"
-                                            />
-                                        {/if}
-                                    </td>
+									<td style="padding-top:5px;">
+										{#if card.custom?.corporateHighlight?.photos.company}
+											<img
+												src={card.custom.corporateHighlight.photos.company}
+												alt={card.company}
+												style="display:block; border:0; height:157px; width:370px;"
+											/>
+										{/if}
+									</td>
 								</tr>
-							</tbody>
-						</table>
 
-						<table
-							width="100%"
-							cellspacing="0"
-							cellpadding="0"
-							border="0"
-							style="margin-top:10px;"
-						>
-							<tbody>
-                                <tr>
-                                    <td
-                                        style="vertical-align:top;line-height:16px;"
-                                    >
-                                        {#if card.linkedIn}
-                                            <a
-                                                href={card.linkedIn}
-                                                target="_blank"
-                                                style="text-decoration:none;margin-right:8px;display:inline-block;"
-                                            >
-                                                <img
-                                                    src={icons['mdi:linkedin']}
-                                                    alt="LinkedIn"
-                                                    style="width:16px;height:16px;display:block;"
-                                                />
-                                            </a>
-                                        {/if}
-                                        {#if card.twitter}
-                                            <a
-                                                href={card.twitter}
-                                                target="_blank"
-                                                style="text-decoration:none;margin-right:8px;display:inline-block;"
-                                            >
-                                                <img
-                                                    src={icons['mdi:twitter']}
-                                                    alt="Twitter"
-                                                    style="width:16px;height:16px;display:block;"
-                                                />
-                                            </a>
-                                        {/if}
-                                        {#if card.websiteLink}
-                                            <a
-                                                href={card.websiteLink}
-                                                target="_blank"
-                                                style="text-decoration:none;display:inline-block;"
-                                            >
-                                                <img
-                                                    src={icons['mdi:web']}
-                                                    alt="Website"
-                                                    style="width:16px;height:16px;display:block;"
-                                                />
-                                            </a>
-                                        {/if}
-                                    </td>
+								<tr>
+									<td style="padding-top:15px; font-size:11px; color:#666666;">
+										<table cellpadding="0" cellspacing="0" border="0" width="100%">
+											<tbody>
+												<tr>
+													<td align="left">
+														{#each extraInputs.socialInputs as card}
+															<a
+																href={card.linkedIn}
+																target="_blank"
+																style="text-decoration:none; border:0; outline:none; display:inline-block; margin-right:20px;"
+															>
+																<img
+																	src={icons[card.icon]}
+																	alt={card.id}
+																	width="20"
+																	height="20"
+																	style="display:block; border:0;"
+																/>
+															</a>
+														{/each}
 
-                                    <td
-                                        style="text-align:right;font-size:11px;color:#333;
-                                        vertical-align:top;line-height:16px;"
-                                    >
-                                        <span style="white-space:nowrap;display:inline-block;">
-                                            <img
-                                                src={icons['mdi:phone']}
-                                                alt="Phone"
-                                                style="width:14px;height:14px;margin-right:4px;
-                                                display:inline-block;vertical-align:top;"
-                                            />
-                                            <span style="display:inline-block;vertical-align:top;font-size:11px;font-weight:500;">
-                                                {card.custom?.corporateHighlight?.tollFree}
-                                            </span>
-                                        </span>
-                                    </td>
-                                </tr>
+														<!-- {#if card.linkedIn}
+															<a
+																href={card.linkedIn}
+																target="_blank"
+																style="text-decoration:none; border:0; outline:none; display:inline-block; margin-right:20px;"
+															>
+																<img
+																	src={icons['mdi:linkedin']}
+																	alt="LinkedIn"
+																	width="20"
+																	height="20"
+																	style="display:block; border:0;"
+																/>
+															</a>
+														{/if}
+														{#if card.twitter}
+															<a
+																href={card.twitter}
+																target="_blank"
+																style="text-decoration:none; border:0; outline:none; display:inline-block; margin-right:20px;"
+															>
+																<img
+																	src={icons['mdi:twitter']}
+																	alt="Twitter"
+																	width="20"
+																	height="20"
+																	style="display:block; border:0;"
+																/>
+															</a>
+														{/if}
+														{#if card.websiteLink}
+															<a
+																href={card.websiteLink}
+																target="_blank"
+																style="text-decoration:none; border:0; outline:none; display:inline-block;"
+															>
+																<img
+																	src={icons['mdi:web']}
+																	alt="Website"
+																	width="20"
+																	height="20"
+																	style="display:block; border:0;"
+																/>
+															</a>
+														{/if} -->
+													</td>
 
+													<td align="right" valign="middle">
+														<table cellpadding="0" cellspacing="0" border="0">
+															<tbody>
+																<tr>
+																	<td valign="middle" style="padding-right:8px;">
+																		<a
+																			href={'tel:' +
+																				(card.custom?.corporateHighlight?.tollFree || '800-LINUX')}
+																			style="text-decoration:none;"
+																		>
+																			<img
+																				src={icons['mdi:phone']}
+																				alt="call"
+																				width="20"
+																				height="20"
+																				style="display:block; border:0;"
+																			/>
+																		</a>
+																	</td>
+																	<td valign="middle" style="font-size:16px;white-space:nowrap;">
+																		{card.custom?.corporateHighlight?.tollFree || '800-LINUX'}
+																	</td>
+																</tr>
+															</tbody>
+														</table>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</td>
+								</tr>
 							</tbody>
 						</table>
 					</td>
 
-					<!-- RIGHT PANEL -->
-					<td style="padding:4px 4px 4px 0;vertical-align:top;">
-						<table width="100%" cellspacing="0" cellpadding="0" border="0">
+					<td valign="top" style="padding:0 0 10px 20px;">
+						<table cellpadding="0" cellspacing="0" border="0">
 							<tbody>
 								<tr>
 									<td
-										style="font-size:18px;font-weight:600;color:{card.colours.primary};
-											padding-bottom:4px;white-space:nowrap;letter-spacing: 0.5px;"
+										style="font-size:30px;font-weight:bold;color:{card.colours
+											.primary};padding-bottom:8px;"
 									>
 										{card.name}
 									</td>
 								</tr>
 								<tr>
 									<td
-										style="font-size:13px;font-weight:400;color:{card.colours.text};padding-bottom:16px;white-space:nowrap;letter-spacing: 0.5px;"
+										style="font-size:16px;font-weight:bold;padding-bottom:8px;color:{card.colours
+											.text};"
 									>
 										{card.title}
 									</td>
 								</tr>
 
 								<tr>
-									<td
-										style="font-size:12px;color:{card.colours.text};
-										padding-bottom:8px;white-space:nowrap;"
-									>
-										<img
-											src={icons['lucide:mail']}
-											alt="Email"
-											style="width:14px;height:14px;margin-right:6px;
-											vertical-align:middle;display:inline-block;"
-										/>
-										<a
-											href="mailto:{card.email}"
-											style="color:{card.colours.text};text-decoration:none;
-											display:inline-block;vertical-align:middle;"
-										>
-											{card.email}
-										</a>
-									</td>
-								</tr>
+									<td style="font-size:16px;line-height:1.8;color:#000000;">
+										<table cellpadding="0" cellspacing="0" border="0">
+											<tbody>
+												<tr>
+													<td style="padding:0 12px 7px 0;">
+														<img
+															src={icons['mdi:phone']}
+															width="20"
+															height="20"
+															style="display:block; border:0;"
+															alt="phone"
+														/>
+													</td>
+													<td style="padding:0 0 7px 0;">
+														<a
+															href={'tel:' + card.phone}
+															style="color:#000000; text-decoration:none;"
+														>
+															{card.phone}
+														</a>
+													</td>
+												</tr>
+											</tbody>
+										</table>
 
-                                {#if card.custom?.corporateHighlight?.mobile}
-                                    <tr>
-                                        <td
-                                            style="font-size:12px;color:{card.colours.text};
-                                            padding-bottom:8px;white-space:nowrap;"
-                                        >
-                                            <img
-                                                src={icons['material-symbols:mobile-outline']}
-                                                alt="Mobile"
-                                                style="width:14px;height:14px;margin-right:6px;
-                                                vertical-align:middle;display:inline-block;"
-                                            />
-                                            <a
-                                                href="tel:{card.custom.corporateHighlight.mobile}"
-                                                style="color:{card.colours.text};text-decoration:none;
-                                                display:inline-block;vertical-align:middle;"
-                                            >
-                                                {card.custom.corporateHighlight.mobile}
-                                            </a>
-                                        </td>
-                                    </tr>
-                                {/if}
+										{#if card.custom?.corporateHighlight?.mobile}
+											<table cellpadding="0" cellspacing="0" border="0">
+												<tbody>
+													<tr>
+														<td style="padding:0 12px 7px 0;">
+															<img
+																src={icons['material-symbols:mobile-outline']}
+																width="20"
+																height="20"
+																style="display:block; border:0;"
+																alt="mobile"
+															/>
+														</td>
+														<td style="padding:0 0 7px 0;">
+															<a
+																href={'tel:' + card.custom.corporateHighlight.mobile}
+																style="color:#000000; text-decoration:none;"
+															>
+																{card.custom.corporateHighlight.mobile}
+															</a>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+										{/if}
 
-                                <tr>
-									<td
-										style="font-size:12px;color:{card.colours.text};
-										padding-bottom:8px;white-space:nowrap;"
-									>
-										<img
-											src={icons['mdi:phone']}
-											alt="Phone"
-											style="width:14px;height:14px;margin-right:6px;
-											vertical-align:middle;display:inline-block;"
-										/>
-										<a
-											href="tel:{card.phone}"
-											style="color:{card.colours.text};text-decoration:none;
-											display:inline-block;vertical-align:middle;"
-										>
-											{card.phone}
-										</a>
-									</td>
-								</tr>
+										<table cellpadding="0" cellspacing="0" border="0">
+											<tbody>
+												<tr>
+													<td style="padding:0 12px 7px 0;">
+														<img
+															src={icons['lucide:mail']}
+															width="20"
+															height="20"
+															style="display:block; border:0;"
+															alt="mail"
+														/>
+													</td>
+													<td style="padding:0 0 7px 0;">
+														<a
+															href={'mailto:' + card.email}
+															style="color:#000000; text-decoration:none;"
+														>
+															{card.email}
+														</a>
+													</td>
+												</tr>
+											</tbody>
+										</table>
 
-								<tr>
-									<td
-										style="font-size:12px;color:{card.colours.text};
-										padding-bottom:8px;white-space:nowrap;"
-									>
-										<img
-											src={icons['mdi:web']}
-											alt="Website"
-											style="width:14px;height:14px;margin-right:6px;
-											vertical-align:middle;display:inline-block;"
-										/>
-										<a
-											href={card.websiteLink}
-											style="color:{card.colours.text};text-decoration:none;
-											display:inline-block;vertical-align:middle;"
-										>
-											{card.website}
-										</a>
-									</td>
-								</tr>
+										<table cellpadding="0" cellspacing="0" border="0">
+											<tbody>
+												<tr>
+													<td style="padding:0 12px 7px 0;">
+														<img
+															src={icons['mdi:web']}
+															width="20"
+															height="20"
+															style="display:block; border:0;"
+															alt="global"
+														/>
+													</td>
+													<td style="padding:0 0 7px 0;">
+														<a href={card.websiteLink} style="color:#000000; text-decoration:none;">
+															{card.website}
+														</a>
+													</td>
+												</tr>
+											</tbody>
+										</table>
 
-								<tr>
-									<td
-										style="font-size:12px;color:{card.colours.text};
-										padding-bottom:8px;white-space:nowrap;"
-									>
-										<img
-											src={icons['mdi:map-marker']}
-											alt="Website"
-											style="width:14px;height:14px;margin-right:6px;
-											vertical-align:middle;display:inline-block;"
-										/>
-										<span
-											style="color:{card.colours.text};text-decoration:none;
-											display:inline-block;vertical-align:middle;"
-										>
-											{card.location}
-										</span>
+										<table cellpadding="0" cellspacing="0" border="0">
+											<tbody>
+												<tr>
+													<td style="padding:0 12px 7px 0;">
+														<img
+															src={icons['mdi:map-marker']}
+															width="20"
+															height="20"
+															style="display:block; border:0;"
+															alt="location"
+														/>
+													</td>
+													<td style="padding:0 0 7px 0;">
+														<a
+															href={card.custom?.corporateHighlight?.mapLink ||
+																'https://maps.app.goo.gl/PFhrbjWH76xiqz7U7'}
+															style="color:#000000; text-decoration:none;"
+														>
+															{card.location}
+														</a>
+													</td>
+												</tr>
+											</tbody>
+										</table>
 									</td>
 								</tr>
 							</tbody>
