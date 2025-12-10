@@ -28,7 +28,7 @@
 		{ id: 'elegant-minimal', label: 'Elegant Minimal' },
 		{ id: 'modern-compact', label: 'Modern Compact' },
 		{ id: 'professional-grid', label: 'Professional Grid (QR)' },
-		{ id: 'corporate-highlight', label: 'Corporate Highlight' },
+		{ id: 'corporate-highlight', label: 'Corporate Highlight' }
 	];
 
 	let pickerWidth: number = $state(0);
@@ -107,6 +107,15 @@
 				return;
 			}
 
+			if (card.template === 'corporate-highlight') {
+				const reader = new FileReader();
+				reader.onload = () => {
+					card.custom.corporateHighlight.photos.company = reader.result as string;
+				};
+				reader.readAsDataURL(blob);
+				return;
+			}
+
 			await processImage(blob, type, imageElement);
 		} catch (error) {
 			console.error('Error handling image:', error);
@@ -167,7 +176,10 @@
 			<div>
 				<div class="mb-6 rounded-lg bg-white p-6 shadow">
 					<div class="mb-6 flex flex-col gap-4 md:flex-row">
-						<div class="flex w-full flex-grow items-start space-x-4" class:hidden={card.template === 'corporate-highlight'}>
+						<div
+							class="flex w-full flex-grow items-start space-x-4"
+							class:hidden={card.template === 'corporate-highlight'}
+						>
 							<div
 								class="flex h-16 w-16 items-center justify-center overflow-hidden rounded-xl bg-gray-100"
 							>
@@ -200,7 +212,10 @@
 							</div>
 						</div>
 
-						<div class="flex w-full flex-grow items-start space-x-4" class:hidden={card.template === 'corporate-highlight'}>
+						<div
+							class="flex w-full flex-grow items-start space-x-4"
+							class:hidden={card.template === 'corporate-highlight'}
+						>
 							<div
 								class="flex h-16 w-16 items-center justify-center overflow-hidden rounded-xl bg-gray-100"
 							>
@@ -233,45 +248,49 @@
 							</div>
 						</div>
 
-                        <div class="flex w-full flex-grow items-start space-x-4 space-y-8" class:hidden={card.template !== 'corporate-highlight'} class:block={card.template === 'corporate-highlight'}>
-                            <div
-                                class="flex w-full max-w-md items-center justify-center overflow-hidden rounded-xl"
-                            >
-                                {#if card.custom?.corporateHighlight?.photos.company}
-                                    <img
-                                        src={card.custom.corporateHighlight.photos.company}
-                                        class="max-h-32 w-full object-contain"
-                                        alt=""
-                                    />
-                                {:else}
-                                    <Icon icon="mdi:image-outline" class="h-12 w-12 text-gray-400" />
-                                {/if}
-                            </div>
+						<div
+							class="flex w-full flex-grow items-start space-x-4 space-y-8"
+							class:hidden={card.template !== 'corporate-highlight'}
+							class:block={card.template === 'corporate-highlight'}
+						>
+							<div
+								class="flex w-full max-w-md items-center justify-center overflow-hidden rounded-xl"
+							>
+								{#if card.custom?.corporateHighlight?.photos.company}
+									<img
+										src={card.custom.corporateHighlight.photos.company}
+										class="max-h-32 w-full object-contain"
+										alt=""
+									/>
+								{:else}
+									<Icon icon="mdi:image-outline" class="h-12 w-12 text-gray-400" />
+								{/if}
+							</div>
 							<div class="flex flex-col space-y-2">
-                                <label
-                                    class="flex cursor-pointer items-center whitespace-nowrap
+								<label
+									class="flex cursor-pointer items-center whitespace-nowrap
                                     rounded-lg bg-blue-50 px-4 py-1 text-blue-600
                                     hover:bg-blue-100 focus:ring-2 focus:ring-blue-300"
-                                >
-                                    <Icon icon="mdi:upload" class="mr-2 h-5 w-5" />
-                                    Upload Logo
-                                    <input
-                                        type="file"
-                                        accept="image/*"
-                                        class="hidden"
-                                        onchange={(e) => handleImage('company', 'file', e)}
-                                    />
-                                </label>
+								>
+									<Icon icon="mdi:upload" class="mr-2 h-5 w-5" />
+									Upload Logo
+									<input
+										type="file"
+										accept="image/*"
+										class="hidden"
+										onchange={(e) => handleImage('company', 'file', e)}
+									/>
+								</label>
 
-                                <button
-                                    class="flex items-center whitespace-nowrap
+								<button
+									class="flex items-center whitespace-nowrap
                                     rounded-lg border border-gray-300 px-4 py-1 text-gray-600
                                     hover:bg-gray-100 focus:ring-2 focus:ring-gray-300"
-                                    onclick={() => handleImage('company', 'url')}
-                                >
-                                    <Icon icon="mdi:link" class="mr-2 h-5 w-5" />
-                                    Add URL
-                                </button>
+									onclick={() => handleImage('company', 'url')}
+								>
+									<Icon icon="mdi:link" class="mr-2 h-5 w-5" />
+									Add URL
+								</button>
 							</div>
 						</div>
 
@@ -366,18 +385,18 @@
 								/>
 							</div>
 
-                            {#if card.template === 'corporate-highlight' && card.custom?.corporateHighlight?.mobile !== undefined}
-                                <div class="flex items-center space-x-2">
-                                    <Icon icon="mdi:cellphone" class="text-gray-500" />
-                                    <input
-                                        id="mobile"
-                                        type="text"
-                                        placeholder="Mobile Number"
-                                        class="w-full rounded-md border border-gray-300 px-3 py-2"
-                                        bind:value={card.custom.corporateHighlight.mobile}
-                                    />
-                                </div>
-                            {/if}
+							{#if card.template === 'corporate-highlight' && card.custom?.corporateHighlight?.mobile !== undefined}
+								<div class="flex items-center space-x-2">
+									<Icon icon="mdi:cellphone" class="text-gray-500" />
+									<input
+										id="mobile"
+										type="text"
+										placeholder="Mobile Number"
+										class="w-full rounded-md border border-gray-300 px-3 py-2"
+										bind:value={card.custom.corporateHighlight.mobile}
+									/>
+								</div>
+							{/if}
 
 							<div class="flex items-center space-x-2">
 								<Icon icon="mdi:phone" class="text-gray-500" />
@@ -410,18 +429,18 @@
 								/>
 							</div>
 
-                            {#if card.template === 'corporate-highlight' && card.custom?.corporateHighlight?.tollFree !== undefined}
-                                <div class="flex items-center space-x-2">
-                                    <Icon icon="healthicons:call-centre" class="text-gray-500" />
-                                    <input
-                                        id="toll-free"
-                                        type="text"
-                                        placeholder="Toll Free Number"
-                                        class="w-full rounded-md border border-gray-300 px-3 py-2"
-                                        bind:value={card.custom.corporateHighlight.tollFree}
-                                    />
-                                </div>
-                            {/if}
+							{#if card.template === 'corporate-highlight' && card.custom?.corporateHighlight?.tollFree !== undefined}
+								<div class="flex items-center space-x-2">
+									<Icon icon="healthicons:call-centre" class="text-gray-500" />
+									<input
+										id="toll-free"
+										type="text"
+										placeholder="Toll Free Number"
+										class="w-full rounded-md border border-gray-300 px-3 py-2"
+										bind:value={card.custom.corporateHighlight.tollFree}
+									/>
+								</div>
+							{/if}
 
 							{#if extraInputs.showModal == true}
 								<div
