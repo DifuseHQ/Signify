@@ -51,67 +51,21 @@
 											<tbody>
 												<tr>
 													<td align="left">
-														{#each extraInputs.socialInputs as card}
+														{#each extraInputs.socialInputs as input}
 															<a
-																href={card.linkedIn}
+																href={input.value}
 																target="_blank"
 																style="text-decoration:none; border:0; outline:none; display:inline-block; margin-right:20px;"
 															>
 																<img
-																	src={icons[card.icon]}
-																	alt={card.id}
+																	src={icons[input.icon]}
+																	alt={input.id}
 																	width="20"
 																	height="20"
 																	style="display:block; border:0;"
 																/>
 															</a>
 														{/each}
-
-														<!-- {#if card.linkedIn}
-															<a
-																href={card.linkedIn}
-																target="_blank"
-																style="text-decoration:none; border:0; outline:none; display:inline-block; margin-right:20px;"
-															>
-																<img
-																	src={icons['mdi:linkedin']}
-																	alt="LinkedIn"
-																	width="20"
-																	height="20"
-																	style="display:block; border:0;"
-																/>
-															</a>
-														{/if}
-														{#if card.twitter}
-															<a
-																href={card.twitter}
-																target="_blank"
-																style="text-decoration:none; border:0; outline:none; display:inline-block; margin-right:20px;"
-															>
-																<img
-																	src={icons['mdi:twitter']}
-																	alt="Twitter"
-																	width="20"
-																	height="20"
-																	style="display:block; border:0;"
-																/>
-															</a>
-														{/if}
-														{#if card.websiteLink}
-															<a
-																href={card.websiteLink}
-																target="_blank"
-																style="text-decoration:none; border:0; outline:none; display:inline-block;"
-															>
-																<img
-																	src={icons['mdi:web']}
-																	alt="Website"
-																	width="20"
-																	height="20"
-																	style="display:block; border:0;"
-																/>
-															</a>
-														{/if} -->
 													</td>
 
 													<td align="right" valign="middle">
@@ -279,13 +233,9 @@
 														/>
 													</td>
 													<td style="padding:0 0 7px 0;">
-														<a
-															href={card.custom?.corporateHighlight?.mapLink ||
-																'https://maps.app.goo.gl/PFhrbjWH76xiqz7U7'}
-															style="color:#000000; text-decoration:none;"
-														>
+														<span>
 															{card.location}
-														</a>
+														</span>
 													</td>
 												</tr>
 											</tbody>

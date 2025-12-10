@@ -161,38 +161,6 @@
 										<table cellspacing="0" cellpadding="0" style="display: inline-block;">
 											<tbody>
 												<tr>
-													<!-- {#if card.linkedIn}
-														<td style="padding-right: 8px;">
-															<a
-																href={card.linkedIn}
-																target="_blank"
-																style="text-decoration: none; color: {card.colours.primary};"
-															>
-																<img
-																	src={icons['mdi:linkedin']}
-																	alt="LinkedIn"
-																	width="16"
-																	height="16"
-																/>
-															</a>
-														</td>
-													{/if}
-													{#if card.twitter}
-														<td>
-															<a
-																href={card.twitter}
-																target="_blank"
-																style="text-decoration: none; color: {card.colours.primary};"
-															>
-																<img
-																	src={icons['mdi:twitter']}
-																	alt="Twitter"
-																	width="16"
-																	height="16"
-																/>
-															</a>
-														</td>
-													{/if} -->
 													{#each extraInputs.socialInputs as card}
 														<td>
 															<a href={card.value} target="_blank" style="text-decoration: none;">

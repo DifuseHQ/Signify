@@ -110,7 +110,9 @@
 			if (card.template === 'corporate-highlight') {
 				const reader = new FileReader();
 				reader.onload = () => {
-					card.custom.corporateHighlight.photos.company = reader.result as string;
+                    if (card.custom && card.custom.corporateHighlight) {
+                        card.custom.corporateHighlight.photos.company = reader.result as string;
+                    }
 				};
 				reader.readAsDataURL(blob);
 				return;
