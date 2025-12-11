@@ -29,8 +29,8 @@
       style="font-family: Arial, sans-serif;font-size: 13px;color: #111827;width: 500px;background-color: {card.colours.background};line-height: 1.4;margin: 0;padding: 10px 14px;border-radius: 10px;"
     >
       <tbody>
-        <tr>
-          <td width="70" valign="middle" style="padding-right: 10px;">
+        <tr >
+          <td width="70" valign="middle" style="padding-bottom: 10px;padding-right: 10px;">
             {#if card.photos.profile}
               <img
                 src={card.photos.profile}
@@ -40,7 +40,7 @@
             {/if}
           </td>
 
-          <td valign="middle" style="padding-right: 20px; border-right: 1px solid {card.colours.primary};">
+          <td valign="middle" style="padding-bottom: 10px;padding-right: 20px; border-right: 1px solid {card.colours.primary};">
             <p
               style="margin: 0;font-size: 16px;font-weight: bold;color: {card.colours.primary};white-space: nowrap;"
             >
@@ -63,7 +63,7 @@
             </p>
           </td>
 
-          <td valign="middle" style="padding-left: 18px;">
+          <td valign="middle" style="padding-bottom: 10px;padding-left: 18px;">
             <table cellpadding="0" cellspacing="0" border="0" width="100%">
               <tbody>
                 <tr>
@@ -179,7 +179,6 @@
           </td>
         </tr>
 
-        <!-- SOCIAL + CTA BAR -->
         <tr>
           <td colspan="3" style="padding-top: 8px; border-top: 1px solid {card.colours.primary};">
             <table cellpadding="0" cellspacing="0" border="0" width="100%">
