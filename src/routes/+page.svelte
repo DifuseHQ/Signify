@@ -295,14 +295,16 @@
 						</div>
 					</div>
 
-					<div class="flex items-center space-x-2" title="Add More social media">
-						<button
-							onclick={() => (extraInputs.showModal = true)}
-							class="py- flex w-auto items-center space-x-2 rounded-md px-4 focus:outline-none"
-						>
-							<Icon icon="simple-line-icons:plus" class="h-6 w-6 text-blue-500" />
-						</button>
-					</div>
+					{#if card.template !== 'elegant-minimal' && card.template !== 'modern-stack'}
+						<div class="flex items-center space-x-2" title="Add More social media">
+							<button
+								onclick={() => (extraInputs.showModal = true)}
+								class="py- flex w-auto flex-col items-center gap-2 space-x-2 rounded-md px-4 focus:outline-none"
+							>
+								<Icon icon="simple-line-icons:plus" class="h-6 w-6 text-blue-500" />
+							</button>
+						</div>
+					{/if}
 				</div>
 
 				<div

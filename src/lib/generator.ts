@@ -3,7 +3,7 @@ import { type Card, type SelectedColors } from './types';
 export function getDefaultCard(selectedColors: SelectedColors): Card {
     const hostname = window.location.hostname;
     const card: Card = {
-        template: 'corporate-clean',
+        template: 'professional-grid',
         name: 'Hayzam Sherif',
         title: 'VP - Development',
         company: 'Iridia Solutions Private Limited',
