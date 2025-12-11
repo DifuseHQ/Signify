@@ -110,9 +110,9 @@
 			if (card.template === 'corporate-highlight') {
 				const reader = new FileReader();
 				reader.onload = () => {
-                    if (card.custom && card.custom.corporateHighlight) {
-                        card.custom.corporateHighlight.photos.company = reader.result as string;
-                    }
+					if (card.custom && card.custom.corporateHighlight) {
+						card.custom.corporateHighlight.photos.company = reader.result as string;
+					}
 				};
 				reader.readAsDataURL(blob);
 				return;
@@ -175,406 +175,337 @@
 		</button>
 
 		<div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
-			<div>
-				<div class="mb-6 rounded-lg bg-white p-6 shadow">
-					<div class="mb-6 flex flex-col gap-4 md:flex-row">
+			<div class="mb-6 rounded-lg bg-white p-6 shadow">
+				<div class="mb-6 flex flex-col gap-4 md:flex-row">
+					<div
+						class="flex w-full flex-grow items-start space-x-4"
+						class:hidden={card.template === 'corporate-highlight'}
+					>
 						<div
-							class="flex w-full flex-grow items-start space-x-4"
-							class:hidden={card.template === 'corporate-highlight'}
+							class="flex h-16 w-16 items-center justify-center overflow-hidden rounded-xl bg-gray-100"
 						>
-							<div
-								class="flex h-16 w-16 items-center justify-center overflow-hidden rounded-xl bg-gray-100"
-							>
-								{#if card.photos.profile}
-									<img src={card.photos.profile} class="h-full w-full object-cover" alt="" />
-								{:else}
-									<Icon icon="mdi:account-circle" class="h-10 w-10 text-gray-400" />
-								{/if}
-							</div>
-							<div class="flex flex-col space-y-2">
-								<label
-									class="flex cursor-pointer items-center rounded-lg bg-blue-50 px-4 py-1 text-blue-600 hover:bg-blue-100 focus:ring-2 focus:ring-blue-300"
-								>
-									<Icon icon="mdi:upload" class="mr-2 h-5 w-5" />
-									Upload Photo
-									<input
-										type="file"
-										accept="image/*"
-										class="hidden"
-										onchange={(e) => handleImage('profile', 'file', e)}
-									/>
-								</label>
-								<button
-									class="flex items-center rounded-lg border border-gray-300 px-4 py-1 text-gray-600 hover:bg-gray-100 focus:ring-2 focus:ring-gray-300"
-									onclick={() => handleImage('profile', 'url')}
-								>
-									<Icon icon="mdi:link" class="mr-2 h-5 w-5" />
-									Add URL
-								</button>
-							</div>
+							{#if card.photos.profile}
+								<img src={card.photos.profile} class="h-full w-full object-cover" alt="" />
+							{:else}
+								<Icon icon="mdi:account-circle" class="h-10 w-10 text-gray-400" />
+							{/if}
 						</div>
-
-						<div
-							class="flex w-full flex-grow items-start space-x-4"
-							class:hidden={card.template === 'corporate-highlight'}
-						>
-							<div
-								class="flex h-16 w-16 items-center justify-center overflow-hidden rounded-xl bg-gray-100"
+						<div class="flex flex-col space-y-2">
+							<label
+								class="flex cursor-pointer items-center rounded-lg bg-blue-50 px-4 py-1 text-blue-600 hover:bg-blue-100 focus:ring-2 focus:ring-blue-300"
 							>
-								{#if card.photos.company}
-									<img src={card.photos.company} class="h-full w-full object-cover" alt="" />
-								{:else}
-									<Icon icon="mdi:image-outline" class="h-10 w-10 text-gray-400" />
-								{/if}
-							</div>
-							<div class="flex flex-col space-y-2">
-								<label
-									class="flex cursor-pointer items-center rounded-lg bg-blue-50 px-4 py-1 text-blue-600 hover:bg-blue-100 focus:ring-2 focus:ring-blue-300"
-								>
-									<Icon icon="mdi:upload" class="mr-2 h-5 w-5" />
-									Upload Logo
-									<input
-										type="file"
-										accept="image/*"
-										class="hidden"
-										onchange={(e) => handleImage('company', 'file', e)}
-									/>
-								</label>
-								<button
-									class="flex items-center rounded-lg border border-gray-300 px-4 py-1 text-gray-600 hover:bg-gray-100 focus:ring-2 focus:ring-gray-300"
-									onclick={() => handleImage('company', 'url')}
-								>
-									<Icon icon="mdi:link" class="mr-2 h-5 w-5" />
-									Add URL
-								</button>
-							</div>
-						</div>
-
-						<div
-							class="flex w-full flex-grow items-start space-x-4 space-y-8"
-							class:hidden={card.template !== 'corporate-highlight'}
-							class:block={card.template === 'corporate-highlight'}
-						>
-							<div
-								class="flex w-full max-w-md items-center justify-center overflow-hidden rounded-xl"
-							>
-								{#if card.custom?.corporateHighlight?.photos.company}
-									<img
-										src={card.custom.corporateHighlight.photos.company}
-										class="max-h-32 w-full object-contain"
-										alt=""
-									/>
-								{:else}
-									<Icon icon="mdi:image-outline" class="h-12 w-12 text-gray-400" />
-								{/if}
-							</div>
-							<div class="flex flex-col space-y-2">
-								<label
-									class="flex cursor-pointer items-center whitespace-nowrap
-                                    rounded-lg bg-blue-50 px-4 py-1 text-blue-600
-                                    hover:bg-blue-100 focus:ring-2 focus:ring-blue-300"
-								>
-									<Icon icon="mdi:upload" class="mr-2 h-5 w-5" />
-									Upload Logo
-									<input
-										type="file"
-										accept="image/*"
-										class="hidden"
-										onchange={(e) => handleImage('company', 'file', e)}
-									/>
-								</label>
-
-								<button
-									class="flex items-center whitespace-nowrap
-                                    rounded-lg border border-gray-300 px-4 py-1 text-gray-600
-                                    hover:bg-gray-100 focus:ring-2 focus:ring-gray-300"
-									onclick={() => handleImage('company', 'url')}
-								>
-									<Icon icon="mdi:link" class="mr-2 h-5 w-5" />
-									Add URL
-								</button>
-							</div>
-						</div>
-
-						<div class="flex items-center space-x-2" title="Add More social media">
+								<Icon icon="mdi:upload" class="mr-2 h-5 w-5" />
+								Upload Photo
+								<input
+									type="file"
+									accept="image/*"
+									class="hidden"
+									onchange={(e) => handleImage('profile', 'file', e)}
+								/>
+							</label>
 							<button
-								onclick={() => (extraInputs.showModal = true)}
-								class="py- flex w-auto items-center space-x-2 rounded-md px-4 focus:outline-none"
+								class="flex items-center rounded-lg border border-gray-300 px-4 py-1 text-gray-600 hover:bg-gray-100 focus:ring-2 focus:ring-gray-300"
+								onclick={() => handleImage('profile', 'url')}
 							>
-								<Icon icon="simple-line-icons:plus" class="h-6 w-6 text-blue-500" />
+								<Icon icon="mdi:link" class="mr-2 h-5 w-5" />
+								Add URL
 							</button>
 						</div>
 					</div>
 
 					<div
-						class={`fixed inset-0 z-50 flex items-center justify-center bg-black/50 ${!cropperInputs.isOpen ? 'hidden' : ''}`}
+						class="flex w-full flex-grow items-start space-x-4"
+						class:hidden={card.template === 'corporate-highlight'}
 					>
-						<div class="relative w-full max-w-4xl rounded-lg bg-white p-6 shadow-xl">
-							<div class="mb-4 flex items-center justify-between border-b pb-4">
-								<h3 class="text-xl font-semibold text-gray-900">Crop Image</h3>
-								<button onclick={closeCropperModal} class="text-gray-500 hover:text-gray-700">
-									<Icon icon="mdi:close" class="h-6 w-6" />
-								</button>
-							</div>
-
-							<div class="relative h-[60vh] min-h-[400px] w-full">
-								<!-- svelte-ignore a11y_img_redundant_alt -->
-								<img
-									bind:this={imageElement}
-									src=""
-									alt="Image to crop"
-									class="max-h-full max-w-full"
+						<div
+							class="flex h-16 w-16 items-center justify-center overflow-hidden rounded-xl bg-gray-100"
+						>
+							{#if card.photos.company}
+								<img src={card.photos.company} class="h-full w-full object-cover" alt="" />
+							{:else}
+								<Icon icon="mdi:image-outline" class="h-10 w-10 text-gray-400" />
+							{/if}
+						</div>
+						<div class="flex flex-col space-y-2">
+							<label
+								class="flex cursor-pointer items-center rounded-lg bg-blue-50 px-4 py-1 text-blue-600 hover:bg-blue-100 focus:ring-2 focus:ring-blue-300"
+							>
+								<Icon icon="mdi:upload" class="mr-2 h-5 w-5" />
+								Upload Logo
+								<input
+									type="file"
+									accept="image/*"
+									class="hidden"
+									onchange={(e) => handleImage('company', 'file', e)}
 								/>
-							</div>
-
-							<div class="mt-6 flex justify-end gap-3">
-								<button
-									onclick={closeCropperModal}
-									class="w-full rounded-md bg-gray-200 px-4 py-2 text-gray-700 hover:bg-gray-300 md:w-40"
-								>
-									Cancel
-								</button>
-								<button
-									onclick={getCroppedImage}
-									class="w-full rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 md:w-40"
-								>
-									Crop
-								</button>
-							</div>
+							</label>
+							<button
+								class="flex items-center rounded-lg border border-gray-300 px-4 py-1 text-gray-600 hover:bg-gray-100 focus:ring-2 focus:ring-gray-300"
+								onclick={() => handleImage('company', 'url')}
+							>
+								<Icon icon="mdi:link" class="mr-2 h-5 w-5" />
+								Add URL
+							</button>
 						</div>
 					</div>
 
-					<div>
-						<form class="grid grid-cols-1 gap-4 md:grid-cols-2">
-							<div class="flex items-center space-x-2">
-								<Icon icon="mdi:account" class="text-gray-500" />
-								<input
-									id="name"
-									type="text"
-									placeholder="Full Name"
-									class="w-full rounded-md border border-gray-300 px-3 py-2"
-									bind:value={card.name}
+					<div
+						class="flex w-full flex-grow items-start space-x-4 space-y-8"
+						class:hidden={card.template !== 'corporate-highlight'}
+						class:block={card.template === 'corporate-highlight'}
+					>
+						<div
+							class="flex w-full max-w-md items-center justify-center overflow-hidden rounded-xl"
+						>
+							{#if card.custom?.corporateHighlight?.photos.company}
+								<img
+									src={card.custom.corporateHighlight.photos.company}
+									class="max-h-32 w-full object-contain"
+									alt=""
 								/>
-							</div>
-							<div class="flex items-center space-x-2">
-								<Icon icon="mdi:badge-account" class="text-gray-500" />
-								<input
-									id="title"
-									type="text"
-									placeholder="Job Title"
-									class="w-full rounded-md border border-gray-300 px-3 py-2"
-									bind:value={card.title}
-								/>
-							</div>
-							<div class="flex items-center space-x-2">
-								<Icon icon="mdi:domain" class="text-gray-500" />
-								<input
-									id="company"
-									type="text"
-									placeholder="Company"
-									class="w-full rounded-md border border-gray-300 px-3 py-2"
-									bind:value={card.company}
-								/>
-							</div>
-							<div class="flex items-center space-x-2">
-								<Icon icon="mdi:email" class="text-gray-500" />
-								<input
-									id="email"
-									type="email"
-									placeholder="Email"
-									class="w-full rounded-md border border-gray-300 px-3 py-2"
-									bind:value={card.email}
-								/>
-							</div>
-
-							{#if card.template === 'corporate-highlight' && card.custom?.corporateHighlight?.mobile !== undefined}
-								<div class="flex items-center space-x-2">
-									<Icon icon="mdi:cellphone" class="text-gray-500" />
-									<input
-										id="mobile"
-										type="text"
-										placeholder="Mobile Number"
-										class="w-full rounded-md border border-gray-300 px-3 py-2"
-										bind:value={card.custom.corporateHighlight.mobile}
-									/>
-								</div>
+							{:else}
+								<Icon icon="mdi:image-outline" class="h-12 w-12 text-gray-400" />
 							{/if}
-
-							<div class="flex items-center space-x-2">
-								<Icon icon="mdi:phone" class="text-gray-500" />
+						</div>
+						<div class="flex flex-col space-y-2">
+							<label
+								class="flex cursor-pointer items-center whitespace-nowrap
+                                    rounded-lg bg-blue-50 px-4 py-1 text-blue-600
+                                    hover:bg-blue-100 focus:ring-2 focus:ring-blue-300"
+							>
+								<Icon icon="mdi:upload" class="mr-2 h-5 w-5" />
+								Upload Logo
 								<input
-									id="phone"
-									type="text"
-									placeholder="Phone"
-									class="w-full rounded-md border border-gray-300 px-3 py-2"
-									bind:value={card.phone}
+									type="file"
+									accept="image/*"
+									class="hidden"
+									onchange={(e) => handleImage('company', 'file', e)}
 								/>
-							</div>
+							</label>
 
-							<div class="flex items-center space-x-2">
-								<Icon icon="mdi:web" class="text-gray-500" />
-								<input
-									id="website"
-									placeholder="Website"
-									class="w-full rounded-md border border-gray-300 px-3 py-2"
-									bind:value={card.website}
-								/>
-							</div>
-							<div class="flex items-center space-x-2">
-								<Icon icon="mdi:map-marker" class="text-gray-500" />
-								<input
-									id="location"
-									type="text"
-									placeholder="Location"
-									class="w-full rounded-md border border-gray-300 px-3 py-2"
-									bind:value={card.location}
-								/>
-							</div>
+							<button
+								class="flex items-center whitespace-nowrap
+                                    rounded-lg border border-gray-300 px-4 py-1 text-gray-600
+                                    hover:bg-gray-100 focus:ring-2 focus:ring-gray-300"
+								onclick={() => handleImage('company', 'url')}
+							>
+								<Icon icon="mdi:link" class="mr-2 h-5 w-5" />
+								Add URL
+							</button>
+						</div>
+					</div>
 
-							{#if card.template === 'corporate-highlight' && card.custom?.corporateHighlight?.tollFree !== undefined}
-								<div class="flex items-center space-x-2">
-									<Icon icon="healthicons:call-centre" class="text-gray-500" />
-									<input
-										id="toll-free"
-										type="text"
-										placeholder="Toll Free Number"
-										class="w-full rounded-md border border-gray-300 px-3 py-2"
-										bind:value={card.custom.corporateHighlight.tollFree}
-									/>
-								</div>
-							{/if}
-
-							{#if extraInputs.showModal == true}
-								<div
-									class="fixed inset-0 z-10 flex items-center justify-center bg-black bg-opacity-50"
-									in:fade={{ duration: 300 }}
-									out:fade={{ duration: 300 }}
-								>
-									<div class="w-96 rounded-lg bg-white p-6">
-										<h2 class="mb-2 text-lg font-semibold">Select Social Media</h2>
-										<hr class="mb-2 border border-gray-300" />
-										<div class="max-h-[300px] space-y-3 overflow-y-auto">
-											{#each socialMediaOptions as option}
-												<button
-													onclick={() => addSocialInput(option)}
-													class="flex w-full items-center space-x-2 rounded-md p-2 hover:bg-gray-100
-													{extraInputs.socialInputs.some((input) => input.id === option.id)
-														? 'bg-blue-50 text-blue-600'
-														: ''}"
-													disabled={extraInputs.socialInputs.some(
-														(input) => input.id === option.id
-													)}
-												>
-													<Icon icon={option.icon} class="text-gray-500" />
-													<span>{option.placeholder}</span>
-													{#if extraInputs.socialInputs.some((input) => input.id === option.id)}
-														<Icon icon="mdi:check-circle" class="ml-auto text-blue-500" />
-													{/if}
-												</button>
-											{/each}
-										</div>
-										<button
-											onclick={() => (extraInputs.showModal = false)}
-											class="mt-4 w-full rounded-xl bg-blue-500 px-3 py-2 text-center text-white hover:bg-blue-700"
-										>
-											Cancel
-										</button>
-									</div>
-								</div>
-							{/if}
-
-							{#each extraInputs.socialInputs as input, index}
-								<div class="flex items-center space-x-2">
-									<Icon icon={input.icon} class="text-gray-500" />
-									<input
-										type="url"
-										placeholder={input.placeholder}
-										class="w-full rounded-md border border-gray-300 px-3 py-2"
-										bind:value={input.value}
-									/>
-									<button
-										onclick={() =>
-											(extraInputs.socialInputs = extraInputs.socialInputs.filter(
-												(_, i) => i !== index
-											))}
-										class="text-gray-400 hover:text-red-500"
-									>
-										<Icon icon="mdi:close-circle" class="h-5 w-5" />
-									</button>
-								</div>
-							{/each}
-						</form>
+					<div class="flex items-center space-x-2" title="Add More social media">
+						<button
+							onclick={() => (extraInputs.showModal = true)}
+							class="py- flex w-auto items-center space-x-2 rounded-md px-4 focus:outline-none"
+						>
+							<Icon icon="simple-line-icons:plus" class="h-6 w-6 text-blue-500" />
+						</button>
 					</div>
 				</div>
 
-				<div class="rounded-lg bg-white p-6 shadow">
-					<div class="">
-						<div class="mb-5 flex items-center justify-between">
-							<div class="flex items-center space-x-2">
-								<Icon icon="lucide:sparkles" class="h-5 w-5 text-indigo-500" />
-								<h2 class="text-lg font-semibold">Preview</h2>
-							</div>
-							<div class="dropdown-container relative inline-block">
-								<button
-									class="flex rounded-md bg-blue-500 px-4 py-2 text-white focus:outline-none"
-									onclick={() => (dropdown = !dropdown)}
-								>
-									Download
-								</button>
-								<div
-									in:fade={{ duration: 300 }}
-									out:fade={{ duration: 300 }}
-									class={`absolute left-1/2 z-10 mt-2 w-44 origin-top-left -translate-x-1/2 rounded-md border border-gray-200 bg-white shadow-xl ring-1 ring-black ring-opacity-5 focus:outline-none ${
-										dropdown ? 'block' : 'hidden'
-									}`}
-								>
-									<ul class="divide-y divide-gray-300">
-										<li>
-											<button
-												class="w-full cursor-pointer rounded px-4 py-2 text-left hover:bg-gray-200"
-												onclick={() => downloadSignature($state.snapshot(card), 'html')}
-											>
-												Download HTML
-											</button>
-										</li>
-										<li>
-											<button
-												class=" w-full cursor-pointer rounded px-4 py-2 text-left hover:bg-gray-200"
-												onclick={() => downloadSignature($state.snapshot(card), 'png')}
-											>
-												Download PNG
-											</button>
-										</li>
-									</ul>
-								</div>
-							</div>
+				<div
+					class={`fixed inset-0 z-50 flex items-center justify-center bg-black/50 ${!cropperInputs.isOpen ? 'hidden' : ''}`}
+				>
+					<div class="relative w-full max-w-4xl rounded-lg bg-white p-6 shadow-xl">
+						<div class="mb-4 flex items-center justify-between border-b pb-4">
+							<h3 class="text-xl font-semibold text-gray-900">Crop Image</h3>
+							<button onclick={closeCropperModal} class="text-gray-500 hover:text-gray-700">
+								<Icon icon="mdi:close" class="h-6 w-6" />
+							</button>
 						</div>
-						<div class="rounded border border-gray-50 p-4" id="preview">
-							<div id="email-signature-container"></div>
+
+						<div class="relative h-[60vh] min-h-[400px] w-full">
+							<!-- svelte-ignore a11y_img_redundant_alt -->
+							<img
+								bind:this={imageElement}
+								src=""
+								alt="Image to crop"
+								class="max-h-full max-w-full"
+							/>
+						</div>
+
+						<div class="mt-6 flex justify-end gap-3">
+							<button
+								onclick={closeCropperModal}
+								class="w-full rounded-md bg-gray-200 px-4 py-2 text-gray-700 hover:bg-gray-300 md:w-40"
+							>
+								Cancel
+							</button>
+							<button
+								onclick={getCroppedImage}
+								class="w-full rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 md:w-40"
+							>
+								Crop
+							</button>
 						</div>
 					</div>
+				</div>
+
+				<div>
+					<form class="grid grid-cols-1 gap-4 md:grid-cols-2">
+						<div class="flex items-center space-x-2">
+							<Icon icon="mdi:account" class="text-gray-500" />
+							<input
+								id="name"
+								type="text"
+								placeholder="Full Name"
+								class="w-full rounded-md border border-gray-300 px-3 py-2"
+								bind:value={card.name}
+							/>
+						</div>
+						<div class="flex items-center space-x-2">
+							<Icon icon="mdi:badge-account" class="text-gray-500" />
+							<input
+								id="title"
+								type="text"
+								placeholder="Job Title"
+								class="w-full rounded-md border border-gray-300 px-3 py-2"
+								bind:value={card.title}
+							/>
+						</div>
+						<div class="flex items-center space-x-2">
+							<Icon icon="mdi:domain" class="text-gray-500" />
+							<input
+								id="company"
+								type="text"
+								placeholder="Company"
+								class="w-full rounded-md border border-gray-300 px-3 py-2"
+								bind:value={card.company}
+							/>
+						</div>
+						<div class="flex items-center space-x-2">
+							<Icon icon="mdi:email" class="text-gray-500" />
+							<input
+								id="email"
+								type="email"
+								placeholder="Email"
+								class="w-full rounded-md border border-gray-300 px-3 py-2"
+								bind:value={card.email}
+							/>
+						</div>
+
+						{#if card.template === 'corporate-highlight' && card.custom?.corporateHighlight?.mobile !== undefined}
+							<div class="flex items-center space-x-2">
+								<Icon icon="mdi:cellphone" class="text-gray-500" />
+								<input
+									id="mobile"
+									type="text"
+									placeholder="Mobile Number"
+									class="w-full rounded-md border border-gray-300 px-3 py-2"
+									bind:value={card.custom.corporateHighlight.mobile}
+								/>
+							</div>
+						{/if}
+
+						<div class="flex items-center space-x-2">
+							<Icon icon="mdi:phone" class="text-gray-500" />
+							<input
+								id="phone"
+								type="text"
+								placeholder="Phone"
+								class="w-full rounded-md border border-gray-300 px-3 py-2"
+								bind:value={card.phone}
+							/>
+						</div>
+
+						<div class="flex items-center space-x-2">
+							<Icon icon="mdi:web" class="text-gray-500" />
+							<input
+								id="website"
+								placeholder="Website"
+								class="w-full rounded-md border border-gray-300 px-3 py-2"
+								bind:value={card.website}
+							/>
+						</div>
+						<div class="flex items-center space-x-2">
+							<Icon icon="mdi:map-marker" class="text-gray-500" />
+							<input
+								id="location"
+								type="text"
+								placeholder="Location"
+								class="w-full rounded-md border border-gray-300 px-3 py-2"
+								bind:value={card.location}
+							/>
+						</div>
+
+						{#if card.template === 'corporate-highlight' && card.custom?.corporateHighlight?.tollFree !== undefined}
+							<div class="flex items-center space-x-2">
+								<Icon icon="healthicons:call-centre" class="text-gray-500" />
+								<input
+									id="toll-free"
+									type="text"
+									placeholder="Toll Free Number"
+									class="w-full rounded-md border border-gray-300 px-3 py-2"
+									bind:value={card.custom.corporateHighlight.tollFree}
+								/>
+							</div>
+						{/if}
+
+						{#if extraInputs.showModal == true}
+							<div
+								class="fixed inset-0 z-10 flex items-center justify-center bg-black bg-opacity-50"
+								in:fade={{ duration: 300 }}
+								out:fade={{ duration: 300 }}
+							>
+								<div class="w-96 rounded-lg bg-white p-6">
+									<h2 class="mb-2 text-lg font-semibold">Select Social Media</h2>
+									<hr class="mb-2 border border-gray-300" />
+									<div class="max-h-[300px] space-y-3 overflow-y-auto">
+										{#each socialMediaOptions as option}
+											<button
+												onclick={() => addSocialInput(option)}
+												class="flex w-full items-center space-x-2 rounded-md p-2 hover:bg-gray-100
+													{extraInputs.socialInputs.some((input) => input.id === option.id)
+													? 'bg-blue-50 text-blue-600'
+													: ''}"
+												disabled={extraInputs.socialInputs.some((input) => input.id === option.id)}
+											>
+												<Icon icon={option.icon} class="text-gray-500" />
+												<span>{option.placeholder}</span>
+												{#if extraInputs.socialInputs.some((input) => input.id === option.id)}
+													<Icon icon="mdi:check-circle" class="ml-auto text-blue-500" />
+												{/if}
+											</button>
+										{/each}
+									</div>
+									<button
+										onclick={() => (extraInputs.showModal = false)}
+										class="mt-4 w-full rounded-xl bg-blue-500 px-3 py-2 text-center text-white hover:bg-blue-700"
+									>
+										Cancel
+									</button>
+								</div>
+							</div>
+						{/if}
+
+						{#each extraInputs.socialInputs as input, index}
+							<div class="flex items-center space-x-2">
+								<Icon icon={input.icon} class="text-gray-500" />
+								<input
+									type="url"
+									placeholder={input.placeholder}
+									class="w-full rounded-md border border-gray-300 px-3 py-2"
+									bind:value={input.value}
+								/>
+								<button
+									onclick={() =>
+										(extraInputs.socialInputs = extraInputs.socialInputs.filter(
+											(_, i) => i !== index
+										))}
+									class="text-gray-400 hover:text-red-500"
+								>
+									<Icon icon="mdi:close-circle" class="h-5 w-5" />
+								</button>
+							</div>
+						{/each}
+					</form>
 				</div>
 			</div>
 
-			<div>
-				<div class="mb-6 rounded-lg bg-white p-6 shadow">
-					<h2 class="mb-4 text-xl font-semibold">Templates</h2>
-
-					<div class="grid grid-cols-2 gap-4">
-						{#each templates as { id, label }}
-							<button
-								class={`transform rounded-xl border border-gray-300 px-4 py-2 transition duration-200 ease-in-out hover:scale-105 hover:bg-blue-50 hover:text-blue-600 ${
-									card.template === id ? 'bg-blue-100 text-blue-600 ring-2 ring-blue-300' : ''
-								} focus:outline-none ${id === 'professional-grid' ? '' : ''}`}
-								onclick={() => (card.template = id)}
-							>
-								{label}
-							</button>
-						{/each}
-					</div>
-				</div>
-
-				<div class="mb-6 rounded-lg bg-white p-6 shadow">
+			<div class="mb-6 space-y-2 rounded-lg bg-white p-6 shadow">
+				<div>
 					<div class="mb-4 flex items-center space-x-2">
 						<Icon icon="lucide:palette" class="h-5 w-5 text-indigo-500" />
 						<h2 class="text-lg font-semibold">Colours</h2>
@@ -635,18 +566,83 @@
 					</div>
 				</div>
 
-				<a
-					href="mailto:hello@difuse.io"
-					target="_blank"
-					class="flex items-center justify-center gap-2 rounded-lg bg-white p-4 shadow transition duration-300 hover:bg-gray-100"
-				>
-					<Icon icon="lucide:mail" class="text-[#1da1f2]" />
-					<span>Share Your Feedback via Email</span>
-				</a>
+				<div>
+					<div class="mb-4 flex items-center space-x-2">
+						<Icon icon="tabler:template" class="h-5 w-5 text-indigo-500" />
+						<h2 class="text-lg font-semibold">Select Template</h2>
+					</div>
+
+					<select
+						class="focus:borde-blue-300 focus:ring-ring-blue-300 w-full rounded-md border border-gray-300
+         px-3 py-2 focus:outline-none"
+						bind:value={card.template}
+					>
+						{#each templates as { id, label }}
+							<option value={id} selected={card.template === id}>{label}</option>
+						{/each}
+					</select>
+				</div>
 			</div>
 		</div>
 
-		<p class="mb-1 mt-3 text-center">
+		<div class="rounded-lg bg-white p-6 shadow">
+			<div class="">
+				<div class="mb-5 flex items-center justify-between">
+					<div class="flex items-center space-x-2">
+						<Icon icon="lucide:sparkles" class="h-5 w-5 text-indigo-500" />
+						<h2 class="text-lg font-semibold">Preview</h2>
+					</div>
+					<div class="dropdown-container relative inline-block">
+						<button
+							class="flex rounded-md bg-blue-500 px-4 py-2 text-white focus:outline-none"
+							onclick={() => (dropdown = !dropdown)}
+						>
+							Download
+						</button>
+						<div
+							in:fade={{ duration: 300 }}
+							out:fade={{ duration: 300 }}
+							class={`absolute left-1/2 z-10 mt-2 w-44 origin-top-left -translate-x-1/2 rounded-md border border-gray-200 bg-white shadow-xl ring-1 ring-black ring-opacity-5 focus:outline-none ${
+								dropdown ? 'block' : 'hidden'
+							}`}
+						>
+							<ul class="divide-y divide-gray-300">
+								<li>
+									<button
+										class="w-full cursor-pointer rounded px-4 py-2 text-left hover:bg-gray-200"
+										onclick={() => downloadSignature($state.snapshot(card), 'html')}
+									>
+										Download HTML
+									</button>
+								</li>
+								<li>
+									<button
+										class=" w-full cursor-pointer rounded px-4 py-2 text-left hover:bg-gray-200"
+										onclick={() => downloadSignature($state.snapshot(card), 'png')}
+									>
+										Download PNG
+									</button>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="rounded border border-gray-50 p-4" id="preview">
+					<div id="email-signature-container"></div>
+				</div>
+			</div>
+		</div>
+
+		<a
+			href="mailto:hello@difuse.io"
+			target="_blank"
+			class="mt-4 flex items-center justify-center gap-2 rounded-lg bg-white p-4 shadow transition duration-300 hover:bg-gray-100"
+		>
+			<Icon icon="lucide:mail" class="text-[#1da1f2]" />
+			<span>Share Your Feedback via Email</span>
+		</a>
+
+		<p class="mb-1 mt-4 text-center">
 			© 2025 Signify - Made with ❤️ by <a
 				href="https://difuse.io"
 				target="_blank"
