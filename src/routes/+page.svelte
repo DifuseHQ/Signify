@@ -15,6 +15,8 @@
 	import { getDefaultCard } from '$lib/generator';
 	import { addSocialInput, socialMediaOptions, extraInputs } from '$lib/extra-inputs.svelte';
 	import { cropperInputs, processImage, closeCropperModal } from '$lib/cropperUtils.svelte';
+	import PrecisionBar from '$lib/templates/precision-bar.svelte';
+	import ModernStripe from '$lib/templates/modern-stripe.svelte';
 
 	let selectedColors: SelectedColors = $state({
 		primary: '#000000',
@@ -28,7 +30,9 @@
 		{ id: 'elegant-minimal', label: 'Elegant Minimal' },
 		{ id: 'modern-compact', label: 'Modern Compact' },
 		{ id: 'professional-grid', label: 'Professional Grid (QR)' },
-		{ id: 'corporate-highlight', label: 'Corporate Highlight' }
+		{ id: 'corporate-highlight', label: 'Corporate Highlight' },
+        { id: 'precision-bar', label: 'Precision Bar' },
+        { id: 'modern-stripe', label: 'Modern Stripe' }
 	];
 
 	let pickerWidth: number = $state(0);
@@ -78,6 +82,12 @@
 				case 'corporate-highlight':
 					mount(CorporateHighlight, { target, props: { card } });
 					break;
+                case 'precision-bar':
+                    mount(PrecisionBar, { target, props: { card } });
+                    break;
+                case 'modern-stripe':
+                    mount(ModernStripe, { target, props: { card } });
+                    break;
 			}
 		}
 	});
@@ -215,7 +225,7 @@
 
 					<div
 						class="flex w-full flex-grow items-start space-x-4"
-						class:hidden={card.template === 'corporate-highlight'}
+						class:hidden={card.template === 'corporate-highlight' || card.template === 'precision-bar' || card.template === 'modern-stripe'}
 					>
 						<div
 							class="flex h-16 w-16 items-center justify-center overflow-hidden rounded-xl bg-gray-100"
