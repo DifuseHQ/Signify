@@ -3,6 +3,7 @@
 	import type { Card } from '$lib/types';
 	import { fade } from 'svelte/transition';
 	import { extraInputs } from '$lib/extra-inputs.svelte';
+	import DIfuseLogo from '$lib/DIfuseLogo.svelte';
 
 	interface Props {
 		card: Card;
@@ -72,7 +73,10 @@
 														<table cellpadding="0" cellspacing="0" border="0">
 															<tbody>
 																<tr>
-																	<td valign="middle" style="padding-right:8px;">
+																	<td
+																		valign="middle"
+																		style="padding-right:8px; white-space:nowrap;"
+																	>
 																		<a
 																			href={'tel:' +
 																				(card.custom?.corporateHighlight?.tollFree || '800-LINUX')}
@@ -83,12 +87,24 @@
 																				alt="call"
 																				width="20"
 																				height="20"
-																				style="display:block; border:0;"
+																				style="display:inline-block; border:0; vertical-align:middle; margin-right:4px;"
 																			/>
+																			<span
+																				style="font-size:16px; font-weight:bold; color:#000000;"
+																			>
+																				{card.custom?.corporateHighlight?.tollFree || '800-LINUX'}
+																			</span>
 																		</a>
 																	</td>
-																	<td valign="middle" style="font-size:16px;white-space:nowrap;">
-																		{card.custom?.corporateHighlight?.tollFree || '800-LINUX'}
+
+																	<td valign="middle">
+																		<a
+																			href="https://signify.difuse.io/"
+																			target="_blank"
+																			style="text-decoration:none; border:0; outline:none; display:inline-block; margin-right:1px;margin-left:7px;"
+																		>
+																			<DIfuseLogo />
+																		</a>
 																	</td>
 																</tr>
 															</tbody>
