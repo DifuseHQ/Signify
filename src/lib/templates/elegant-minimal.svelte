@@ -86,7 +86,7 @@
 						>
 							<tbody>
 								<tr>
-									<td style="padding-left:10px;">
+									<td style="padding-left:10px;text-align: left;">
 										<a
 											target="_blank"
 											href={'mailto:' + card.email}
@@ -103,7 +103,7 @@
 										</a>
 									</td>
 
-									<td>
+									<td style="padding-left:5px;text-align: center;">
 										<a
 											href={'tel:' + card.phone}
 											style="color:{card.colours.text};text-decoration:none;white-space:nowrap;"
@@ -119,7 +119,7 @@
 										</a>
 									</td>
 
-									<td>
+									<td style="padding-left:5px;text-align: right;">
 										<a
 											target="_blank"
 											href={card.websiteLink}
