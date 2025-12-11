@@ -44,8 +44,8 @@ export async function processImage(blob: Blob, type: 'profile' | 'company', imag
         imageElement.style.display = 'block';
 
         cropperInputs.cropperInstance = new Cropper(imageElement, {
-            aspectRatio: 1,
-            viewMode: 3,
+            // aspectRatio: 2 / 1,
+            viewMode: 1,
             autoCropArea: 1,
             ready() {
                 cropperInputs.currentImageType = type;
@@ -55,3 +55,4 @@ export async function processImage(blob: Blob, type: 'profile' | 'company', imag
 
     reader.readAsDataURL(blob);
 }
+
